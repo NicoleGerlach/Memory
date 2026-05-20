@@ -1,0 +1,107 @@
+
+
+body {
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+}
+
+.home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #303131;
+    height: 100vh;
+}
+
+.h2-home {
+    font-family: 'Almarai';
+    font-size: clamp(2rem, 1.286rem + 1.905vw, 3rem);
+    color: #FFFFFF;
+    margin: 0;
+}
+
+h1 {
+    font-family: 'Red Rose';
+    color: #FFFFFF;
+    font-size: clamp(3.5rem, -0.25rem + 10vw, 8.75rem);
+    font-weight: 700;
+}
+
+.button {
+    width: clamp(12.5rem, 10.268rem + 5.952vw, 15.625rem);
+    height: clamp(5rem, 4.196rem + 2.143vw, 6.125rem);
+    background-color: #F0EA6E;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(0.75rem, 0.393rem + 0.952vw, 1.25rem);
+
+    >span {
+        font-family: 'Red Rose';
+        color: #303131;
+        font-size: clamp(1.75rem, 1.214rem + 1.429vw, 2.5rem);
+    }
+
+    &:hover {
+        .button__controller {
+            transform: rotate(-25.77deg);
+        }
+
+        .button__arrow {
+            width: 36px;
+        }
+    }
+}
+
+.controller-big {
+    width: clamp(9.375rem, -17.25rem + 71vw, 22.688rem);
+    position: fixed;
+    left: 0;
+    bottom: 0;
+}
+
+.settings {
+    font-family: 'Almarai';
+}
+
+.h2-settings {
+    font-family: 'Red Rose';
+}
+
+.settings-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.settings-box-inner {
+    display: flex;
+    flex-direction: row;
+}
+
+.circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #303131;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .circle::after {
+    content: "";
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: transparent;
+    transition: background-color 0.15s ease;
+  }
+
+  .circle:hover::after {
+    background-color: #303131;
+  }
