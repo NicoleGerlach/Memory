@@ -1,0 +1,59 @@
+@use '../abstract/variables' as vars;
+@use '../abstract/mixins' as mx;
+
+.home {
+    @include mx.flex-center;
+    flex-direction: column;
+    background-color: vars.$dark;
+    height: 100vh;
+}
+
+.h2-home {
+    font-family: vars.$font-Almarai;
+    font-size: clamp(2rem, 1.286rem + 1.905vw, 3rem);
+    color: vars.$bright;
+    margin: 0;
+}
+
+h1 {
+    font-family: vars.$font-RedRose;
+    color: vars.$bright;
+    font-size: clamp(3.5rem, -0.25rem + 10vw, 8.75rem);
+    font-weight: 700;
+}
+
+.button {
+    @include mx.flex-center;
+    width: clamp(12.5rem, 10.268rem + 5.952vw, 15.625rem);
+    height: clamp(5rem, 4.196rem + 2.143vw, 6.125rem);
+    background-color: vars.$yellow;
+    color: vars.$dark;
+    border: none;
+    gap: clamp(0.75rem, 0.393rem + 0.952vw, 1.25rem);
+    text-decoration: none;
+
+    &:hover {
+        .button__controller {
+            transform: rotate(-25.77deg);
+        }
+
+        .button__arrow {
+            width: 36px;
+        }
+    }
+}
+
+.button-text {
+    font-family: vars.$font-RedRose;
+    color: vars.$dark;
+    font-size: clamp(1.75rem, 1.214rem + 1.429vw, 2.5rem);
+    font-weight: 700;
+}
+
+
+.controller-big {
+    width: clamp(9.375rem, -17.25rem + 71vw, 22.688rem);
+    position: fixed;
+    left: 0;
+    bottom: 0;
+}
