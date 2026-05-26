@@ -1,7 +1,9 @@
+@use '../abstract/mixins' as mx;
+
 .content {
     display: flex;
     justify-content: space-around;
-    margin: 54px;
+    padding: 54px;
 }
 
 .settings {
@@ -39,7 +41,7 @@
 .settings-box {
     display: flex;
     flex-direction: column;
-    margin-left: 40px;
+    margin: 40px 0 0 40px;
 }
 
 .settings-box-headline {
@@ -55,12 +57,12 @@ h3 {
 }
 
 .settings-box-inner {
-    height: 20px;
+    // height: 20px;
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 10px;
-    margin: 0 0 12px 44px;
+    margin-left: 44px;
 }
 
 .circle {
@@ -68,9 +70,11 @@ h3 {
     height: 20px;
     // border-radius: 50%;
     // border: 2px solid #303131;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include mx.flex-center;
+    margin-right: 10px;
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
     cursor: pointer;
     transition: all 0.15s ease;
 }
@@ -86,6 +90,20 @@ h3 {
 
 .circle:hover::after {
     background-color: #303131;
+}
+
+ul {
+    margin: unset;
+    padding: unset;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    >li {
+        height: 20px;
+        display: flex;
+        align-items: center;
+    }
 }
 
 .preview-themes {
@@ -122,9 +140,10 @@ h3 {
     >button {
         height: 53px;
         width: 126px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        @include mx.flex-center;
+        // display: flex;
+        // align-items: center;
+        // justify-content: center;
         gap: 8px;
         background-color: #F0EA6E;
         border: none;

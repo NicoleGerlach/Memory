@@ -1,6 +1,6 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="/public/assets/fonts/font.scss">
     <script src="./main.ts"></script>
 </head>
-
 <body>
     <section class="settings" id="settings">
         <div class="content">
@@ -26,12 +25,21 @@
                         <h3>Game themes</h3>
                     </div>
                     <form class="settings-box-inner">
-                        <input type="radio" class="circle"></input>
-                        <label>Code vibes theme</label>
+                        <ul>
+                            <li>
+                                <input type="radio" name="themes" class="circle"></input>
+                                <label>Default theme</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="themes" class="circle"></input>
+                                <label>Dark theme</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="themes" class="circle"></input>
+                                <label>Light theme</label>
+                            </li>
                     </form>
                     <form class="settings-box-inner">
-                        <input type="radio" class="circle"></input>
-                        <label>Gaming theme</label>
                     </form>
                 </div>
                 <div class="settings-box">
@@ -40,12 +48,15 @@
                         <h3>Choose player</h3>
                     </div>
                     <form class="settings-box-inner">
-                        <input type="radio" class="circle"></input>
-                        <label>Blue</label>
-                    </form>
-                    <form class="settings-box-inner">
-                        <input type="radio" class="circle"></input>
-                        <label>Orange</label>
+                        <ul>
+                            <li>
+                                <input type="radio" name="player" class="circle"></input>
+                                <label>Blue</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="player" class="circle"></input>
+                                <label>Orange</label>
+                            </li>
                     </form>
                 </div>
                 <div class="settings-box">
@@ -54,16 +65,20 @@
                         <h3>Board size</h3>
                     </div>
                     <form class="settings-box-inner">
-                        <input type="radio" class="circle"></input>
-                        <label>16 cards</label>
-                    </form>
-                    <form class="settings-box-inner">
-                        <input type="radio" class="circle"></input>
-                        <label>24 card</label>
-                    </form>
-                    <form class="settings-box-inner">
-                        <input type="radio" class="circle"></input>
-                        <label>36 cards</label>
+                        <ul>
+                            <li>
+                                <input type="radio" name="board" class="circle"></input>
+                                <label>16 cards</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="board" class="circle"></input>
+                                <label>24 card</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="board" class="circle"></input>
+                                <label>36 cards</label>
+                            </li>
+                        </ul>
                     </form>
                 </div>
             </div>
@@ -94,5 +109,4 @@
         </div>
     </section>
 </body>
-
 </html>
