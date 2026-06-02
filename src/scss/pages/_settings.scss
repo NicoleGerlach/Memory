@@ -57,7 +57,6 @@ h3 {
 }
 
 .settings-box-inner {
-    // height: 20px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -65,16 +64,18 @@ h3 {
     margin-left: 44px;
 }
 
+.circle input[type="radio"] {
+   appearance: none;
+       border: solid 3px black;
+
+}
+
 .circle {
     width: 20px;
     height: 20px;
-    // border-radius: 50%;
-    // border: 2px solid #303131;
+    border-radius: 50%;
     @include mx.flex-center;
     margin-right: 10px;
-    // display: flex;
-    // justify-content: center;
-    // align-items: center;
     cursor: pointer;
     transition: all 0.15s ease;
 }
@@ -141,9 +142,6 @@ ul {
         height: 53px;
         width: 126px;
         @include mx.flex-center;
-        // display: flex;
-        // align-items: center;
-        // justify-content: center;
         gap: 8px;
         background-color: #F0EA6E;
         border: none;
@@ -159,4 +157,17 @@ ul {
     height: 56px;
     transform: rotate(9.33deg);
     background-color: #F0EA6E;
+}
+
+.exit-btn {
+    background: rgb(77, 213, 188, 0.2);
+    border: solid 1px #4DD5BC;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    color: #F6F6F6;
+    font-family: 'Red Rose';
+    font-size: 16px;
+    font-weight: 700;
 }
