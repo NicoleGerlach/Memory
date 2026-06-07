@@ -41,7 +41,7 @@
 .settings-box {
     display: flex;
     flex-direction: column;
-    margin: 40px 0 0 40px;
+    margin-top: 40px;
 }
 
 .settings-box-headline {
@@ -64,18 +64,18 @@ h3 {
     margin-left: 44px;
 }
 
-.circle input[type="radio"] {
-   appearance: none;
-       border: solid 3px black;
+// .circle input[type="radio"] {
+//     appearance: none;
+//     border: solid 3px black;
 
-}
+// }
 
 .circle {
     width: 20px;
     height: 20px;
     border-radius: 50%;
     @include mx.flex-center;
-    margin-right: 10px;
+    // margin-right: 10px;
     cursor: pointer;
     transition: all 0.15s ease;
 }
@@ -89,10 +89,6 @@ h3 {
     transition: background-color 0.15s ease;
 }
 
-.circle:hover::after {
-    background-color: #303131;
-}
-
 ul {
     margin: unset;
     padding: unset;
@@ -104,7 +100,39 @@ ul {
         height: 20px;
         display: flex;
         align-items: center;
+        gap: 10px;
+
+        &:hover {
+            font-weight: 700;
+            cursor: pointer;
+
+            .circle::after {
+                background-color: #303131;
+            }
+
+            .line-wrap-small {
+                display: flex;
+                align-items: center;
+            }
+        }
     }
+}
+
+.line-wrap-small {
+    display: none;
+}
+
+.line-small {
+    width: 41px;
+    height: 3px;
+    background-color: #F0EA6E;
+}
+
+.diamond-small {
+    width: 12px;
+    height: 12px;
+    background-color: #F0EA6E;
+    transform: rotate(45deg);
 }
 
 .preview-themes {

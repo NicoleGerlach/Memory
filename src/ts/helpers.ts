@@ -1,3 +1,4 @@
+
 export function createElementWithText(
     el: string,
     elClass: string | null,
@@ -43,13 +44,20 @@ export function createList(
         const label = document.createElement('label');
         const radioBtn = document.createElement('input');
         const text = document.createElement('span');
+        const element = document.createElement('div');
+        const lineSmall = document.createElement('div');
+        const diamondSmall = document.createElement('div');
 
         radioBtn.type = 'radio';
         radioBtn.name = radioName;
         radioBtn.value = item;
         text.textContent = item;
         li.classList.add(itemClass);
-        label.append(radioBtn, text);
+        element.append(lineSmall, diamondSmall);
+        element.classList.add('line-wrap-small');
+        lineSmall.classList.add('line-small');
+        diamondSmall.classList.add('diamond-small');
+        label.append(radioBtn, text, element);
         li.append(label);
         list.append(li);
     }
@@ -58,7 +66,7 @@ export function createList(
 
 export function createImageElement(iconPath: string): HTMLImageElement {
     const img = document.createElement('img');
-    const pathPrefix = '../../public/assets/img/';
+    const pathPrefix = '';
     img.src = pathPrefix + iconPath;
     img.alt = '';
     return img;

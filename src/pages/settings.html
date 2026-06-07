@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +8,9 @@
     <link rel="stylesheet" href="./src/style.scss">
     <link rel="stylesheet" href="../../src/scss/pages/_settings.scss">
     <link rel="stylesheet" href="/public/assets/fonts/font.scss">
+    <script type="module" src="../ts/settings.ts"></script>
 </head>
+
 <body>
     <section class="settings" id="settings">
         <div class="content">
@@ -18,7 +20,7 @@
                     <div class="diamond"></div>
                     <div class="line-big"></div>
                 </div>
-                <div class="settings-box">
+                <!-- <div class="settings-box">
                     <div class="settings-box-headline">
                         <img src="../../public/assets/img/palette.svg" alt="">
                         <h3>Game themes</h3>
@@ -26,16 +28,29 @@
                     <form class="settings-box-inner">
                         <ul>
                             <li>
-                                <input type="radio" name="themes" class="circle"></input>
+                                <input type="radio" name="themes" class="circle">
                                 <label>Default theme</label>
+                                <div class="line-wrap-small">
+                                    <div class="line-small"></div>
+                                    <div class="diamond-small"></div>
+                                </div>
                             </li>
                             <li>
-                                <input type="radio" name="themes" class="circle"></input>
+                                <input type="radio" name="themes" class="circle">
                                 <label>Dark theme</label>
+                                <div id="line-wrap" class="line-wrap-small">
+                                    <div class="line-small"></div>
+                                    <div class="diamond-small"></div>
+                                </div>
                             </li>
                             <li>
-                                <input type="radio" name="themes" class="circle"></input>
+                                <input type="radio" name="themes" class="circle">
                                 <label>Light theme</label>
+                                <div id="line-wrap" class="line-wrap-small">
+                                    <div class="line-small"></div>
+                                    <div class="diamond-small"></div>
+                                </div>
+
                             </li>
                     </form>
                     <form class="settings-box-inner">
@@ -49,11 +64,11 @@
                     <form class="settings-box-inner">
                         <ul>
                             <li>
-                                <input type="radio" name="player" class="circle"></input>
+                                <input type="radio" name="player" class="circle">
                                 <label>Blue</label>
                             </li>
                             <li>
-                                <input type="radio" name="player" class="circle"></input>
+                                <input type="radio" name="player" class="circle">
                                 <label>Orange</label>
                             </li>
                     </form>
@@ -67,21 +82,22 @@
                         <ul>
 
                             <li>
-                                <input type="radio" name="board" class="circle"></input>
+                                <input type="radio" name="board" class="circle">
                                 <label>16 cards</label>
                             </li>
 
                             <li>
-                                <input type="radio" name="board" class="circle"></input>
+                                <input type="radio" name="board" class="circle">
                                 <label>24 card</label>
                             </li>
                             <li>
-                                <input type="radio" name="board" class="circle"></input>
+                                <input type="radio" name="board" class="circle">
                                 <label>36 cards</label>
                             </li>
                         </ul>
                     </form>
-                </div>
+                </div> -->
+                <div id="settings_box"></div>
             </div>
             <div class="preview-themes">
                 <div class="preview-box">
@@ -110,4 +126,5 @@
         </div>
     </section>
 </body>
+
 </html>

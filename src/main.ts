@@ -1,6 +1,7 @@
 
 function init() {
     setupEventListeners();
+    console.log('init in main.ts wird ausgeführt');
 }
 
 function setupEventListeners() {

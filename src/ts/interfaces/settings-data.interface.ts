@@ -1,4 +1,12 @@
-export const settingsData = [
+export interface SettingsData {
+    type: string;
+    title: string;
+    iconPath: string;
+    radioName: string;
+    items: string[];
+}
+
+export const SettingsDatas: SettingsData[] = [
     {
         type: 'theme',
         title: 'Game Themes',
@@ -8,7 +16,7 @@ export const settingsData = [
     },
     {
         type: 'player',
-        title: 'Chosse player',
+        title: 'Choose player',
         iconPath: '../../public/assets/img/player.svg',
         radioName: 'player',
         items: ['Blue', 'Orange']
