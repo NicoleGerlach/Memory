@@ -32,36 +32,41 @@ export function createElementWithoutText(
 }
 
 export function createList(
-    listClass: string,
-    itemClass: string,
-    array: string[],
-    radioName: string
+  listClass: string,
+  itemClass: string,
+  array: string[],
+  radioName: string
 ): HTMLUListElement {
-    const list = document.createElement('ul');
-    list.classList.add(listClass);
-    for (const item of array) {
-        const li = document.createElement('li');
-        const label = document.createElement('label');
-        const radioBtn = document.createElement('input');
-        const text = document.createElement('span');
-        const element = document.createElement('div');
-        const lineSmall = document.createElement('div');
-        const diamondSmall = document.createElement('div');
-
-        radioBtn.type = 'radio';
-        radioBtn.name = radioName;
-        radioBtn.value = item;
-        text.textContent = item;
-        li.classList.add(itemClass);
-        element.append(lineSmall, diamondSmall);
-        element.classList.add('line-wrap-small');
-        lineSmall.classList.add('line-small');
-        diamondSmall.classList.add('diamond-small');
-        label.append(radioBtn, text, element);
-        li.append(label);
-        list.append(li);
-    }
-    return list;
+  const list = document.createElement('ul');
+  list.classList.add(listClass);
+  array.forEach((item, idx) => {
+    const li = document.createElement('li');
+    const label = document.createElement('label');
+    const radioBtn = document.createElement('input');
+    const text = document.createElement('span');
+    const element = document.createElement('div');
+    const lineSmall = document.createElement('div');
+    const diamondSmall = document.createElement('div');
+    const id = `${radioName}-${idx}`;
+    // Input konfigurieren
+    radioBtn.type = 'radio';
+    radioBtn.name = radioName;
+    radioBtn.value = item;
+    radioBtn.id = id;
+    // Label korrekt mit Input verknüpfen
+    label.setAttribute('for', id);
+    // Sichtbarer Inhalt
+    text.textContent = item;
+    element.append(lineSmall, diamondSmall);
+    element.classList.add('line-wrap-small');
+    lineSmall.classList.add('line-small');
+    diamondSmall.classList.add('diamond-small');
+    label.append(text, element);
+    li.classList.add(itemClass);
+    li.append(radioBtn, label);
+    list.append(li);
+  });
+  return list;
 }
 
 export function createImageElement(iconPath: string): HTMLImageElement {

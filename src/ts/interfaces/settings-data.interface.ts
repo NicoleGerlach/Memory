@@ -1,3 +1,4 @@
+
 export interface SettingsData {
     type: string;
     title: string;
@@ -12,7 +13,7 @@ export const SettingsDatas: SettingsData[] = [
         title: 'Game Themes',
         iconPath: '../../public/assets/img/palette.svg',
         radioName: 'game-theme',
-        items: ['Code vibes theme', 'Gaming theme']
+        items: ['Code vibes theme', 'Gaming theme'],
     },
     {
         type: 'player',
@@ -29,3 +30,4 @@ export const SettingsDatas: SettingsData[] = [
         items: ['16 cards', '24 cards', '36 cards']
     }
 ]
+
