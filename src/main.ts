@@ -18,7 +18,7 @@ function setupEventListeners() {
 function exchangeArrow(shouldExchangeArrow: boolean) {
     const arrowIcon = document.querySelector<HTMLImageElement>('#link_arrow');
     if (!arrowIcon) return;
-    arrowIcon.src = shouldExchangeArrow ? 'assets/img/arrow_thick.svg' : 'assets/img/arrow.svg';
+    arrowIcon.src = shouldExchangeArrow ? 'assets/img/ui/arrow_thick.svg' : 'assets/img/ui/arrow.svg';
 }
 
 init();

@@ -5,9 +5,17 @@ import { createElementWithoutText } from "./helpers";
 import { createList } from "./helpers";
 import { createImageElement } from "./helpers";
 
+const DEFAULT_THEME_LABEL = 'Code vibes theme';
 function init() {
-    renderSettings();
-    addRadioButtonsListeners();
+  renderSettings();
+  addRadioButtonsListeners();
+  const DEFAULT_THEME_LABEL = 'Code vibes theme';
+  const defaultThemeRadio = Array.from(
+    document.querySelectorAll<HTMLInputElement>('input[name="game-theme"]')
+  ).find(r => r.value.trim().toLowerCase() === DEFAULT_THEME_LABEL.toLowerCase());
+  if (defaultThemeRadio) defaultThemeRadio.checked = true;
+  updateGroupSelectedClass('game-theme');
+  renderPreview(DEFAULT_THEME_LABEL);
 }
 
 function renderSettings() {
@@ -32,16 +40,25 @@ function renderSettingsBox(data: SettingsData): HTMLElement {
 }
 
 function addRadioButtonsListeners() {
-    const radioButtons = document.querySelectorAll('input[type="radio"]');
-    radioButtons.forEach(radio => {
-        radio.addEventListener('change', updatePreview);
+  const radios = document.querySelectorAll('input[type="radio"]');
+  radios.forEach(radio => {
+    radio.addEventListener('change', (e) => {
+      const input = e.target as HTMLInputElement;
+      const groupName = input.name;
+      updateGroupSelectedClass(groupName);
+      if (groupName === 'game-theme') {
+        const selectedTheme = getSelectedValue('game-theme');
+        renderPreview(selectedTheme);
+      }
     });
+  });
 }
 
-function updatePreview() {
-    const selectedTheme = getSelectedValue('game-theme');
-    const selectedPlayer = getSelectedValue('player');
-    renderPreview(selectedTheme, selectedPlayer);
+function updateGroupSelectedClass(groupName: string) {
+  const groupUl = document.querySelector(`.group-${groupName}`) as HTMLUListElement | null;
+  if (!groupUl) return;
+  const hasChecked = !!groupUl.querySelector('input[type="radio"]:checked');
+  groupUl.classList.toggle('selected', hasChecked);
 }
 
 function getSelectedValue(radioName: string): string | null {
@@ -51,53 +68,27 @@ function getSelectedValue(radioName: string): string | null {
     return el ? el.value : null;
 }
 
-function renderPreview(theme: string | null, player: string | null) {
-    let previewContainer = document.querySelector('#preview_game_theme') as HTMLElement | null;
-
-    if (!previewContainer) {
-        previewContainer = createElementWithoutText('div', 'preview-game-theme', 'preview_game_theme');
-        document.body.append(previewContainer);
-    }
-
-    previewContainer.innerHTML = '';
-
-    const preview = createElementWithoutText('div', 'preview', null,);
-
-    if (theme) {
-        const themePreview = createElementWithoutText('div', 'player-preview', null);
-        if (theme === 'Code vibes theme') {
-            preview.style.color = '#00ff00';
-            themePreview.textContent = '💻 Code Vibes Theme';
-        } else if (theme === 'Gaming theme' || theme === 'Game theme' || theme === 'Gaming Theme') {
-            preview.style.color = '#ffffff';
-            themePreview.textContent = '🎮 Gaming Theme';
-        } else {
-            themePreview.textContent = theme;
-        }
-        preview.appendChild(themePreview);
-    }
-
-    if (player) {
-        const currentPlayer = document.querySelector('#current_player') as HTMLElement | null;
-        if (currentPlayer) {
-            const old = currentPlayer.querySelector('.player-preview');
-            if (old) old.remove();
-        }
-        const playerWrapper = createElementWithoutText('div', 'player-preview', null);
-        const map: Record<string, string> = {
-            blue: '/public/assets/img/code_blue.svg',
-            orange: '/public/assets/img/code_orange.svg',
-        };
-        const key = player.trim().toLowerCase();
-        const src = map[key];
-        if (src) {
-            const img = createImageElement(src);
-            img.alt = `${player} Player`;
-            playerWrapper.appendChild(img);
-        }
-        currentPlayer?.appendChild(playerWrapper);
-    }
-    previewContainer.appendChild(preview);
+function renderPreview(theme: string | null) {
+  let previewContainer = document.querySelector('#preview_box') as HTMLElement | null;
+  if (!previewContainer) {
+    previewContainer = createElementWithoutText('div', 'preview-game-theme', 'preview_game_theme');
+    document.body.append(previewContainer);
+  }
+  previewContainer.innerHTML = '';
+  const preview = createElementWithoutText('div', 'preview', null);
+  const themeImageMap: Record<string, string> = {
+    'code vibes theme': '/public/assets/img/code/codepreview.svg',
+    'gaming theme': '/public/assets/img/gaming/gamepreview.svg',
+  };
+  const normalizedTheme = (theme ?? DEFAULT_THEME_LABEL).trim().toLowerCase();
+  const themeImgSrc = themeImageMap[normalizedTheme] ?? '/assets/img/codepreview.svg';
+  const themePreview = createElementWithoutText('div', 'theme-preview', null);
+  const img = createImageElement(themeImgSrc);
+  img.alt = `${theme ?? DEFAULT_THEME_LABEL} Preview`;
+  img.classList.add('theme-image');
+  themePreview.appendChild(img);
+  preview.appendChild(themePreview);
+  previewContainer.appendChild(preview);
 }
 
 init();

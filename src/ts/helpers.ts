@@ -38,7 +38,7 @@ export function createList(
   radioName: string
 ): HTMLUListElement {
   const list = document.createElement('ul');
-  list.classList.add(listClass);
+  list.classList.add(listClass, `group-${radioName}`);
   array.forEach((item, idx) => {
     const li = document.createElement('li');
     const label = document.createElement('label');
@@ -48,14 +48,11 @@ export function createList(
     const lineSmall = document.createElement('div');
     const diamondSmall = document.createElement('div');
     const id = `${radioName}-${idx}`;
-    // Input konfigurieren
     radioBtn.type = 'radio';
     radioBtn.name = radioName;
     radioBtn.value = item;
     radioBtn.id = id;
-    // Label korrekt mit Input verknüpfen
     label.setAttribute('for', id);
-    // Sichtbarer Inhalt
     text.textContent = item;
     element.append(lineSmall, diamondSmall);
     element.classList.add('line-wrap-small');
