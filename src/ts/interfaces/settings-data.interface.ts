@@ -11,21 +11,21 @@ export const SettingsDatas: SettingsData[] = [
     {
         type: 'theme',
         title: 'Game Themes',
-        iconPath: '../../public/assets/img/ui/palette.svg',
+        iconPath: '/assets/img/ui/palette.svg',
         radioName: 'game-theme',
         items: ['Code vibes theme', 'Gaming theme'],
     },
     {
         type: 'player',
         title: 'Choose player',
-        iconPath: '../../public/assets/img/ui/player.svg',
+        iconPath: '/assets/img/ui/player.svg',
         radioName: 'player',
         items: ['Blue', 'Orange']
     },
     {
         type: 'size',
         title: 'Board size',
-        iconPath: '../../public/assets/img/ui/board_size.svg',
+        iconPath: '/assets/img/ui/board_size.svg',
         radioName: 'board-size',
         items: ['16 cards', '24 cards', '36 cards']
     }

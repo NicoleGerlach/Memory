@@ -77,11 +77,11 @@ function renderPreview(theme: string | null) {
   previewContainer.innerHTML = '';
   const preview = createElementWithoutText('div', 'preview', null);
   const themeImageMap: Record<string, string> = {
-    'code vibes theme': '/public/assets/img/code/codepreview.svg',
-    'gaming theme': '/public/assets/img/gaming/gamepreview.svg',
+    'code vibes theme': '/assets/img/code/codepreview.svg',
+    'gaming theme': '/assets/img/gaming/gamepreview.svg',
   };
   const normalizedTheme = (theme ?? DEFAULT_THEME_LABEL).trim().toLowerCase();
-  const themeImgSrc = themeImageMap[normalizedTheme] ?? '/assets/img/codepreview.svg';
+  const themeImgSrc = themeImageMap[normalizedTheme] ?? '/assets/img/code/codepreview.svg';
   const themePreview = createElementWithoutText('div', 'theme-preview', null);
   const img = createImageElement(themeImgSrc);
   img.alt = `${theme ?? DEFAULT_THEME_LABEL} Preview`;

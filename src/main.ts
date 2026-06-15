@@ -1,7 +1,6 @@
 
 function init() {
     setupEventListeners();
-    console.log('init in main.ts wird ausgeführt');
 }
 
 function setupEventListeners() {
@@ -9,7 +8,6 @@ function setupEventListeners() {
     playLink?.addEventListener('mouseenter', function () {
         exchangeArrow(true);
     });
-
     playLink?.addEventListener('mouseleave', function () {
         exchangeArrow(false);
     });
