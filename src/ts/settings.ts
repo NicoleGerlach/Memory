@@ -106,9 +106,9 @@ function activateStartBtn() {
   }
 }
 
-window.startGame = function () {
-  const target = 'src/pages/game.html'
-  window.location.assign(target);
-}
+function startGame() {
+  window.location.assign('/src/pages/game.html');
+};
+document.querySelector('#start_btn')?.addEventListener('click', startGame);
 
 init();
