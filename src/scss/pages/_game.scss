@@ -29,11 +29,23 @@ header {
 
 
 
-.current-player{
+.current-player-box{
     font-family: 'Red Rose';
     font-size: 26px;
     font-weight: 700;
     color: #F6F6F6;
+    display: flex;
+    gap: 8px;
+
+    .current-player-preview {
+        width: 29px;
+        display: flex;
+        align-items: center;
+
+        >img {
+            width: 100%;
+        }
+    }
 }
 
 .exit {

@@ -97,18 +97,24 @@ function activateStartBtn() {
   const selectedTheme = getSelectedValue('game-theme');
   const selectedPlayer = getSelectedValue('player');
   const selectedBoard = getSelectedValue('board-size');
-  if (selectedTheme && selectedPlayer && selectedBoard) {
-    console.log(selectedTheme, selectedPlayer, selectedBoard);
-    const btn = document.querySelector('#start_btn');
-    if (btn) {
-      btn.removeAttribute('disabled');
-    }
-  }
+  const btn = document.querySelector('#start_btn') as HTMLButtonElement | null;
+  if (!btn) return;
+  btn.disabled = !(selectedTheme && selectedPlayer && selectedBoard);
 }
 
-function startGame() {
+
+function startGame(theme: string, player: string, board: string) {
+  localStorage.setItem('selectedTheme', theme);
+  localStorage.setItem('selectedPlayer', player);
+  localStorage.setItem('selectedBoard', board);
   window.location.assign('/src/pages/game.html');
 };
-document.querySelector('#start_btn')?.addEventListener('click', startGame);
+document.querySelector('#start_btn')?.addEventListener('click', () => {
+  const selectedTheme = getSelectedValue('game-theme');
+  const selectedPlayer = getSelectedValue('player');
+  const selectedBoard = getSelectedValue('board-size');
+  if (!selectedTheme || !selectedPlayer || !selectedBoard) return;
+  startGame(selectedTheme, selectedPlayer, selectedBoard);
+});
 
 init();
