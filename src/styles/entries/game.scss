@@ -1,0 +1,47 @@
+@use "../../styles/abstracts/variables"; 
+@use "../components/card";
+@use "../pages/game-styles";
+
+body {
+  font-family: "Red Rose", sans-serif;
+}
+
+header {
+  padding: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+  background-color: #303131;
+
+  .score-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .current-player-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.2em;
+  }
+}
+
+#game_field {
+  img {
+    height: 120px;
+    width: 120px;
+  }
+}
+
+
+// .card-back {
+//   background: var(--card-back-bg);
+// }
+
+// .theme-gaming {
+//   --card-back-bg: var(--green-500);
+// }
+
+// .theme-food {
+//   --card-back-bg: var(--orange-500);
+// }

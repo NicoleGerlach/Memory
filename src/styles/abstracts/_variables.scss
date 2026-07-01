@@ -1,0 +1,248 @@
+:root {
+  /* ======================================================
+     PRIMITIVE COLOR TOKENS
+  ====================================================== */
+
+  --neutral-900: #303131;
+  --neutral-800: #3d3d3d;
+  --neutral-700: #6d6d6d;
+  --neutral-500: #a3a1a1;
+  --neutral-300: #dbdbd6;
+  --neutral-200: #e8e2dc;
+  --neutral-100: #f6f6f6;
+  --white: #ffffff;
+
+  --yellow-300: #f0ea6e;
+
+  --purple-500: #8a38f5;
+
+  --blue-950: #143847;
+  --blue-900: #0a2835;
+  --blue-800: #294f60;
+  --blue-700: #1e7594;
+  --blue-700-transparent-25: rgba(30, 117, 148, 0.25);
+  --blue-500: #2086b4;
+  --blue-300: #bfe5f2;
+  --blue-100: #f0f4f5;
+
+  --green-700: #286f62;
+  --green-500: #4dd5bc;
+  --green-500-transparent-20: #4dd5bc33;
+  --green-100: #e8f3f0;
+
+  --red-50: #f6f1f3;
+  --red-500-transparent-35: rgba(237, 27, 118, 0.35);
+  --red-500: #ed1b76;
+  --red-700: #c41463;
+
+  --orange-500: #f3832d;
+  --orange-500-transparent-25: rgba(243, 131, 45, 0.25);
+  --orange-200: #f3d5bb;
+  --orange-100: #f7e6d5;
+
+  /* ======================================================
+     SEMANTIC TOKENS
+     Role in interface
+  ====================================================== */
+
+  /* ---------------- background ------------------ */
+
+  --bg-home: var(--neutral-900);
+
+  /* ---------- Main Text ---------- */
+
+  --text-primary: var(--neutral-900);
+  --text-secondary: var(--neutral-700);
+  --text-disabled: var(--neutral-500);
+  --text-on-dark: var(--white);
+
+  /* ---------- Buttons ---------- */
+
+  --button-primary-yellow-bg: var(--yellow-300);
+  --button-primary-yellow-text: var(--neutral-900);
+
+  --button-disabled-bg: var(--neutral-300);
+  --button-disabled-text: var(--neutral-500);
+
+  --button-secondary-bg: var(--neutral-900);
+  --button-secondary-border: var(--yellow-300);
+  --button-secondary-text: var(--white);
+
+  /* ---------- UI Panels ---------- */
+
+  --panel-bg: var(--neutral-100);
+  --panel-separator: var(--yellow-300);
+
+  /* ------------ Lines ----------------- */
+
+  --yellow-line: var(--yellow-300);
+
+  /* ======================================================
+     THEME RED
+  ====================================================== */
+
+  /* ---------- cards ---------- */
+
+  --theme-red-bg-gradient: linear-gradient(
+    180deg,
+    var(--blue-800),
+    var(--blue-500)
+  );
+
+  --theme-red-card-gradient: linear-gradient(
+    180deg,
+    var(--red-500),
+    var(--blue-900)
+  );
+
+  --theme-red-card-front: var(--red-50);
+
+  /* ---------- match status for cards ---------- */
+
+  --match-status-bg: var(--red-50);
+  --match-status-border: var(--red-500);
+  --match-status-icon: var(--red-500);
+  --match-status-shadow: 0 0 12px var(--red-500-transparent-35);
+
+  /* --------------- buttons primary -------------- */
+
+  --button-primary-red-bg: var(--red-500);
+  --button-primary-text: var(--white);
+  --button-primary-border: transparent;
+  --button-primary-hover-bg: var(--red-700);
+
+  /* -------------------- buttons secondary ------------- */
+
+  --button-secondary-bg: var(--blue-900);
+  --button-secondary-text: var(--white);
+  --button-secondary-border: var(--red-500);
+  --button-secondary-icon: var(--red-500);
+  --button-secondary-hover-bg: var(--blue-950);
+
+  /* -------------------- buttons disabled ------------- */
+
+  --button-disabled-bg: var(--red-50);
+  --button-disabled-text: var(--red-500);
+  --button-disabled-border: var(--red-500);
+
+  /* ======================================================
+     THEME GREEN
+  ====================================================== */
+
+  /* ----------------- cards -------------------------- */
+
+  --theme-green-bg-gradient: linear-gradient(
+    180deg,
+    var(--neutral-900),
+    var(--neutral-700)
+  );
+
+  --theme-green-card-gradient: linear-gradient(
+    180deg,
+    var(--green-500),
+    var(--green-700)
+  );
+
+  --theme-green-card-front: var(--green-100);
+
+  /* ---------- Match status for cards ---------- */
+
+  --match-status-bg: var(--green-100);
+  --match-status-border: var(--green-500);
+  --match-status-icon: var(--red-500);
+
+  /* -------------------- buttons primary --------------- */
+
+  --button-primary-green-bg: var(--green-500);
+  --button-primary-text: var(--white);
+  --button-primary-border: transparent;
+  --button-primary-hover-bg: var(--green-700);
+
+  /* -------------------- buttons secondary --------------- */
+
+  --button-secondary-bg: var(--neutral-900);
+  --button-secondary-text: var(--white);
+  --button-secondary-border: var(--green-500);
+  --button-secondary-icon: var(--yellow-300);
+  --button-secondary-hover-bg: var(--neutral-800);
+
+  /* -------------------- buttons disabled --------------- */
+
+  --button-disabled-bg: var(--neutral-300);
+  --button-disabled-text: var(--white);
+  --button-disabled-border: var(--green-500);
+
+  /* ======================================================
+     THEME BLUE
+  ====================================================== */
+
+  /* -------------------- cards --------------------------- */
+
+  --theme-blue-bg: var(--blue-300);
+  --theme-blue-card-back: var(--blue-700);
+  --theme-blue-card-front: var(--blue-100);
+
+  /* ---------- Match status for cards ---------- */
+
+  --match-status-bg: var(--blue-100);
+  --match-status-border: var(--blue-700);
+  --match-status-icon: var(--orange-500);
+  --match-status-shadow: 0 0 12px var(--blue-700-transparent-25);
+
+  /* -------------------- buttons primary --------------- */
+  --button-primary-blue-bg: var(--blue-700);
+  --button-primary-text: var(--white);
+  --button-primary-border: transparent;
+  --button-primary-hover-bg: var(--blue-500);
+
+  /* -------------------- buttons secondary --------------- */
+
+  --button-secondary-bg: var(--blue-100);
+  --button-secondary-text: var(--blue-700);
+  --button-secondary-border: var(--yellow-300);
+  --button-secondary-icon: var(--blue-700);
+  --button-secondary-hover-bg: var(--blue-300);
+
+  /* -------------------- buttons disabled --------------- */
+
+  --button-disabled-bg: var(--neutral-300);
+  --button-disabled-text: var(--neutral-700);
+  --button-disabled-border: var(--blue-700);
+
+  /* ======================================================
+     THEME ORANGE
+  ====================================================== */
+
+  /* ---------- cards ---------- */
+
+  --theme-orange-bg: var(--neutral-200);
+  --theme-orange-card-back: var(--orange-500);
+  --theme-orange-card-front: var(--orange-100);
+
+  /* ---------- Match status for cards ---------- */
+
+  --match-status-bg: var(--orange-100);
+  --match-status-border: var(--orange-500);
+  --match-status-icon: var(--orange-500);
+  --match-status-shadow: 0 0 12px var(--orange-500-transparent-25);
+
+  /* -------------------- buttons primary --------------- */
+
+  --match-status-bg: var(--orange-100);
+  --match-status-border: var(--orange-500);
+  --match-status-icon: var(--orange-500);
+  --match-status-shadow: 0 0 12px var(--orange-500-transparent-25);
+
+  /* -------------------- buttons secondary --------------- */
+
+  --button-secondary-bg: var(--orange-100);
+  --button-secondary-text: var(--orange-500);
+  --button-secondary-border: var(--orange-500);
+  --button-secondary-icon: var(--orange-500);
+  --button-secondary-hover-bg: var(--orange-200);
+
+  /* -------------------- buttons disabled --------------- */
+  --button-disabled-bg: var(--neutral-300);
+  --button-disabled-text: var(--neutral-700);
+  --button-disabled-border: var(--orange-500);
+}

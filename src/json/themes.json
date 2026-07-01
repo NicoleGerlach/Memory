@@ -1,0 +1,160 @@
+[
+  {
+    "id": "code-vibes",
+    "name": "Code vibes",
+    "colors": {
+      "primary": "#62d0c0",
+      "accent": "#8e7dff"
+    },
+
+    "cardBack-illustration": "da-logo",
+
+    "cards": [
+      {
+        "id": 1,
+        "image": "angular.svg",
+        "alt": "Angular logo"
+      },
+      {
+        "id": 2,
+        "image": "bootstrap.svg",
+        "alt": "Bootstrap logo"
+      },
+      {
+        "id": 3,
+        "image": "css.svg",
+        "alt": "CSS logo"
+      },
+      {
+        "id": 4,
+        "image": "database.svg",
+        "alt": "Database logo"
+      },
+      {
+        "id": 5,
+        "image": "django.svg",
+        "alt": "Django logo"
+      },
+      {
+        "id": 6,
+        "image": "firebase.svg",
+        "alt": "Firebase logo"
+      },
+      {
+        "id": 7,
+        "image": "git.svg",
+        "alt": "Git logo"
+      },
+      {
+        "id": 8,
+        "image": "github.svg",
+        "alt": "GitHub logo"
+      },
+      {
+        "id": 9,
+        "image": "html.svg",
+        "alt": "HTML logo"
+      },
+      {
+        "id": 10,
+        "image": "javascript.svg",
+        "alt": "JavaScript logo"
+      },
+      {
+        "id": 11,
+        "image": "node-js.svg",
+        "alt": "Node JS logo"
+      },
+      {
+        "id": 12,
+        "image": "python.svg",
+        "alt": "Python logo"
+      },
+      {
+        "id": 13,
+        "image": "react.svg",
+        "alt": "React logo"
+      },
+      {
+        "id": 14,
+        "image": "sass.svg",
+        "alt": "SASS logo"
+      },
+      {
+        "id": 15,
+        "image": "terminal.svg",
+        "alt": "Terminal logo"
+      },
+      {
+        "id": 16,
+        "image": "typescript.svg",
+        "alt": "TypeScript logo"
+      },
+      {
+        "id": 17,
+        "image": "vscode.svg",
+        "alt": "Visual Studio Code logo"
+      },
+      {
+        "id": 18,
+        "image": "vue-js.svg",
+        "alt": "Vue.js logo"
+      }
+    ]
+  },
+
+  {
+    "id": "gaming",
+    "name": "Gaming",
+    "colors": {
+      "primary": "#ff2d8d",
+      "accent": "#7422a8"
+    },
+
+    "cards": [
+      {
+        "id": 1,
+        "image": "/assets/img/themes/gaming/mushroom.png",
+        "alt": "Gaming mushroom"
+      }
+    ]
+  },
+
+  {
+    "id": "da-projects",
+    "name": "DA Projects",
+    "colors": {
+      "primary": "#ff2d8d",
+      "accent": "#7422a8"
+    },
+
+    "cardBack": "/assets/img/themes/gaming/card-back.png",
+
+    "cards": [
+      {
+        "id": 1,
+        "image": "/assets/img/themes/gaming/mushroom.png",
+        "alt": "Gaming mushroom"
+      }
+    ]
+  },
+
+  {
+    "id": "food",
+    "name": "Food",
+    "colors": {
+      "primary": "#ff2d8d",
+      "accent": "#7422a8"
+    },
+
+    "cardBack": "/assets/img/themes/gaming/card-back.png",
+
+    "cards": [
+      {
+        "id": 1,
+        "image": "/assets/img/themes/gaming/mushroom.png",
+        "alt": "Gaming mushroom"
+      }
+    ]
+  }
+]

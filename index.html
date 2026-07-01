@@ -1,28 +1,38 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Memory</title>
-    <link rel="stylesheet" href="./src/style.scss">
-    <link rel="stylesheet" href="/public/assets/fonts/font.scss">
-    <script type="module" src="/src/main.ts"></script>
+    <link rel="icon" href="./assets/img/memory-game.png" />
+    <!-- <link rel="stylesheet" href="./src/styles/entries/global.scss" />
+    <link rel="stylesheet" href="./src/styles/entries/home.scss" /> -->
+    <!-- <script type="module" src="./src/main.ts"></script> -->
+    <script type="module" src="./src/ts/home.ts"></script>
+  </head>
 
-</head>
-
-<body>
+  <body>
     <section class="home" id="home">
-        <h2 class="h2-home">It's play time.</h2>
-        <h1>Ready to play?</h1>
-
-        <a class="button" href='src/pages/settings.html' id="play_link">
-            <img class="button__controller" src="assets/img/ui/controller.svg" alt="small picture of a controller">
-            <p class="button-text">Play</p>
-            <img class="button__arrow" src="assets/img/ui/arrow.svg" id="link_arrow" alt="arrow left">
-        </a>
-        
+      <h1 class="visually-hidden">Memory Game</h1>
+      <div class="title-wrapper">
+        <p class="play-time">It's play time.</p>
+        <h2>Ready to play?</h2>
+      </div>
+      <a href="./settings.html" id="play_link" class="link-element">
+        <img
+          class="link__controller"
+          src="assets/img/ui/controller.svg"
+          alt="small picture of a controller"
+        />
+        <span id="play_text">Play</span>
+        <img
+          id="link_arrow"
+          class="link__arrow"
+          src="assets/img/ui/arrow.svg"
+          alt=""
+        />
+      </a>
     </section>
-</body>
 
+  </body>
 </html>

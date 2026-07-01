@@ -1,0 +1,69 @@
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-home);
+  background-image: url("/assets/img/ui-icons/controller-big.svg");
+  background-repeat: no-repeat;
+  background-position: bottom left;
+  font-family: "Red Rose", sans-serif;
+}
+
+.home {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3em;
+}
+
+.title-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1em;
+}
+
+h2 {
+  font-family: "Red Rose";
+  color: var(--white);
+  font-size: clamp(3.5rem, -0.25rem + 10vw, 8.75rem);
+  font-weight: 700;
+  text-align: center;
+}
+
+.play-time {
+  font-size: clamp(2rem, 1.286rem + 1.905vw, 3rem);
+  font-family: "Almarai", sans-serif;
+  color: var(--white);
+}
+
+.link-element {
+  width: clamp(12.5rem, 10.268rem + 5.952vw, 15.625rem);
+  height: clamp(5rem, 4.196rem + 2.143vw, 6.125rem);
+  background-color: var(--button-primary-yellow-bg);
+  color: var(--white);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.75rem, 0.393rem + 0.952vw, 1.25rem);
+  > span {
+    font-family: "Red Rose";
+    color: var(--button-primary-yellow-text);
+    font-size: clamp(1.75rem, 1.214rem + 1.429vw, 2.5rem);
+    font-weight: 700;
+  }
+  &:hover {
+    scale: 1.1;
+    .link__controller {
+      transform: rotate(-25.77deg);
+    }
+
+    .link__arrow {
+      width: 36px;
+    }
+  }
+}
