@@ -1,6 +1,7 @@
 @use "../../styles/abstracts/variables"; 
 @use "../components/card";
 @use "../pages/game-styles";
+@use "../themes/theme";
 
 body {
   font-family: "Red Rose", sans-serif;
@@ -12,7 +13,7 @@ header {
   align-items: center;
   justify-content: space-between;
   color: white;
-  background-color: #303131;
+  // background-color: #303131;
 
   .score-wrapper {
     display: flex;
@@ -27,6 +28,7 @@ header {
 }
 
 #game_field {
+  // background-color: var(--neutral-900);
   img {
     height: 120px;
     width: 120px;

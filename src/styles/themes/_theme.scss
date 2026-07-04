@@ -1,0 +1,51 @@
+@use "../../styles/abstracts/variables";
+
+body.theme-code-vibes {
+  background-color: var(--neutral-900);
+}
+body.theme-gaming {
+  background-color: var(--blue-800);
+}
+
+header.header-code-vibes {
+  background-color: var(--neutral-900);
+}
+header.header-gaming {
+  background-color: var(--red_600-transparent-20);
+}
+// body.theme-da-projects {
+//   background-color: $da-body-bg;
+//   color: $da-text;
+// }
+// body.theme-food {
+//   background-color: $food-body-bg;
+//   color: $food-text;
+// }
+// .game-bg-code {
+//   background-color: $code-game-bg;
+// }
+// .game-bg-gaming {
+//   background-color: $gaming-game-bg;
+// }
+// .game-bg-da-projects {
+//   background-color: $da-game-bg;
+// }
+// .game-bg-food {
+//   background-color: $food-game-bg;
+// }
+// .card-bg-code {
+//   background-color: $code-card-bg;
+//   border-color: $code-card-border;
+// }
+// .card-bg-gaming {
+//   background-color: $gaming-card-bg;
+//   border-color: $gaming-card-border;
+// }
+// .card-bg-da-projects {
+//   background-color: $da-card-bg;
+//   border-color: $da-card-border;
+// }
+// .card-bg-food {
+//   background-color: $food-card-bg;
+//   border-color: $food-card-border;
+// }
