@@ -19,6 +19,8 @@ let currentTheme: ThemeId = "codeVibes";
 function init() {
   loadData();
   initializeGameData();
+  flipCard();
+  generateIds(+currentSettings.size);
 }
 
 function getThemeData() {
@@ -37,7 +39,7 @@ function loadData() {
 function initializeGameData() {
   currentPlayer = currentSettings.player ?? "blue";
   currentTheme = currentSettings.theme ?? "codeVibes";
-  const numberOfCards: number = +currentSettings.size / 2 || 8;
+  const numberOfCards: number = +currentSettings.size / 2 || 8 || 12 || 18;
   console.log("aktueller Spieler: ", currentPlayer);
   console.log("aktuelles Thema: ", currentTheme);
   console.log("numberOfCards: ", numberOfCards);
@@ -78,11 +80,22 @@ function renderCurrentTheme(numberOfPairs: number) {
   const selectedMotifs = themeData.motifs.slice(0, numberOfPairs);
   const cardMotifs = [...selectedMotifs, ...selectedMotifs];
   const shuffledCards = shuffleCards(cardMotifs);
+  const numberOfCards: number = +currentSettings.size;
+  const cardIds = generateIds(numberOfCards);
+  let idx = 0;
   for (const imgPath of shuffledCards) {
-    const card = createElementWithoutText("div", ["card", themeData.cardBackground], null);
-    const imgObj = createImageElement(`/assets/img/${themeData.id}/`, imgPath);
-    card.append(imgObj);
-    gameField.append(card);
+    const currentId = cardIds[idx] ?? "";
+    const field = createElementWithoutText("section", ["field", themeData.cardBackground], null);
+    if (currentId) field.id = currentId;
+    const button = createElementWithoutText("button", ["card-button"], null);
+    const box = createElementWithoutText("div", ["card-button__inner"], null);
+    const imgObj = createImageElement(`/assets/img/${themeData.id}/`, imgPath, ["card-button__face", "card-button__face--back"]);
+    const imgBack = createImageElement(`/assets/img/${themeData.id}/`, "back.svg", ["card-button__face"]);
+    gameField.append(field);
+    field.append(button);
+    button.append(box);
+    box.append(imgBack, imgObj);
+    idx++;
   }
 }
 
@@ -116,7 +129,7 @@ function renderCurrentPlayer() {
   const iconPath = themeData.playerIcons[currentPlayer];
   const playerText = document.createElement("span");
   playerText.textContent = "Current player: ";
-  const playerIcon = createImageElement("/assets/img/ui/", iconPath);
+  const playerIcon = createImageElement("/assets/img/ui/", iconPath, null);
   currentPlayerElement.append(playerText, playerIcon);
 }
 
@@ -125,7 +138,7 @@ function renderExitBtn() {
   if (!exitBtn) return;
   exitBtn.textContent = "";
   const iconPath = "exit.svg";
-  const button = createImageElement("/assets/img/ui/", iconPath);
+  const button = createImageElement("/assets/img/ui/", iconPath, null);
   const exitText = document.createElement("span");
   exitText.textContent = "Exit";
   exitBtn.append(button, exitText);
@@ -140,6 +153,23 @@ function shuffleCards(array: string[]): string[] {
     shuffled[randomIndex] = temp;
   }
   return shuffled;
+}
+
+function flipCard() {
+  document.addEventListener("click", (e) => {
+    const target = e.target as HTMLElement;
+    const card = target.closest(".card-button");
+    if (!card) return;
+    card.classList.toggle("is-flipped");
+  });
+}
+
+function generateIds(numberOfCards: number): string[] {
+  const ids: string[] = [];
+  for (let i = 0; i < numberOfCards; i++) {
+    ids.push(`card-${i + 1}`);
+  }
+  return ids;
 }
 
 init();

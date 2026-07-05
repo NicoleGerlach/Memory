@@ -4,7 +4,7 @@ import "../styles/entries/settings.scss";
 import { settingsData } from "./data.js";
 import {
   ThemeId,
-  ThemeName,
+  // ThemeName,
   Player,
   BoardSize,
   Settings,
@@ -83,7 +83,7 @@ function renderSettingsBox(data: SettingsData): HTMLElement {
     ["title-wrapper"],
     null,
   );
-  const img = createImageElement("/assets/img/ui/", data.iconPath);
+  const img = createImageElement("/assets/img/ui/", data.iconPath, null);
   const title = createElementWithText(
     "h2",
     [`${data.type}-title`],
@@ -136,7 +136,7 @@ function handleSubmitEvent(event: any) {
   }
 
   const currentSettings: Settings = {
-    theme: themeInput?.value as ThemeName,
+    theme: themeInput?.value as ThemeId,
     player: playerInput?.value as Player,
     size: sizeInput?.value as BoardSize,
   };
