@@ -217,10 +217,10 @@ label {
   .settings-content-wrapper {
     grid-template-columns: 1fr 2fr;
     grid-template-areas:
-      "settings preview preview"
-      "settings preview preview"
-      "settings preview preview"
-      "settings preview preview"
-      "settings selection selection";
+      "settings preview"
+      "settings preview"
+      "settings preview"
+      "settings preview"
+      "settings selection";
   }
 }

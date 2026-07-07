@@ -2,9 +2,6 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
-    // justify-items: center;
-    // align-items: center;
-    // padding: 10px;
 }
 
 .field {
@@ -29,6 +26,7 @@
 
     &__face {
         height: 100%;
+        width: 100%;
         position: absolute;
         inset: 0;
         backface-visibility: hidden;

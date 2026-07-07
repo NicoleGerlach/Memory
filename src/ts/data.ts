@@ -77,6 +77,9 @@ export const themes = {
     gameOverBackground: "game-over-bg-code",
     winnerBackground: "winner-bg-code",
     cardBackground: "card-bg-code",
+    cardMatchBorder: "border-card-code",
+    cardMatchBackground: "card-match-bg-code",
+    cardMatchShadow: "card-match-shadow-code",
     playerIcons: {
       blue: "code_blue.svg",
       orange: "code_orange.svg",

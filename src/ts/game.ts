@@ -12,9 +12,18 @@ import {
   Player,
 } from "../interfaces/settings-data.interface.js";
 
+type SelectedCard = {
+  field: HTMLElement;
+  button: HTMLElement
+}
+
 let currentSettings = {} as Settings;
 let currentPlayer: Player = "blue";
 let currentTheme: ThemeId = "codeVibes";
+
+let firstCard: HTMLElement | null;
+let secondCard: HTMLElement | null;
+let isChecking = false;
 
 function init() {
   loadData();
@@ -85,11 +94,14 @@ function renderCurrentTheme(numberOfPairs: number) {
   let idx = 0;
   for (const imgPath of shuffledCards) {
     const currentId = cardIds[idx] ?? "";
-    const field = createElementWithoutText("section", ["field", themeData.cardBackground], null);
+    const field = createElementWithoutText("section", ["field"], null);
     if (currentId) field.id = currentId;
+
+    field.dataset.pairId = imgPath.replace(".svg", "");
+
     const button = createElementWithoutText("button", ["card-button"], null);
     const box = createElementWithoutText("div", ["card-button__inner"], null);
-    const imgObj = createImageElement(`/assets/img/${themeData.id}/`, imgPath, ["card-button__face", "card-button__face--back"]);
+    const imgObj = createImageElement(`/assets/img/${themeData.id}/`, imgPath, ["card-button__face", "card-button__face--back", themeData.cardBackground]);
     const imgBack = createImageElement(`/assets/img/${themeData.id}/`, "back.svg", ["card-button__face"]);
     gameField.append(field);
     field.append(button);
@@ -157,10 +169,24 @@ function shuffleCards(array: string[]): string[] {
 
 function flipCard() {
   document.addEventListener("click", (e) => {
+    if (isChecking) return;
     const target = e.target as HTMLElement;
-    const card = target.closest(".card-button");
-    if (!card) return;
-    card.classList.toggle("is-flipped");
+    const button = target.closest(".card-button") as HTMLElement | null;
+    const field = target.closest(".field") as HTMLElement | null;
+    if (!button || !field) return;
+    if (button.classList.contains("is-flipped")) return;
+    button.classList.add("is-flipped");
+    if (!firstCard) {
+      firstCard = createSelectedCard(field, button);
+      console.log("Erste Karte:", firstCard.field.dataset.pairId);
+      return;
+    }
+    if (!secondCard && field !== firstCard.field) {
+      secondCard = createSelectedCard(field, button);
+      console.log("Zweite Karte:", secondCard.field.dataset.pairId);
+      isChecking = true;
+      compareCards();
+    }
   });
 }
 
@@ -170,6 +196,49 @@ function generateIds(numberOfCards: number): string[] {
     ids.push(`card-${i + 1}`);
   }
   return ids;
+}
+
+function createSelectedCard (field: HTMLElement, button: HTMLElement): SelectedCard {
+  return {field, button};
+}
+
+function isMatch(cardOne: SelectedCard, cardTwo: SelectedCard): boolean {
+  return cardOne.field.dataset.pairId === cardTwo.field.dataset.pairId;
+}
+
+function applyMatchStyles(card: SelectedCard, themeData: any) {
+  card.field.classList.add(themeData.cardMatchBorder, themeData.cardMatchBackground, themeData.cardMatchShadow);
+}
+
+function unflipCards(cardOne: SelectedCard, cardTwo: SelectedCard) {
+  cardOne.field.classList.remove("is-flipped");
+  cardTwo.field.classList.remove("is-flipped");
+}
+
+function resetSelectedCards() {
+  firstCard = null;
+  secondCard = null;
+}
+
+function compareCards() {
+  const themeData = getThemeData();
+  if (!themeData || !firstCard || !secondCard) return;
+  if (isMatch(firstCard, secondCard)) {
+    console.log("Karten stimmen ueberein!");
+    applyMatchStyles(firstCard, themeData);
+    applyMatchStyles(secondCard, themeData);
+    resetSelectedCards();
+    isChecking = false;
+  } else {
+    console.log("Karten stimmen nicht ueberein!");
+    setTimeout(() => {
+      if (firstCard && secondCard) {
+        unflipCards(firstCard, secondCard);
+      }
+      resetSelectedCards();
+      isChecking = false;
+    }, 1000);
+  }
 }
 
 init();
