@@ -61,16 +61,26 @@ h2 {
 
 .settings-content-wrapper {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
   grid-template-areas:
-    "selection"
-    "settings"
-    "preview";
+    "settings preview"
+    "settings selection";
+}
+
+.settings-form {
+  // width: 575px;
+  // display: flex;
+  // justify-content: flex-end;
+  grid-area: selection;
+  justify-self: end;
 }
 
 .settings-box {
   grid-area: settings;
   margin: 1.5em 0 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   .theme-box,
   .player-box,
@@ -89,11 +99,13 @@ h2 {
   grid-area: selection;
   max-width: 600px;
   padding: 1em;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr 8px) 1fr;
-  grid-template-areas:
-    "theme sep1 player sep2 size"
-    "button button button button button";
+  display: flex;
+  justify-content: space-around;
+  // display: grid;
+  // grid-template-columns: repeat(2, 1fr 8px) 1fr;
+  // grid-template-areas:
+  //   "theme sep1 player sep2 size"
+  //   "button button button button button";
   gap: 0.5em;
   font-size: 0.9rem;
   place-items: center;
@@ -145,8 +157,16 @@ h2 {
   }
 }
 
+.preview-wrapper {
+  display: flex;
+  margin: 1.5em 0 1.5em;
+  justify-content: flex-end;
+}
+
+
 .preview {
   grid-area: preview;
+  justify-self: end;
 }
 
 .list-element {
@@ -164,7 +184,7 @@ h2 {
   }
 
   input:checked {
-      border: solid 2px #303131;
+    border: solid 2px #303131;
     background: radial-gradient(#303131 0 25%, transparent 35% 100%);
   }
 
@@ -180,32 +200,32 @@ h2 {
 }
 
 label {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
 }
 
 .line-wrap-small {
-    display: none;
+  display: none;
 }
 
 .line-small {
-    width: 41px;
-    height: 3px;
-    background-color: #F0EA6E;
+  width: 41px;
+  height: 3px;
+  background-color: #F0EA6E;
 }
 
 .diamond-small {
-    width: 12px;
-    height: 12px;
-    background-color: #F0EA6E;
-    transform: rotate(45deg);
+  width: 12px;
+  height: 12px;
+  background-color: #F0EA6E;
+  transform: rotate(45deg);
 }
 
 .list-element:has(input:checked) .line-wrap-small {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 

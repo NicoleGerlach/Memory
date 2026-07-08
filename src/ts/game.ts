@@ -14,16 +14,16 @@ import {
 
 type SelectedCard = {
   field: HTMLElement;
-  button: HTMLElement
+  button: HTMLElement;
 }
 
 let currentSettings = {} as Settings;
 let currentPlayer: Player = "blue";
 let currentTheme: ThemeId = "codeVibes";
 
-let firstCard: HTMLElement | null;
-let secondCard: HTMLElement | null;
-let isChecking = false;
+let firstCard: SelectedCard | null;
+let secondCard: SelectedCard | null;
+let isChecking: boolean = false;
 
 function init() {
   loadData();
@@ -178,7 +178,6 @@ function flipCard() {
     button.classList.add("is-flipped");
     if (!firstCard) {
       firstCard = createSelectedCard(field, button);
-      console.log("Erste Karte:", firstCard.field.dataset.pairId);
       return;
     }
     if (!secondCard && field !== firstCard.field) {
@@ -211,8 +210,9 @@ function applyMatchStyles(card: SelectedCard, themeData: any) {
 }
 
 function unflipCards(cardOne: SelectedCard, cardTwo: SelectedCard) {
-  cardOne.field.classList.remove("is-flipped");
-  cardTwo.field.classList.remove("is-flipped");
+  console.log("Unflipcards wird aufgerufen");
+  cardOne.button.classList.remove("is-flipped");
+  cardTwo.button.classList.remove("is-flipped");
 }
 
 function resetSelectedCards() {
@@ -234,6 +234,7 @@ function compareCards() {
     setTimeout(() => {
       if (firstCard && secondCard) {
         unflipCards(firstCard, secondCard);
+        console.log("Karten sollen umgedreht werden")
       }
       resetSelectedCards();
       isChecking = false;
