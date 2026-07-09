@@ -115,14 +115,16 @@ export function createImageElement(
 export function createPlayerScoreWrapper(
   color: string,
   imgPath: string,
+  score: number,
 ): HTMLElement {
   const wrapper = createElementWithoutText("div", [color, "player-score"], null,);
   const playerIcon = createImageElement("/assets/img/ui/", imgPath, null);
   const playerDescription = createElementWithText("span", [color], null, color);
-  const playerScore = createElementWithText("span", [color], null, "0");
+  const playerScore = createElementWithText("span", [color], null, String(score));
   wrapper.append(playerIcon, playerDescription, playerScore);
   return wrapper;
 }
+
 
 export function getThemeSelection(item: ThemeId) {
   switch (item) {

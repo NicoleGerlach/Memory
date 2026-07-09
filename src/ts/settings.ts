@@ -4,7 +4,6 @@ import "../styles/entries/settings.scss";
 import { settingsData } from "./data.js";
 import {
   ThemeId,
-  // ThemeName,
   Player,
   BoardSize,
   Settings,
@@ -139,6 +138,10 @@ function handleSubmitEvent(event: any) {
     theme: themeInput?.value as ThemeId,
     player: playerInput?.value as Player,
     size: sizeInput?.value as BoardSize,
+    points: {
+      pointsBlue: 5,
+      pointsOrange: 4,
+    }
   };
   console.log("Spiel gestartet", currentSettings);
   saveCurrentSettings(currentSettings);

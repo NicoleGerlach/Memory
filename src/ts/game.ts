@@ -10,7 +10,8 @@ import {
   ThemeId,
   Settings,
   Player,
-} from "../interfaces/settings-data.interface.js";
+  PlayerPoints,
+  } from "../interfaces/settings-data.interface.js";
 
 type SelectedCard = {
   field: HTMLElement;
@@ -20,6 +21,10 @@ type SelectedCard = {
 let currentSettings = {} as Settings;
 let currentPlayer: Player = "blue";
 let currentTheme: ThemeId = "codeVibes";
+let points: PlayerPoints = {
+  pointsBlue: 3,
+  pointsOrange: 2,
+}
 
 let firstCard: SelectedCard | null;
 let secondCard: SelectedCard | null;
@@ -49,9 +54,9 @@ function initializeGameData() {
   currentPlayer = currentSettings.player ?? "blue";
   currentTheme = currentSettings.theme ?? "codeVibes";
   const numberOfCards: number = +currentSettings.size / 2 || 8 || 12 || 18;
-  console.log("aktueller Spieler: ", currentPlayer);
-  console.log("aktuelles Thema: ", currentTheme);
-  console.log("numberOfCards: ", numberOfCards);
+  // console.log("aktueller Spieler: ", currentPlayer);
+  // console.log("aktuelles Thema: ", currentTheme);
+  // console.log("numberOfCards: ", numberOfCards);
   applyThemeStyles();
   renderHeader();
   renderCurrentTheme(numberOfCards);
@@ -126,8 +131,8 @@ function renderScores() {
   const oldScoreWrapper = header.querySelector(".score-wrapper");
   if (oldScoreWrapper) oldScoreWrapper.remove();
   const scoreWrapper = createElementWithoutText("section", ["score-wrapper"], null);
-  const bluePlayerScoreWrapper = createPlayerScoreWrapper("blue", themeData.playerIcons.blue);
-  const orangePlayerScoreWrapper = createPlayerScoreWrapper("orange", themeData.playerIcons.orange);
+  const bluePlayerScoreWrapper = createPlayerScoreWrapper("blue", themeData.playerIcons.blue, points.pointsBlue);
+  const orangePlayerScoreWrapper = createPlayerScoreWrapper("orange", themeData.playerIcons.orange, points.pointsOrange);
   scoreWrapper.append(bluePlayerScoreWrapper, orangePlayerScoreWrapper);
   header.prepend(scoreWrapper);
 }
@@ -137,12 +142,14 @@ function renderCurrentPlayer() {
   if (!currentPlayerElement) return;
   const themeData = getThemeData();
   if (!themeData) return;
-  currentPlayerElement.textContent = "";
+  const currentPlayer = currentSettings.player;
   const iconPath = themeData.playerIcons[currentPlayer];
+  currentPlayerElement.textContent = "";
   const playerText = document.createElement("span");
   playerText.textContent = "Current player: ";
   const playerIcon = createImageElement("/assets/img/ui/", iconPath, null);
   currentPlayerElement.append(playerText, playerIcon);
+  console.log("renderCurrentPlayer wird aufgerufen:", currentPlayer);
 }
 
 function renderExitBtn() {
@@ -197,8 +204,8 @@ function generateIds(numberOfCards: number): string[] {
   return ids;
 }
 
-function createSelectedCard (field: HTMLElement, button: HTMLElement): SelectedCard {
-  return {field, button};
+function createSelectedCard(field: HTMLElement, button: HTMLElement): SelectedCard {
+  return { field, button };
 }
 
 function isMatch(cardOne: SelectedCard, cardTwo: SelectedCard): boolean {
@@ -224,22 +231,27 @@ function compareCards() {
   const themeData = getThemeData();
   if (!themeData || !firstCard || !secondCard) return;
   if (isMatch(firstCard, secondCard)) {
-    console.log("Karten stimmen ueberein!");
     applyMatchStyles(firstCard, themeData);
     applyMatchStyles(secondCard, themeData);
     resetSelectedCards();
+    // changeCurrentPlayer();
     isChecking = false;
   } else {
-    console.log("Karten stimmen nicht ueberein!");
     setTimeout(() => {
       if (firstCard && secondCard) {
         unflipCards(firstCard, secondCard);
-        console.log("Karten sollen umgedreht werden")
       }
       resetSelectedCards();
+      changeCurrentPlayer();
       isChecking = false;
     }, 1000);
   }
+}
+
+function changeCurrentPlayer() {
+  currentSettings.player =
+    currentSettings.player === 'blue' ? 'orange' : 'blue';
+  renderCurrentPlayer();
 }
 
 init();

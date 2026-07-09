@@ -11,6 +11,7 @@ export interface ThemeData {
   id: string;
   label: string;
   bodyClass: string;
+  headerClass: string;
   gameBackground: string;
   gameOverBackground: string;
   winnerBackground: string;
@@ -24,7 +25,7 @@ export interface ThemeData {
 
 export interface PlayerIcons {
   blue: string;
-  orange: string; 
+  orange: string;
 }
 
 
