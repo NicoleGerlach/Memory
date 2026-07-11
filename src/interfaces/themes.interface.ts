@@ -1,4 +1,3 @@
-import { Player } from "./settings-data.interface.js";
 
 export interface Themes {
   "Code vibes": ThemeData;

@@ -139,8 +139,8 @@ function handleSubmitEvent(event: any) {
     player: playerInput?.value as Player,
     size: sizeInput?.value as BoardSize,
     points: {
-      pointsBlue: 5,
-      pointsOrange: 4,
+      pointsBlue: 0,
+      pointsOrange: 0,
     }
   };
   console.log("Spiel gestartet", currentSettings);

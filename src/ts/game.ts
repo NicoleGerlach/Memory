@@ -5,36 +5,36 @@ import { themes } from "./data.js";
 import { createElementWithoutText } from "./helpers.js";
 import { createImageElement } from "./helpers.js";
 import { createPlayerScoreWrapper } from "./helpers.js";
+import { CardData } from "../interfaces/card.interface";
 
 import {
   ThemeId,
   Settings,
   Player,
-  PlayerPoints,
-  } from "../interfaces/settings-data.interface.js";
+} from "../interfaces/settings-data.interface.js";
 
 type SelectedCard = {
   field: HTMLElement;
   button: HTMLElement;
+  cardData: CardData;
 }
+
+type Winner = "blue" | "orange" | "draw";
 
 let currentSettings = {} as Settings;
 let currentPlayer: Player = "blue";
 let currentTheme: ThemeId = "codeVibes";
-let points: PlayerPoints = {
-  pointsBlue: 3,
-  pointsOrange: 2,
-}
-
 let firstCard: SelectedCard | null;
 let secondCard: SelectedCard | null;
 let isChecking: boolean = false;
+let cards: CardData[] = [];
 
 function init() {
   loadData();
   initializeGameData();
   flipCard();
   generateIds(+currentSettings.size);
+  resetPoints();
 }
 
 function getThemeData() {
@@ -46,20 +46,16 @@ function loadData() {
   if (data) {
     const settings = JSON.parse(data) as Settings;
     currentSettings = settings;
-    console.log("aktuelle Settings: ", settings);
   }
 }
 
 function initializeGameData() {
   currentPlayer = currentSettings.player ?? "blue";
   currentTheme = currentSettings.theme ?? "codeVibes";
-  const numberOfCards: number = +currentSettings.size / 2 || 8 || 12 || 18;
-  // console.log("aktueller Spieler: ", currentPlayer);
-  // console.log("aktuelles Thema: ", currentTheme);
-  // console.log("numberOfCards: ", numberOfCards);
+  const numberOfPairs = +currentSettings.size / 2;
   applyThemeStyles();
   renderHeader();
-  renderCurrentTheme(numberOfCards);
+  renderCurrentTheme(numberOfPairs);
 }
 
 function applyThemeStyles() {
@@ -85,34 +81,52 @@ function applyHeaderStyles() {
   header.classList.add(themeData.headerClass);
 }
 
+function createCards(numberOfPairs: number, motifs: string[]): CardData[] {
+  const selectedMotifs = motifs.slice(0, numberOfPairs);
+  const cardData: CardData[] = [];
+  let idCounter = 1;
+  selectedMotifs.forEach((motif, index) => {
+    const pairId = index + 1;
+    cardData.push({
+      id: idCounter++,
+      pairId,
+      motif,
+      isFlipped: false,
+      isMatched: false,
+    });
+    cardData.push({
+      id: idCounter++,
+      pairId,
+      motif,
+      isFlipped: false,
+      isMatched: false,
+    });
+  });
+  return shuffleCards(cardData);
+}
 function renderCurrentTheme(numberOfPairs: number) {
   const gameField = document.querySelector("#game_field");
   if (!gameField) return;
   const themeData = themes[currentTheme];
   if (!themeData) return;
   gameField.innerHTML = "";
-  const selectedMotifs = themeData.motifs.slice(0, numberOfPairs);
-  const cardMotifs = [...selectedMotifs, ...selectedMotifs];
-  const shuffledCards = shuffleCards(cardMotifs);
-  const numberOfCards: number = +currentSettings.size;
-  const cardIds = generateIds(numberOfCards);
-  let idx = 0;
-  for (const imgPath of shuffledCards) {
-    const currentId = cardIds[idx] ?? "";
+  cards = createCards(numberOfPairs, themeData.motifs);
+  for (const card of cards) {
     const field = createElementWithoutText("section", ["field"], null);
-    if (currentId) field.id = currentId;
-
-    field.dataset.pairId = imgPath.replace(".svg", "");
-
+    field.id = String(card.id);
+    field.dataset.cardId = String(card.id);
+    field.dataset.pairId = String(card.pairId);
     const button = createElementWithoutText("button", ["card-button"], null);
+    if (card.isFlipped) {
+      button.classList.add("is-flipped");
+    }
     const box = createElementWithoutText("div", ["card-button__inner"], null);
-    const imgObj = createImageElement(`/assets/img/${themeData.id}/`, imgPath, ["card-button__face", "card-button__face--back", themeData.cardBackground]);
+    const imgObj = createImageElement(`/assets/img/${themeData.id}/`, card.motif, ["card-button__face", "card-button__face--back", themeData.cardBackground]);
     const imgBack = createImageElement(`/assets/img/${themeData.id}/`, "back.svg", ["card-button__face"]);
     gameField.append(field);
     field.append(button);
     button.append(box);
-    box.append(imgBack, imgObj);
-    idx++;
+    box.append(imgBack, imgObj)
   }
 }
 
@@ -131,8 +145,8 @@ function renderScores() {
   const oldScoreWrapper = header.querySelector(".score-wrapper");
   if (oldScoreWrapper) oldScoreWrapper.remove();
   const scoreWrapper = createElementWithoutText("section", ["score-wrapper"], null);
-  const bluePlayerScoreWrapper = createPlayerScoreWrapper("blue", themeData.playerIcons.blue, points.pointsBlue);
-  const orangePlayerScoreWrapper = createPlayerScoreWrapper("orange", themeData.playerIcons.orange, points.pointsOrange);
+  const bluePlayerScoreWrapper = createPlayerScoreWrapper("blue", themeData.playerIcons.blue, currentSettings.points.pointsBlue);
+  const orangePlayerScoreWrapper = createPlayerScoreWrapper("orange", themeData.playerIcons.orange, currentSettings.points.pointsOrange);
   scoreWrapper.append(bluePlayerScoreWrapper, orangePlayerScoreWrapper);
   header.prepend(scoreWrapper);
 }
@@ -149,7 +163,6 @@ function renderCurrentPlayer() {
   playerText.textContent = "Current player: ";
   const playerIcon = createImageElement("/assets/img/ui/", iconPath, null);
   currentPlayerElement.append(playerText, playerIcon);
-  console.log("renderCurrentPlayer wird aufgerufen:", currentPlayer);
 }
 
 function renderExitBtn() {
@@ -163,7 +176,7 @@ function renderExitBtn() {
   exitBtn.append(button, exitText);
 }
 
-function shuffleCards(array: string[]): string[] {
+function shuffleCards(array: CardData[]): CardData[] {
   const shuffled = [...array];
   for (let i = shuffled.length - 1; i > 0; i--) {
     const randomIndex = Math.floor(Math.random() * (i + 1));
@@ -182,14 +195,16 @@ function flipCard() {
     const field = target.closest(".field") as HTMLElement | null;
     if (!button || !field) return;
     if (button.classList.contains("is-flipped")) return;
+    const selectedCard = createSelectedCard(field, button);
+    if (selectedCard.cardData.isMatched || selectedCard.cardData.isFlipped) return;
     button.classList.add("is-flipped");
+    selectedCard.cardData.isFlipped = true;
     if (!firstCard) {
-      firstCard = createSelectedCard(field, button);
+      firstCard = selectedCard;
       return;
     }
     if (!secondCard && field !== firstCard.field) {
-      secondCard = createSelectedCard(field, button);
-      console.log("Zweite Karte:", secondCard.field.dataset.pairId);
+      secondCard = selectedCard;
       isChecking = true;
       compareCards();
     }
@@ -205,11 +220,16 @@ function generateIds(numberOfCards: number): string[] {
 }
 
 function createSelectedCard(field: HTMLElement, button: HTMLElement): SelectedCard {
-  return { field, button };
+  const cardId = Number(field.dataset.cardId);
+  const cardData = cards.find(card => card.id === cardId);
+  if (!cardId) {
+    throw new Error("Karte nicht gefunden");
+  }
+  return { field, button, cardData };
 }
 
 function isMatch(cardOne: SelectedCard, cardTwo: SelectedCard): boolean {
-  return cardOne.field.dataset.pairId === cardTwo.field.dataset.pairId;
+  return cardOne.cardData.pairId === cardTwo.cardData.pairId;
 }
 
 function applyMatchStyles(card: SelectedCard, themeData: any) {
@@ -217,9 +237,10 @@ function applyMatchStyles(card: SelectedCard, themeData: any) {
 }
 
 function unflipCards(cardOne: SelectedCard, cardTwo: SelectedCard) {
-  console.log("Unflipcards wird aufgerufen");
   cardOne.button.classList.remove("is-flipped");
   cardTwo.button.classList.remove("is-flipped");
+  cardOne.cardData.isFlipped = false;
+  cardTwo.cardData.isFlipped = false;
 }
 
 function resetSelectedCards() {
@@ -227,14 +248,25 @@ function resetSelectedCards() {
   secondCard = null;
 }
 
+function resetPoints() {
+  currentSettings.points.pointsBlue = 0;
+  currentSettings.points.pointsOrange = 0;
+  renderScores();
+}
+
 function compareCards() {
   const themeData = getThemeData();
   if (!themeData || !firstCard || !secondCard) return;
   if (isMatch(firstCard, secondCard)) {
+    firstCard.cardData.isMatched = true;
+    secondCard.cardData.isMatched = true;
     applyMatchStyles(firstCard, themeData);
     applyMatchStyles(secondCard, themeData);
+    countPoints();
+    if (isGameOver(cards)) {
+      endGame();
+    }
     resetSelectedCards();
-    // changeCurrentPlayer();
     isChecking = false;
   } else {
     setTimeout(() => {
@@ -250,8 +282,78 @@ function compareCards() {
 
 function changeCurrentPlayer() {
   currentSettings.player =
-    currentSettings.player === 'blue' ? 'orange' : 'blue';
+  currentSettings.player === 'blue' ? 'orange' : 'blue';
   renderCurrentPlayer();
 }
+
+function countPoints() {
+  if (currentSettings.player === 'blue') {
+    currentSettings.points.pointsBlue++;
+  } else if (currentSettings.player === 'orange') {
+    currentSettings.points.pointsOrange++;
+  }
+  renderScores();
+}
+
+function isGameOver(cards: CardData[]): boolean {
+  return cards.every(card => card.isMatched);
+}
+
+function endGame() {
+  console.log("Das Spiel ist zu Ende!", getWinner());
+}
+
+
+function getWinner(): Winner {
+  const bluePoints = currentSettings.points.pointsBlue;
+  const orangePoints = currentSettings.points.pointsOrange;
+  if (bluePoints > orangePoints) return "blue";
+  if (orangePoints > bluePoints) return "orange";
+  return "draw";
+}
+
+
+// function renderGameOverScreen() {
+//   const themeData = getThemeData();
+//   if (!themeData) return;
+//   const winner = getWinner();
+//   const endScreen = document.querySelector("#game_over_screen");
+//   const resultText = document.querySelector("#game_over_text");
+//   const resultIcon = document.querySelector("#game_over_icon") as HTMLImageElement | null;
+//   if (!endScreen || !resultText || !resultIcon) return;
+//   endScreen.classList.remove(
+//     themeData.gameBackground,
+//     themeData.gameOverBackground,
+//     themeData.winnerBackground
+//   );
+//   if (winner === "draw") {
+//     endScreen.classList.add(themeData.gameOverBackground);
+//     resultText.textContent = "It's a draw!";
+//     resultIcon.src = `/assets/img/ui/${themeData.winnerIcons.draw}`;
+//     resultIcon.style.display = "block";
+//     return;
+//   }
+//   endScreen.classList.add(themeData.winnerBackground);
+//   resultText.textContent = `${winner} wins!`;
+//   resultIcon.src = `/assets/img/ui/${themeData.winnerIcons.win}`;
+//   resultIcon.style.display = "block";
+// }
+
+// function renderLoseScreen() {
+//   const themeData = getThemeData();
+//   if (!themeData) return;
+//   const endScreen = document.querySelector("#game_over_screen");
+//   const resultText = document.querySelector("#game_over_text");
+//   const resultIcon = document.querySelector("#game_over_icon") as HTMLImageElement | null;
+//   if (!endScreen || !resultText || !resultIcon) return;
+//   endScreen.classList.remove(
+//     themeData.gameBackground,
+//     themeData.winnerBackground
+//   );
+//   endScreen.classList.add(themeData.gameOverBackground);
+//   resultText.textContent = "Game Over";
+//   resultIcon.style.display = "none";
+// }
+
 
 init();
