@@ -1,6 +1,6 @@
 @use "../../styles/abstracts/variables";
 
-
+  /* ---------- Code vibes ---------- */
 
 body.theme-code-vibes {
   background-color: var(--neutral-900);
@@ -20,13 +20,21 @@ header.header-code-vibes {
 
 .card-match-bg-code {
   background-color: var(--match-status-bg);
-
 }
 
 .card-match-shadow-code {
   box-shadow: 6px 6px 8px 0px rgba(77, 213, 188, 0.3);
-;
 }
+
+// .game-over-bg-code {
+//   background-color: violet;
+// }
+
+// .winnerBackground {
+//   background-color: coral;
+// }
+
+  /* ---------- Gaming ---------- */
 
 
 body.theme-gaming {

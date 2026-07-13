@@ -137,6 +137,7 @@ function handleSubmitEvent(event: any) {
   const currentSettings: Settings = {
     theme: themeInput?.value as ThemeId,
     player: playerInput?.value as Player,
+    selectedPlayer: playerInput?.value as Player,
     size: sizeInput?.value as BoardSize,
     points: {
       pointsBlue: 0,

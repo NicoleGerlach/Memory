@@ -2,16 +2,13 @@ import "../styles/entries/global.scss";
 import "../styles/entries/game.scss";
 
 import { themes } from "./data.js";
-import { createElementWithoutText } from "./helpers.js";
+import { createElementWithoutText, createElementWithText } from "./helpers.js";
 import { createImageElement } from "./helpers.js";
 import { createPlayerScoreWrapper } from "./helpers.js";
 import { CardData } from "../interfaces/card.interface";
 
-import {
-  ThemeId,
-  Settings,
-  Player,
-} from "../interfaces/settings-data.interface.js";
+import { ThemeId, Player, Settings, PlayerPoints, BoardSize} from "../interfaces/settings-data.interface.js";
+import { ThemeData } from "../interfaces/themes.interface";
 
 type SelectedCard = {
   field: HTMLElement;
@@ -52,6 +49,10 @@ function loadData() {
 function initializeGameData() {
   currentPlayer = currentSettings.player ?? "blue";
   currentTheme = currentSettings.theme ?? "codeVibes";
+  if (!currentSettings.selectedPlayer) {
+    currentSettings.selectedPlayer = currentSettings.player;
+  }
+
   const numberOfPairs = +currentSettings.size / 2;
   applyThemeStyles();
   renderHeader();
@@ -104,6 +105,7 @@ function createCards(numberOfPairs: number, motifs: string[]): CardData[] {
   });
   return shuffleCards(cardData);
 }
+
 function renderCurrentTheme(numberOfPairs: number) {
   const gameField = document.querySelector("#game_field");
   if (!gameField) return;
@@ -222,7 +224,7 @@ function generateIds(numberOfCards: number): string[] {
 function createSelectedCard(field: HTMLElement, button: HTMLElement): SelectedCard {
   const cardId = Number(field.dataset.cardId);
   const cardData = cards.find(card => card.id === cardId);
-  if (!cardId) {
+  if (!cardData) {
     throw new Error("Karte nicht gefunden");
   }
   return { field, button, cardData };
@@ -264,7 +266,7 @@ function compareCards() {
     applyMatchStyles(secondCard, themeData);
     countPoints();
     if (isGameOver(cards)) {
-      endGame();
+      renderEndScreen();
     }
     resetSelectedCards();
     isChecking = false;
@@ -281,8 +283,7 @@ function compareCards() {
 }
 
 function changeCurrentPlayer() {
-  currentSettings.player =
-  currentSettings.player === 'blue' ? 'orange' : 'blue';
+  currentSettings.player = currentSettings.player === 'blue' ? 'orange' : 'blue';
   renderCurrentPlayer();
 }
 
@@ -299,11 +300,6 @@ function isGameOver(cards: CardData[]): boolean {
   return cards.every(card => card.isMatched);
 }
 
-function endGame() {
-  console.log("Das Spiel ist zu Ende!", getWinner());
-}
-
-
 function getWinner(): Winner {
   const bluePoints = currentSettings.points.pointsBlue;
   const orangePoints = currentSettings.points.pointsOrange;
@@ -312,48 +308,87 @@ function getWinner(): Winner {
   return "draw";
 }
 
+function renderEndScreen() {
+  const winner = getWinner();
+  console.log("getWinner() liefert:", winner);
+  console.log("currentSettings.player:", currentSettings.player);
+  const themeData = getThemeData();
+  if (!themeData) return;
+  const gameField = document.querySelector("#game_field");
+  const header = document.querySelector("#game_header") as HTMLElement | null;
+  if (!(gameField instanceof HTMLElement) || !(header instanceof HTMLElement)) return;
+  gameField.innerHTML = "";
+  header.innerHTML = "";
+  gameField.classList.remove(
+    themeData.gameBackground,
+    themeData.gameOverBackground,
+    themeData.winnerBackground
+  );
+  header.classList.remove(themeData.headerClass);
+  const userPlayer = currentSettings.selectedPlayer;  // ← statt .player
+  const isDraw = winner === "draw";
+  const hasWon = winner === userPlayer;
+  console.log("hasWon:", hasWon);
+  console.log("isDraw:", winner === "draw");
+  if (isDraw) {
+    renderDrawView(gameField, header, themeData);
+  } else if (hasWon) {
+    renderWinView(gameField, header, themeData, winner);
+  } else {
+    renderLoseView(gameField, header, themeData);
+  }
+}
 
-// function renderGameOverScreen() {
-//   const themeData = getThemeData();
-//   if (!themeData) return;
-//   const winner = getWinner();
-//   const endScreen = document.querySelector("#game_over_screen");
-//   const resultText = document.querySelector("#game_over_text");
-//   const resultIcon = document.querySelector("#game_over_icon") as HTMLImageElement | null;
-//   if (!endScreen || !resultText || !resultIcon) return;
-//   endScreen.classList.remove(
-//     themeData.gameBackground,
-//     themeData.gameOverBackground,
-//     themeData.winnerBackground
-//   );
-//   if (winner === "draw") {
-//     endScreen.classList.add(themeData.gameOverBackground);
-//     resultText.textContent = "It's a draw!";
-//     resultIcon.src = `/assets/img/ui/${themeData.winnerIcons.draw}`;
-//     resultIcon.style.display = "block";
-//     return;
-//   }
-//   endScreen.classList.add(themeData.winnerBackground);
-//   resultText.textContent = `${winner} wins!`;
-//   resultIcon.src = `/assets/img/ui/${themeData.winnerIcons.win}`;
-//   resultIcon.style.display = "block";
-// }
+function renderWinView(
+  gameField: HTMLElement,
+  header: HTMLElement,
+  themeData: ThemeData,
+  winner: "blue" | "orange",
+) {
+  gameField.classList.add(themeData.winnerBackground);
+  const wrapper = createElementWithoutText("section", ["winner-wrapper"], null);
+  const label = createElementWithText("span", ["game-over-text"], null, "The winner is");
+  const player = createElementWithText("span", ["winner-player"], null, `${winner} Player`);
+  const img = createImageElement("/assets/img/ui/", themeData.winnerIcons.win, ["winner-icon"]);
+  const confetti = createImageElement("/assets/img/ui/", themeData.winnerIcons.decoration, ["confetti"]);
+  gameField.append(wrapper);
+  wrapper.append(label, player, img);
+  header.classList.add(themeData.gameBackground);
+  header.append(confetti);
+}
 
-// function renderLoseScreen() {
-//   const themeData = getThemeData();
-//   if (!themeData) return;
-//   const endScreen = document.querySelector("#game_over_screen");
-//   const resultText = document.querySelector("#game_over_text");
-//   const resultIcon = document.querySelector("#game_over_icon") as HTMLImageElement | null;
-//   if (!endScreen || !resultText || !resultIcon) return;
-//   endScreen.classList.remove(
-//     themeData.gameBackground,
-//     themeData.winnerBackground
-//   );
-//   endScreen.classList.add(themeData.gameOverBackground);
-//   resultText.textContent = "Game Over";
-//   resultIcon.style.display = "none";
-// }
+function renderLoseView(
+  gameField: HTMLElement,
+  header: HTMLElement,
+  themeData: ThemeData,
+) {
+  // gameField.classList.add(themeData.gameOverBackground);
+  const wrapper = createElementWithoutText("section", ["game-over-wrapper"], null);
+  const gameOver = createElementWithText("span", ["game-over-text"], null, "Game Over");
+  const finalScore = createElementWithText("span", ["game-over-text"], null, "Final score");
+  const scoreWrapper = createElementWithoutText("section", ["score-wrapper"], null);
+  const blueScore = createPlayerScoreWrapper("blue", themeData.playerIcons.blue, currentSettings.points.pointsBlue);
+  const orangeScore = createPlayerScoreWrapper("orange", themeData.playerIcons.orange, currentSettings.points.pointsOrange);
+  gameField.append(wrapper, scoreWrapper);
+  wrapper.append(gameOver, finalScore);
+  scoreWrapper.append(blueScore, orangeScore);
+  header.classList.add(themeData.gameBackground);
+}
+
+function renderDrawView(
+  gameField: HTMLElement,
+  header: HTMLElement,
+  themeData: ThemeData,
+) {
+  // gameField.classList.add(themeData.gameOverBackground);
+  const wrapper = createElementWithoutText("section", ["game-over-wrapper"], null);
+  const text = createElementWithText("span", ["game-over-text"], null, "It's a");
+  const draw = createElementWithText("span", ["game-over-text"], null, "Draw");
+  const scales = createImageElement("/assets/img/ui/", themeData.winnerIcons.draw, ["confetti"]);
+  gameField.append(wrapper);
+  wrapper.append(text, draw, scales);
+  header.classList.add(themeData.gameBackground);
+}
 
 
 init();

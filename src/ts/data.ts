@@ -109,8 +109,8 @@ export const themes = {
 
     winnerIcons: {
       win: "player.svg",
-      draw: "scales.png",
-      decoration: "",
+      draw: "scales.svg",
+      decoration: "confetti.svg",
     },
   },
 
