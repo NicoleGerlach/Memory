@@ -7,7 +7,7 @@ import { createImageElement } from "./helpers.js";
 import { createPlayerScoreWrapper } from "./helpers.js";
 import { CardData } from "../interfaces/card.interface";
 
-import { ThemeId, Player, Settings, PlayerPoints, BoardSize} from "../interfaces/settings-data.interface.js";
+import { ThemeId, Player, Settings, PlayerPoints, BoardSize } from "../interfaces/settings-data.interface.js";
 import { ThemeData } from "../interfaces/themes.interface";
 
 type SelectedCard = {
@@ -344,12 +344,15 @@ function renderWinView(
   header: HTMLElement,
   themeData: ThemeData,
   winner: "blue" | "orange",
+  // winnerIcons: "winBlue" | "winOrange"
 ) {
   gameField.classList.add(themeData.winnerBackground);
   const wrapper = createElementWithoutText("section", ["winner-wrapper"], null);
   const label = createElementWithText("span", ["game-over-text"], null, "The winner is");
   const player = createElementWithText("span", ["winner-player"], null, `${winner} Player`);
-  const img = createImageElement("/assets/img/ui/", themeData.winnerIcons.win, ["winner-icon"]);
+  const winnerIcon = winner === "blue" ? themeData.winnerIcons.winBlue : themeData.winnerIcons.winOrange
+  // const img = createImageElement("/assets/img/ui/", winnerIcon, ["winner-icon"]);
+  const img = createImageElement(`/assets/img/${themeData.id}/`, winnerIcon, ["winner-icon"]);
   const confetti = createImageElement("/assets/img/ui/", themeData.winnerIcons.decoration, ["confetti"]);
   gameField.append(wrapper);
   wrapper.append(label, player, img);

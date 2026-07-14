@@ -29,7 +29,8 @@ export interface PlayerIcons {
 
 
 export interface WinnerIcons {
-  win: string;
+  winBlue: string;
+  winOrange: string;
   draw: string;
   decoration: string;
 }
