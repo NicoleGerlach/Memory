@@ -351,7 +351,6 @@ function renderWinView(
   const label = createElementWithText("span", ["game-over-text"], null, "The winner is");
   const player = createElementWithText("span", ["winner-player"], null, `${winner} Player`);
   const winnerIcon = winner === "blue" ? themeData.winnerIcons.winBlue : themeData.winnerIcons.winOrange
-  // const img = createImageElement("/assets/img/ui/", winnerIcon, ["winner-icon"]);
   const img = createImageElement(`/assets/img/${themeData.id}/`, winnerIcon, ["winner-icon"]);
   const confetti = createImageElement("/assets/img/ui/", themeData.winnerIcons.decoration, ["confetti"]);
   gameField.append(wrapper);
@@ -365,7 +364,6 @@ function renderLoseView(
   header: HTMLElement,
   themeData: ThemeData,
 ) {
-  // gameField.classList.add(themeData.gameOverBackground);
   const wrapper = createElementWithoutText("section", ["game-over-wrapper"], null);
   const gameOver = createElementWithText("span", ["game-over-text"], null, "Game Over");
   const finalScore = createElementWithText("span", ["game-over-text"], null, "Final score");
@@ -383,11 +381,10 @@ function renderDrawView(
   header: HTMLElement,
   themeData: ThemeData,
 ) {
-  // gameField.classList.add(themeData.gameOverBackground);
   const wrapper = createElementWithoutText("section", ["game-over-wrapper"], null);
   const text = createElementWithText("span", ["game-over-text"], null, "It's a");
   const draw = createElementWithText("span", ["game-over-text"], null, "Draw");
-  const scales = createImageElement("/assets/img/ui/", themeData.winnerIcons.draw, ["confetti"]);
+  const scales = createImageElement(`/assets/img/${themeData.id}/`, themeData.winnerIcons.draw, ["winner-icon"]); 
   gameField.append(wrapper);
   wrapper.append(text, draw, scales);
   header.classList.add(themeData.gameBackground);

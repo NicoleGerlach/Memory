@@ -124,6 +124,9 @@ export const themes = {
     gameOverBackground: "game-over-bg-gaming",
     winnerBackground: "winner-bg-gaming",
     cardBackground: "card-bg-gaming",
+    cardMatchBorder: "",
+    cardMatchBackground: "",
+    cardMatchShadow: "",
     playerIcons: {
       blue: "player_blue.svg",
       orange: "player_orange.svg",
@@ -143,6 +146,7 @@ export const themes = {
       "meeple_triangle.svg",
       "mushroom.svg",
       "pacman_game.svg",
+      "pacman.svg",
       "pixel.svg",
       "play.svg",
       "puzzle.svg",
@@ -151,7 +155,7 @@ export const themes = {
     winnerIcons: {
       winBlue: "goblet.svg",
       winOrange: "goblet.svg",
-      draw: "scales.png",
+      draw: "scales.svg",
       decoration: "",
     },
   },
@@ -165,6 +169,10 @@ export const themes = {
     gameOverBackground: "game-over-bg-projects",
     winnerBackground: "winner-bg-projects",
     cardBackground: "card-bg-projects",
+    cardMatchBorder: "",
+    cardMatchBackground: "",
+    cardMatchShadow: "",
+
     playerIcons: {
       blue: "player_blue.svg",
       orange: "player_orange.svg",
@@ -195,7 +203,7 @@ export const themes = {
     winnerIcons: {
       winBlue: "win_blue.svg",
       winOrange: "win_orange.svg",
-      draw: "scales.png",
+      draw: "scales.svg",
       decoration: "confetti.svg",
     },
   },
@@ -209,6 +217,10 @@ export const themes = {
     gameOverBackground: "game-over-bg-food",
     winnerBackground: "winner-bg-food",
     cardBackground: "card-bg-food",
+    cardMatchBorder: "",
+    cardMatchBackground: "",
+    cardMatchShadow: "",
+
     playerIcons: {
       blue: "player_blue.svg",
       orange: "player_orange.svg",
@@ -216,7 +228,6 @@ export const themes = {
     previewPath: "preview-food.svg",
 
     motifs: [
-      "back.svg",
       "pommes.svg",
       "pizza.svg",
       "sandwich.svg",
@@ -240,7 +251,7 @@ export const themes = {
     winnerIcons: {
       winBlue: "win_blue.svg",
       winOrange: "win_orange.svg",
-      draw: "scales.png",
+      draw: "scales.svg",
       decoration: "",
     },
   },

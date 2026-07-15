@@ -26,16 +26,7 @@ header.header-code-vibes {
   box-shadow: 6px 6px 8px 0px rgba(77, 213, 188, 0.3);
 }
 
-// .game-over-bg-code {
-//   background-color: violet;
-// }
-
-// .winnerBackground {
-//   background-color: coral;
-// }
-
   /* ---------- Gaming ---------- */
-
 
 body.theme-gaming {
   background-color: var(--blue-800);
@@ -45,39 +36,40 @@ header.header-gaming {
   background-color: var(--red_600-transparent-20);
 }
 
-// body.theme-da-projects {
-//   background-color: $da-body-bg;
-//   color: $da-text;
-// }
-// body.theme-food {
-//   background-color: $food-body-bg;
-//   color: $food-text;
-// }
-// .game-bg-code {
-//   background-color: $code-game-bg;
-// }
-// .game-bg-gaming {
-//   background-color: $gaming-game-bg;
-// }
-// .game-bg-da-projects {
-//   background-color: $da-game-bg;
-// }
-// .game-bg-food {
-//   background-color: $food-game-bg;
-// }
-// .card-bg-code {
-//   background-color: $code-card-bg;
-//   border-color: $code-card-border;
-// }
-// .card-bg-gaming {
-//   background-color: $gaming-card-bg;
-//   border-color: $gaming-card-border;
-// }
-// .card-bg-da-projects {
-//   background-color: $da-card-bg;
-//   border-color: $da-card-border;
-// }
-// .card-bg-food {
-//   background-color: $food-card-bg;
-//   border-color: $food-card-border;
-// }
+/*
+    gameBackground: "game-bg-gaming",
+    gameOverBackground: "game-over-bg-gaming",
+    winnerBackground: "winner-bg-gaming",
+    cardBackground: "card-bg-gaming",
+    cardMatchBorder: "",
+    cardMatchBackground: "",
+    cardMatchShadow: "",
+*/
+
+  /* ---------- DA Projects ---------- */
+
+/*
+    bodyClass: "theme-da-projects",
+    headerClass: "header-da-projects",
+    gameBackground: "game-bg-projects",
+    gameOverBackground: "game-over-bg-projects",
+    winnerBackground: "winner-bg-projects",
+    cardBackground: "card-bg-projects",
+    cardMatchBorder: "",
+    cardMatchBackground: "",
+    cardMatchShadow: "",
+*/
+
+  /* ---------- Food ---------- */
+
+/*
+    bodyClass: "theme-food",
+    headerClass: "header-da-projects",
+    gameBackground: "game-bg-food",
+    gameOverBackground: "game-over-bg-food",
+    winnerBackground: "winner-bg-food",
+    cardBackground: "card-bg-food",
+    cardMatchBorder: "",
+    cardMatchBackground: "",
+    cardMatchShadow: "",
+*/
