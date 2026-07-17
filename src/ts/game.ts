@@ -66,7 +66,7 @@ function applyThemeStyles() {
   if (!gameSection) return;
   const allGameBackgrounds = Object.values(themes).map((theme) => theme.gameBackground);
   gameSection.classList.remove(...allGameBackgrounds);
-  gameSection.classList.add(themeData.gameBackground);
+  safeAddClasses(gameSection, themeData.gameBackground);
   const allBodyClasses = Object.values(themes).map((theme) => theme.bodyClass);
   document.body.classList.remove(...allBodyClasses);
   document.body.classList.add(themeData.bodyClass);
@@ -79,7 +79,7 @@ function applyHeaderStyles() {
   if (!themeData) return;
   const allHeaderClasses = Object.values(themes).map((theme) => theme.headerClass);
   header.classList.remove(...allHeaderClasses);
-  header.classList.add(themeData.headerClass);
+  safeAddClasses(header, themeData.headerClass);
 }
 
 function createCards(numberOfPairs: number, motifs: string[]): CardData[] {
@@ -235,7 +235,16 @@ function isMatch(cardOne: SelectedCard, cardTwo: SelectedCard): boolean {
 }
 
 function applyMatchStyles(card: SelectedCard, themeData: any) {
-  card.field.classList.add(themeData.cardMatchBorder, themeData.cardMatchBackground, themeData.cardMatchShadow);
+  safeAddClasses(card.field, themeData.cardMatchBorder, themeData.cardMatchBackground, themeData.cardMatchShadow)
+}
+
+function safeAddClasses(element: Element, ...classes: (string | undefined | null)[]): void {
+  const valid = classes
+    .filter((c): c is string => Boolean(c) && typeof c === "string" && c.trim() !== "");
+  
+  if (valid.length) {
+    element.classList.add(...valid);
+  }
 }
 
 function unflipCards(cardOne: SelectedCard, cardTwo: SelectedCard) {
@@ -310,8 +319,6 @@ function getWinner(): Winner {
 
 function renderEndScreen() {
   const winner = getWinner();
-  console.log("getWinner() liefert:", winner);
-  console.log("currentSettings.player:", currentSettings.player);
   const themeData = getThemeData();
   if (!themeData) return;
   const gameField = document.querySelector("#game_field");
@@ -328,8 +335,6 @@ function renderEndScreen() {
   const userPlayer = currentSettings.selectedPlayer;  // ← statt .player
   const isDraw = winner === "draw";
   const hasWon = winner === userPlayer;
-  console.log("hasWon:", hasWon);
-  console.log("isDraw:", winner === "draw");
   if (isDraw) {
     renderDrawView(gameField, header, themeData);
   } else if (hasWon) {
@@ -355,7 +360,7 @@ function renderWinView(
   const confetti = createImageElement("/assets/img/ui/", themeData.winnerIcons.decoration, ["confetti"]);
   gameField.append(wrapper);
   wrapper.append(label, player, img);
-  header.classList.add(themeData.gameBackground);
+  safeAddClasses(header, themeData.gameBackground);
   header.append(confetti);
 }
 
@@ -373,7 +378,7 @@ function renderLoseView(
   gameField.append(wrapper, scoreWrapper);
   wrapper.append(gameOver, finalScore);
   scoreWrapper.append(blueScore, orangeScore);
-  header.classList.add(themeData.gameBackground);
+  safeAddClasses(header, themeData.gameBackground);
 }
 
 function renderDrawView(
@@ -384,10 +389,10 @@ function renderDrawView(
   const wrapper = createElementWithoutText("section", ["game-over-wrapper"], null);
   const text = createElementWithText("span", ["game-over-text"], null, "It's a");
   const draw = createElementWithText("span", ["game-over-text"], null, "Draw");
-  const scales = createImageElement(`/assets/img/${themeData.id}/`, themeData.winnerIcons.draw, ["winner-icon"]); 
+  const scales = createImageElement(`/assets/img/${themeData.id}/`, themeData.winnerIcons.draw, ["winner-icon"]);
   gameField.append(wrapper);
   wrapper.append(text, draw, scales);
-  header.classList.add(themeData.gameBackground);
+  safeAddClasses(header, themeData.gameBackground);
 }
 
 

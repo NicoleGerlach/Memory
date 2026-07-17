@@ -21,8 +21,11 @@
   --blue-800: #294f60;
   --blue-700: #1e7594;
   --blue-700-transparent-25: rgba(30, 117, 148, 0.25);
+  --blue-600: #f0fbff;
   --blue-500: #2086b4;
+  --blue-400: #eaf2f4;
   --blue-300: #bfe5f2;
+  --blue-200: #f0f3f4;
   --blue-100: #f0f4f5;
 
   --green-700: #286f62;
@@ -33,11 +36,14 @@
   --red-50: #f6f1f3;
   --red-500-transparent-35: rgba(237, 27, 118, 0.35);
   --red_600-transparent-20: rgba(253, 150, 201, 0.2);
+  --red_700-transparent-30: rgba(237, 27, 118, 0.3);
   --red-500: #ed1b76;
   --red-700: #c41463;
 
   --orange-500: #f3832d;
   --orange-500-transparent-25: rgba(243, 131, 45, 0.25);
+  --orange-400: #f4ece4;
+  --orange-300: #f0e5d9;
   --orange-200: #f3d5bb;
   --orange-100: #f7e6d5;
 
@@ -146,6 +152,8 @@
 
   --theme-green-card-front: var(--green-100);
 
+  --card-match-border-code: solid 5px var(--green-100);
+
   /* ---------- Match status for cards ---------- */
 
   --match-status-bg-green: var(--green-100);
@@ -223,7 +231,9 @@
   /* ---------- Match status for cards ---------- */
 
   --match-status-bg: var(--orange-100);
-  --match-status-border: var(--orange-500);
+
+  --match-status-border: solid 2px var(--orange-500);
+  
   --match-status-icon: var(--orange-500);
   --match-status-shadow: 0 0 12px var(--orange-500-transparent-25);
 

@@ -2,11 +2,11 @@
 
   /* ---------- Code vibes ---------- */
 
-body.theme-code-vibes {
+body.theme-code {
   background-color: var(--neutral-900);
 }
 
-header.header-code-vibes {
+header.header-code {
   background-color: var(--neutral-900);
 }
 
@@ -14,12 +14,12 @@ header.header-code-vibes {
   background-color: var(--green-100);
 }
 
-.border-card-code {
-  border: solid 5px var(--match-status-border-green);
+.card-match-border-code {
+  border: solid 5px var(--green-100);
 }
 
 .card-match-bg-code {
-  background-color: var(--match-status-bg);
+  background-color: var(--red-50);
 }
 
 .card-match-shadow-code {
@@ -36,40 +36,68 @@ header.header-gaming {
   background-color: var(--red_600-transparent-20);
 }
 
-/*
-    gameBackground: "game-bg-gaming",
-    gameOverBackground: "game-over-bg-gaming",
-    winnerBackground: "winner-bg-gaming",
-    cardBackground: "card-bg-gaming",
-    cardMatchBorder: "",
-    cardMatchBackground: "",
-    cardMatchShadow: "",
-*/
+.card-bg-gaming {
+  background-color: var(--red-50);
+}
+
+.card-match-border-gaming {
+  border: solid 3px var(--red-500);
+}
+
+.card-match-bg-gaming {
+  background-color: var(--red-50);
+}
+
+.card-match-shadow-gaming {
+  box-shadow: 5px 5px 8px 0px var(--red_700-transparent-30);
+}
 
   /* ---------- DA Projects ---------- */
 
-/*
-    bodyClass: "theme-da-projects",
-    headerClass: "header-da-projects",
-    gameBackground: "game-bg-projects",
-    gameOverBackground: "game-over-bg-projects",
-    winnerBackground: "winner-bg-projects",
-    cardBackground: "card-bg-projects",
-    cardMatchBorder: "",
-    cardMatchBackground: "",
-    cardMatchShadow: "",
-*/
+body.theme-projects {
+  background-color: var(--white);
+}
+
+header.header-projects {
+  background-color: var(--blue-200);
+}
+
+.gameOverBackground,
+.winnerBackground {
+  background-color: var(--blue-700);
+}
+
+.card-bg-projects {
+  background-color: var(--blue-400);
+}
+
+.card-match-border-projects {
+  border: solid 2px var(--blue-700);
+}
+
+.card-match-bg-projects {
+  background-color: var(--blue-600);
+}
 
   /* ---------- Food ---------- */
 
-/*
-    bodyClass: "theme-food",
-    headerClass: "header-da-projects",
-    gameBackground: "game-bg-food",
-    gameOverBackground: "game-over-bg-food",
-    winnerBackground: "winner-bg-food",
-    cardBackground: "card-bg-food",
-    cardMatchBorder: "",
-    cardMatchBackground: "",
-    cardMatchShadow: "",
-*/
+body.theme-food {
+  background-color: var(--white);
+}
+
+header.header-food {
+  background-color: var(--orange-300);
+}
+
+.card-bg-food {
+  background-color: var(--orange-400);
+}
+
+.card-match-border-food {
+  border: var(--match-status-border);
+}
+
+.card-match-bg-food {
+  background-color: var(--orange-400);
+}
+
