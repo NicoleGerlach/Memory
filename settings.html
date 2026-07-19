@@ -1,51 +1,47 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Settings Memory Game</title>
-    <link
-      rel="shortcut icon"
-      href="/assets/img/memory-game.png"
-      type="image/x-icon"
-    />
-    <link rel="stylesheet" href="./src/styles/entries/global.scss" />
-    <link rel="stylesheet" href="./src/styles/entries/settings.scss" />
-    <script type="module" src="./src/ts/settings.ts"></script>
-  </head>
-  <body>
-    <main>
-      <div class="title-wrapper">
-        <h1 class="settings-title">Settings</h1>
-        <div class="settings-decoration" aria-hidden="true"></div>
-      </div>
 
-      <div class="settings-content-wrapper">
-        <form id="settings_form" class="settings-form">
-          <section id="settings_selection" class="settings-selection">
-            <p id="current_theme" class="current-theme">Code vibes theme</p>
-            <div class="separator sep1" aria-hidden="true">
-              <div class="diamond d-none" id="diamond"></div>
-            </div>
-            <p id="current_player" class="current-player">Player</p>
-            <div class="separator sep2" aria-hidden="true"></div>
-            <p id="current_board_size" class="current-size">Board size</p>
-            <!-- beim Button disabled wieder hinzufügen! -->
-            <button
-              type="submit"
-              id="start_btn"
-              class="start-btn disabled-btn cursor-pointer"
-            >
-              <img src="/assets/img/ui/smart_play.svg" alt="" />
-              <span>Start</span>
-            </button>
-          </section>
-        </form>
-        <section id="settings_box" class="settings-box"></section>
-        <section class="preview-wrapper">
-          <img id="preview_img" src="/assets/img/ui/previews/codeVibes.svg" alt="" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Settings Memory Game</title>
+  <link rel="shortcut icon" href="/assets/img/memory-game.png" type="image/x-icon" />
+  <link rel="stylesheet" href="./src/styles/entries/global.scss" />
+  <link rel="stylesheet" href="./src/styles/entries/settings.scss" />
+  <script type="module" src="./src/ts/settings.ts"></script>
+</head>
+
+<body>
+  <main>
+    <div class="title-wrapper">
+      <h1 class="settings-title">Settings</h1>
+      <div class="settings-decoration" aria-hidden="true"></div>
+    </div>
+
+    <div class="settings-content-wrapper">
+      <form id="settings_form" class="settings-form">
+        <section id="settings_selection" class="settings-selection">
+          <p id="current_theme" class="current-theme">Code vibes theme</p>
+          <div class="separator sep1" aria-hidden="true">
+            <div class="diamond d-none" id="diamond" aria-hidden="true"></div>
+          </div>
+          <p id="current_player" class="current-player">Player</p>
+          <div class="separator sep2" aria-hidden="true"></div>
+          <div class="diamond d-none" id="diamond" aria-hidden="true"></div>
+          <p id="current_board_size" class="current-size">Board size</p>
+          <!-- beim Button disabled wieder hinzufügen! -->
+          <button type="submit" id="start_btn" class="start-btn disabled-btn cursor-pointer">
+            <img src="/assets/img/ui/smart_play.svg" alt="" />
+            <span>Start</span>
+          </button>
         </section>
-      </div>
-    </main>
-  </body>
+      </form>
+      <section id="settings_box" class="settings-box"></section>
+      <section class="preview-wrapper">
+        <img id="preview_img" src="/assets/img/ui/previews/codeVibes.svg" alt="" />
+      </section>
+    </div>
+  </main>
+</body>
+
 </html>

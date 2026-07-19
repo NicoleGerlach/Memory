@@ -1,8 +1,36 @@
+@use "../abstracts/mixins" as flex-align;
+
+body {
+    height: 100vh;
+    width: 100vw;
+    margin: 0 auto;
+    overflow: hidden;
+    max-width: 1440px;
+    display: flex;
+    flex-direction: column;
+    font-family: "Red Rose", sans-serif;
+}
+
 .game-field {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, auto);
+    place-content: center;
+    align-content: flex-start;
     gap: 10px;
+    min-height: 100%;
 }
+
+// .game-field[data-cards="16"] {
+//     grid-template-columns: repeat(4, auto);
+// }
+
+// .game-field[data-cards="24"] {
+//     grid-template-columns: repeat(6, auto);
+// }
+
+// .game-field[data-cards="36"] {
+//     grid-template-columns: repeat(6, auto);
+// }
 
 .field {
     height: 120px;
@@ -33,6 +61,7 @@
 
         &--back {
             transform: rotateY(180deg);
+            padding: 1.7em
         }
     }
 
@@ -44,4 +73,60 @@
 .winner-icon {
     height: 200px;
     width: 200px;
+}
+
+.game-over-wrapper {
+    @include flex-align.flex-align-center;
+    flex-direction: column;
+
+    .game-over-text {
+        color: var(--green-500);
+        font-size: 124px;
+        font-weight: 700;
+        margin-bottom: 100px;
+        text-shadow: -2px -2px 1px var(--green-100);
+    }
+
+    .game-over-score {
+        color: var(--white);
+        font-size: 26px;
+        font-weight: 400;
+    }
+
+    // .score-wrapper {
+    //     display: flex;
+    //     gap: 32px;
+    //     background-color: var(--green-400-transparent-20);
+    //     padding: 20px;
+    //     margin-top: 24px;
+
+    //     .player-score {
+    //         display: flex;
+    //         gap: 5px;
+    //         text-transform: capitalize;
+    //     }
+    // }
+}
+
+.winner-wrapper {
+    @include flex-align.flex-align-center;
+    flex-direction: column;
+
+    .winner-text {
+        color: var(--white);
+        font-size: 40px;
+        font-weight: 400;
+        margin-bottom: 24px;
+    }
+
+    .winner-player {
+        color: var(--blue);
+        font-size: 60px;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    .winner-icon {
+        margin: 64px 0;
+    }
 }

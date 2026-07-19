@@ -78,7 +78,8 @@ function applyHeaderStyles() {
   const themeData = getThemeData();
   if (!themeData) return;
   const allHeaderClasses = Object.values(themes).map((theme) => theme.headerClass);
-  header.classList.remove(...allHeaderClasses);
+  // header.classList.remove(...allHeaderClasses);
+  safeRemoveClasses(header, themeData.headerClass);
   safeAddClasses(header, themeData.headerClass);
 }
 
@@ -124,7 +125,7 @@ function renderCurrentTheme(numberOfPairs: number) {
     }
     const box = createElementWithoutText("div", ["card-button__inner"], null);
     const imgObj = createImageElement(`/assets/img/${themeData.id}/`, card.motif, ["card-button__face", "card-button__face--back", themeData.cardBackground]);
-    const imgBack = createImageElement(`/assets/img/${themeData.id}/`, "back.svg", ["card-button__face"]);
+    const imgBack = createImageElement(`/assets/img/${themeData.id}/`, "back.svg", ["card-button__face", themeData.cardStyle]);
     gameField.append(field);
     field.append(button);
     button.append(box);
@@ -146,7 +147,7 @@ function renderScores() {
   if (!themeData) return;
   const oldScoreWrapper = header.querySelector(".score-wrapper");
   if (oldScoreWrapper) oldScoreWrapper.remove();
-  const scoreWrapper = createElementWithoutText("section", ["score-wrapper"], null);
+  const scoreWrapper = createElementWithoutText("section", ["score-wrapper", themeData.scoreWrapperClass], null);
   const bluePlayerScoreWrapper = createPlayerScoreWrapper("blue", themeData.playerIcons.blue, currentSettings.points.pointsBlue);
   const orangePlayerScoreWrapper = createPlayerScoreWrapper("orange", themeData.playerIcons.orange, currentSettings.points.pointsOrange);
   scoreWrapper.append(bluePlayerScoreWrapper, orangePlayerScoreWrapper);
@@ -168,14 +169,17 @@ function renderCurrentPlayer() {
 }
 
 function renderExitBtn() {
-  const exitBtn = document.querySelector("#exit_btn");
-  if (!exitBtn) return;
-  exitBtn.textContent = "";
+  const header = document.querySelector("#game_header");
+  if (!header) return;
+  const themeData = getThemeData();
+  if (!themeData) return;
+  const exitWrapper = createElementWithoutText("section", ["exit-wrapper"], null);
   const iconPath = "exit.svg";
-  const button = createImageElement("/assets/img/ui/", iconPath, null);
-  const exitText = document.createElement("span");
-  exitText.textContent = "Exit";
-  exitBtn.append(button, exitText);
+  const exitImg = createImageElement("/assets/img/ui/", iconPath, null);
+  const exitText = createElementWithText("p", ["exitText"], null, "Exit game");
+  header.append(exitWrapper);
+  exitWrapper.append(exitImg, exitText);
+  exitWrapper.classList.add(themeData.exitBtnClass);
 }
 
 function shuffleCards(array: CardData[]): CardData[] {
@@ -241,9 +245,18 @@ function applyMatchStyles(card: SelectedCard, themeData: any) {
 function safeAddClasses(element: Element, ...classes: (string | undefined | null)[]): void {
   const valid = classes
     .filter((c): c is string => Boolean(c) && typeof c === "string" && c.trim() !== "");
-  
+
   if (valid.length) {
     element.classList.add(...valid);
+  }
+}
+
+function safeRemoveClasses(element: Element, ...classes: (string | undefined | null)[]): void {
+  const valid = classes
+    .filter((c): c is string => Boolean(c) && typeof c === "string" && c.trim() !== "");
+
+  if (valid.length) {
+    element.classList.remove(...valid);
   }
 }
 
@@ -326,12 +339,10 @@ function renderEndScreen() {
   if (!(gameField instanceof HTMLElement) || !(header instanceof HTMLElement)) return;
   gameField.innerHTML = "";
   header.innerHTML = "";
-  gameField.classList.remove(
-    themeData.gameBackground,
-    themeData.gameOverBackground,
-    themeData.winnerBackground
-  );
-  header.classList.remove(themeData.headerClass);
+  // gameField.classList.remove(themeData.gameBackground, themeData.gameOverBackground, themeData.winnerBackground);
+  // header.classList.remove(themeData.headerClass);
+  safeRemoveClasses(gameField, themeData.gameBackground, themeData.gameOverBackground, themeData.winnerBackground);
+  safeRemoveClasses(header, themeData.headerClass);
   const userPlayer = currentSettings.selectedPlayer;  // ← statt .player
   const isDraw = winner === "draw";
   const hasWon = winner === userPlayer;
@@ -349,11 +360,10 @@ function renderWinView(
   header: HTMLElement,
   themeData: ThemeData,
   winner: "blue" | "orange",
-  // winnerIcons: "winBlue" | "winOrange"
 ) {
   gameField.classList.add(themeData.winnerBackground);
   const wrapper = createElementWithoutText("section", ["winner-wrapper"], null);
-  const label = createElementWithText("span", ["game-over-text"], null, "The winner is");
+  const label = createElementWithText("span", ["winner-text"], null, "The winner is");
   const player = createElementWithText("span", ["winner-player"], null, `${winner} Player`);
   const winnerIcon = winner === "blue" ? themeData.winnerIcons.winBlue : themeData.winnerIcons.winOrange
   const img = createImageElement(`/assets/img/${themeData.id}/`, winnerIcon, ["winner-icon"]);
@@ -371,12 +381,12 @@ function renderLoseView(
 ) {
   const wrapper = createElementWithoutText("section", ["game-over-wrapper"], null);
   const gameOver = createElementWithText("span", ["game-over-text"], null, "Game Over");
-  const finalScore = createElementWithText("span", ["game-over-text"], null, "Final score");
+  const finalScore = createElementWithText("span", ["game-over-score"], null, "Final score");
   const scoreWrapper = createElementWithoutText("section", ["score-wrapper"], null);
   const blueScore = createPlayerScoreWrapper("blue", themeData.playerIcons.blue, currentSettings.points.pointsBlue);
   const orangeScore = createPlayerScoreWrapper("orange", themeData.playerIcons.orange, currentSettings.points.pointsOrange);
   gameField.append(wrapper, scoreWrapper);
-  wrapper.append(gameOver, finalScore);
+  wrapper.append(gameOver, finalScore, scoreWrapper);
   scoreWrapper.append(blueScore, orangeScore);
   safeAddClasses(header, themeData.gameBackground);
 }

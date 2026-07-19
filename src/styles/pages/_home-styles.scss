@@ -1,7 +1,7 @@
+@use "../abstracts/mixins" as flex-all;
+
 body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flex-all.flex-all-center;
   background-color: var(--bg-home);
   background-image: url("/assets/img/ui-icons/controller-big.svg");
   background-repeat: no-repeat;
@@ -12,10 +12,8 @@ body {
 .home {
   width: 100%;
   height: 100%;
-  display: flex;
+  @include flex-all.flex-all-center;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   gap: 3em;
 }
 
@@ -50,14 +48,17 @@ h2 {
   align-items: center;
   justify-content: center;
   gap: clamp(0.75rem, 0.393rem + 0.952vw, 1.25rem);
-  > span {
+
+  >span {
     font-family: "Red Rose";
     color: var(--button-primary-yellow-text);
     font-size: clamp(1.75rem, 1.214rem + 1.429vw, 2.5rem);
     font-weight: 700;
   }
+
   &:hover {
     scale: 1.1;
+
     .link__controller {
       transform: rotate(-25.77deg);
     }

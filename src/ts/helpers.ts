@@ -68,6 +68,7 @@ export function createList(
 
     text.textContent = item.label;
 
+    text.classList.add('test');
     element.append(lineSmall, diamondSmall);
     element.classList.add('line-wrap-small');
     lineSmall.classList.add('line-small');
