@@ -12,13 +12,14 @@ header {
   justify-content: space-between;
   color: white;
   margin: 10px 0 20px;
+  width: 90%;
 
   .score-wrapper {
     @include flex-all.flex-all-center;
     gap: 20px;
     padding: 0.75em 1em;
     text-transform: capitalize;
-    font-size: 24px;
+    font-size: clamp(1.125rem, 0.949rem + 0.882vw, 1.5rem);
 
     .player-score {
       display: flex;
@@ -33,7 +34,7 @@ header {
     gap: 4px;
 
     >img {
-      height: 20px;
+      height: clamp(0.875rem, 0.699rem + 0.882vw, 1.25rem);
     }
   }
 
@@ -41,11 +42,11 @@ header {
     display: flex;
     align-items: center;
     gap: 0.2em;
-    font-size: 32px;
+    font-size: clamp(1.5rem, 1.265rem + 1.176vw, 2rem);
     gap: 8px;
 
     >img {
-      height: 24px;
+      height: clamp(1.125rem, 0.949rem + 0.882vw, 1.5rem);
     }
   }
 
@@ -53,6 +54,17 @@ header {
     @include flex-all.flex-all-center;
     gap: 10px;
     padding: 0.75em 1em;
-    font-size: 24px;
+    font-size: clamp(1.125rem, 0.949rem + 0.882vw, 1.5rem);
+  }
+}
+
+@media (max-width: 850px) {
+  header {
+    flex-direction: column-reverse;
+    gap: 8px;
+  }
+
+  .exit-wrapper {
+    margin-bottom: 32px;
   }
 }

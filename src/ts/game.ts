@@ -77,7 +77,7 @@ function applyHeaderStyles() {
   if (!header) return;
   const themeData = getThemeData();
   if (!themeData) return;
-  const allHeaderClasses = Object.values(themes).map((theme) => theme.headerClass);
+  // const allHeaderClasses = Object.values(themes).map((theme) => theme.headerClass);
   // header.classList.remove(...allHeaderClasses);
   safeRemoveClasses(header, themeData.headerClass);
   safeAddClasses(header, themeData.headerClass);
@@ -339,8 +339,6 @@ function renderEndScreen() {
   if (!(gameField instanceof HTMLElement) || !(header instanceof HTMLElement)) return;
   gameField.innerHTML = "";
   header.innerHTML = "";
-  // gameField.classList.remove(themeData.gameBackground, themeData.gameOverBackground, themeData.winnerBackground);
-  // header.classList.remove(themeData.headerClass);
   safeRemoveClasses(gameField, themeData.gameBackground, themeData.gameOverBackground, themeData.winnerBackground);
   safeRemoveClasses(header, themeData.headerClass);
   const userPlayer = currentSettings.selectedPlayer;  // ← statt .player

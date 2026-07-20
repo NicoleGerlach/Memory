@@ -170,12 +170,8 @@ h2 {
     text-align: center;
     min-width: 112px;
     padding: 0.5em;
-    //  width: 200px;            // feste Breite nach Bedarf anpassen
-    white-space: nowrap; // verhindert Umbruch
-    overflow: hidden; // versteckt Überlauf
-    // // text-overflow: ellipsis;   // "..." bei zu langer Text
-    // margin: 0;                 // falls du Margin reset brauchst
-    // flex: 0 0 200px;           // verhindert Vergrößern/Verkleinern im Flex-Container
+    white-space: nowrap;
+    overflow: hidden;
   }
 
   .start-btn {
@@ -231,10 +227,10 @@ h2 {
   }
 }
 
-// .list-element>input:has(input:checked) .diamond {
-//   display: flex;
-//   align-items: center;
-// }
+.list-element>input:has(input:checked) .diamond {
+  display: flex;
+  align-items: center;
+}
 
 label {
   @include flex-align.flex-align-center;
