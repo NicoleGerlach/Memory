@@ -27,11 +27,13 @@ header.header-code {
 }
 
 .card-match-border-code {
-  border: solid 5px var(--green-500);
+  // border: solid 5px var(--green-500);
+  border-color: var(--green-500);
 }
 
 .card-match-bg-code {
-  background-color: var(--white);
+  background-color: pink !important;
+  // background-color: var(--white);
 }
 
 .card-match-shadow-code {
@@ -67,25 +69,27 @@ header.header-gaming {
 
 .card-style-gaming {
   box-shadow: 6px 6px 12px 0px rgba(0, 0, 0, 0.25);
-  width: 105px;
+  // width: 105px;
   border-radius: 12px;
 }
 
 .card-bg-gaming {
   background-color: var(--red-50);
-  width: 105px;
-  height: 120px;
+  // width: 105px;
+  // height: 120px;
   border-radius: 12px;
   box-shadow: 6px 6px 12px 0px rgba(0, 0, 0, 0.25);
 }
 
 .card-match-border-gaming {
-  border: solid 3px var(--red-500);
+  // border: solid 3px var(--red-500);
+  border-color: var(--red-500);
   border-radius: 12px;
 }
 
 .card-match-bg-gaming {
-  background-color: var(--red-50);
+  background-color: pink;
+  // background-color: var(--red-50);
 }
 
 .card-match-shadow-gaming {
@@ -126,19 +130,20 @@ header.header-projects {
 
 .card-bg-projects {
   background-color: var(--blue-400);
-  height: 100px;
+  // height: 100px;
   border-radius: 13px;
 }
 
 .card-match-border-projects {
-  border: solid 2px var(--blue-700);
-  height: 100px;
+  // border: solid 2px var(--blue-700);
+  // height: 100px;
+  border-color: var(--blue-700);
   border-radius: 13px;
-
 }
 
 .card-match-bg-projects {
-  background-color: var(--blue-600);
+  background-color: pink;
+  // background-color: var(--blue-600);
 }
 
 /* ---------- Food ---------- */
@@ -166,18 +171,18 @@ header.header-food {
   border-radius: 10px;
   border: solid 3px var(--orange-500);
   color: var(--orange-500);
-  // text-transform: uppercase;
 }
-
 
 .card-bg-food {
   background-color: var(--orange-400);
 }
 
 .card-match-border-food {
-  border: var(--match-status-border);
+  // border: var(--match-status-border-food);
+  border-color: var(--orange-500);
 }
 
 .card-match-bg-food {
-  background-color: var(--orange-400);
+  background-color: pink;
+  // background-color: var(--orange-400);
 }

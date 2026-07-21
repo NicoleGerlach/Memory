@@ -239,8 +239,24 @@ function isMatch(cardOne: SelectedCard, cardTwo: SelectedCard): boolean {
 }
 
 function applyMatchStyles(card: SelectedCard, themeData: any) {
-  safeAddClasses(card.field, themeData.cardMatchBorder, themeData.cardMatchBackground, themeData.cardMatchShadow)
+  // BG auf das img (dort liegt auch card-bg-*)
+  const img = card.button.querySelector(".card-button__face--back");
+  if (img) {
+    safeAddClasses(img, themeData.cardMatchBackground);
+    if (themeData.cardBackground) {
+      img.classList.remove(themeData.cardBackground);
+    }
+  }
+  // Border und Shadow auf den Button
+  safeAddClasses(card.button, themeData.cardMatchBorder, themeData.cardMatchShadow);
 }
+
+// function applyMatchStyles(card: SelectedCard, themeData: any) {
+//   safeAddClasses(card.button, themeData.cardMatchBorder, themeData.cardMatchBackground, themeData.cardMatchShadow);
+//   if (themeData.cardBackground) {
+//     card.button.classList.remove(themeData.cardBackground);
+//   }
+// }
 
 function safeAddClasses(element: Element, ...classes: (string | undefined | null)[]): void {
   const valid = classes
