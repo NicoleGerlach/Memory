@@ -158,4 +158,5 @@ function leadToGamePage() {
   location.href = "/game.html";
 }
 
+
 init();

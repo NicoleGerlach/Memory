@@ -95,6 +95,10 @@ body {
 .theme-projects .card-button {
     width: 120px;
     height: 100px;
+
+    &__inner {
+        border-radius: 13px;
+    }
 }
 
 .theme-gaming .card-button {

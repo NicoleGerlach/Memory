@@ -207,35 +207,73 @@ h2 {
     background: #fff;
   }
 
-  input:checked {
-    border: solid 2px #303131;
-    background: radial-gradient(#303131 0 25%, transparent 35% 100%);
-
-    +.test {
-      font-weight: 700;
-    }
-  }
+  // input:checked {
+  //   border: solid 2px #303131;
+  //   background: radial-gradient(#303131 0 25%, transparent 35% 100%);
+  // }
 
   &:hover {
-    font-weight: 700;
+    // font-weight: 700;
     cursor: pointer;
 
-    input {
-      border: solid 2px #303131;
-      background: radial-gradient(#303131 0 25%, transparent 30% 100%);
-    }
+    // input {
+    //   border: solid 2px #303131;
+    //   background: radial-gradient(#303131 0 25%, transparent 30% 100%);
+    // }
   }
 }
 
-.list-element>input:has(input:checked) .diamond {
-  display: flex;
-  align-items: center;
+// Gecheckt → anzeigen, ABER nur wenn nirgends gehovert wird
+.theme-list:not(:has(:hover)) .list-element:has(input:checked),
+.player-list:not(:has(:hover)) .list-element:has(input:checked),
+.size-list:not(:has(:hover)) .list-element:has(input:checked) {
+
+  .line-wrap-small,
+  .diamond {
+    display: flex;
+    align-items: center;
+  }
+  .list-text {
+    font-weight: 700;
+  }
+  input {
+    border: solid 2px #303131;
+    background: radial-gradient(#303131 0 25%, transparent 30% 100%);
+  }
+}
+
+// Gehovertes Element (das nicht gecheckt ist) → anzeigen
+.theme-list:has(:hover) .list-element:hover:not(:has(input:checked)),
+.player-list:has(:hover) .list-element:hover:not(:has(input:checked)),
+.size-list:has(:hover) .list-element:hover:not(:has(input:checked)) {
+
+  .line-wrap-small,
+  .diamond {
+    display: flex;
+    align-items: center;
+  }
+  .list-text {
+    font-weight: 700;
+  }
+  input {
+    border: solid 2px #303131;
+    background: radial-gradient(#303131 0 25%, transparent 30% 100%);
+  }
 }
 
 label {
   @include flex-align.flex-align-center;
   gap: 10px;
   cursor: pointer;
+
+  &:hover {
+
+    .line-wrap-small,
+    .diamond-small {
+      display: flex;
+      align-items: center;
+    }
+  }
 }
 
 .line-wrap-small {
@@ -259,14 +297,15 @@ label {
   display: none;
 }
 
-@media (min-width: 50em) {
-  .settings-content-wrapper {
-    grid-template-columns: 1fr 2fr;
-    grid-template-areas:
-      "settings preview"
-      "settings preview"
-      "settings preview"
-      "settings preview"
-      "settings selection";
-  }
-}
+
+// @media (max-width: 900px) {
+//   .settings-content-wrapper {
+//     grid-template-columns: 1fr 2fr;
+//     grid-template-areas:
+//       "settings preview"
+//       "settings preview"
+//       "settings preview"
+//       "settings preview"
+//       "settings selection";
+//   }
+// }

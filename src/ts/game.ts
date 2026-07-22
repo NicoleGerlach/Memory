@@ -251,13 +251,6 @@ function applyMatchStyles(card: SelectedCard, themeData: any) {
   safeAddClasses(card.button, themeData.cardMatchBorder, themeData.cardMatchShadow);
 }
 
-// function applyMatchStyles(card: SelectedCard, themeData: any) {
-//   safeAddClasses(card.button, themeData.cardMatchBorder, themeData.cardMatchBackground, themeData.cardMatchShadow);
-//   if (themeData.cardBackground) {
-//     card.button.classList.remove(themeData.cardBackground);
-//   }
-// }
-
 function safeAddClasses(element: Element, ...classes: (string | undefined | null)[]): void {
   const valid = classes
     .filter((c): c is string => Boolean(c) && typeof c === "string" && c.trim() !== "");

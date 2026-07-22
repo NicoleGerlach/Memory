@@ -3,7 +3,7 @@
 body {
   @include flex-all.flex-all-center;
   background-color: var(--bg-home);
-  background-image: url("/assets/img/ui-icons/controller-big.svg");
+  background-image: url("/assets/img/ui/controller-big.svg");
   background-repeat: no-repeat;
   background-position: bottom left;
   font-family: "Red Rose", sans-serif;

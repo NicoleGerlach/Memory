@@ -32,8 +32,7 @@ header.header-code {
 }
 
 .card-match-bg-code {
-  background-color: pink !important;
-  // background-color: var(--white);
+  background-color: var(--white);
 }
 
 .card-match-shadow-code {
@@ -88,8 +87,8 @@ header.header-gaming {
 }
 
 .card-match-bg-gaming {
-  background-color: pink;
-  // background-color: var(--red-50);
+  background-color: var(--red-50);
+  border-radius: 9px;
 }
 
 .card-match-shadow-gaming {
@@ -142,8 +141,7 @@ header.header-projects {
 }
 
 .card-match-bg-projects {
-  background-color: pink;
-  // background-color: var(--blue-600);
+  background-color: var(--blue-600);
 }
 
 /* ---------- Food ---------- */
@@ -183,6 +181,5 @@ header.header-food {
 }
 
 .card-match-bg-food {
-  background-color: pink;
-  // background-color: var(--orange-400);
+  background-color: var(--orange-400);
 }
