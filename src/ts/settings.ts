@@ -63,6 +63,7 @@ function updateSettingsSelection(
   if (target.name === "board-size") {
     currentSizeBox.textContent = getBoardSizeSelection(selectedItem as BoardSize);
   }
+  activateStartBtn();
 }
 
 function renderSettings() {
@@ -148,6 +149,23 @@ function handleSubmitEvent(event: any) {
   saveCurrentSettings(currentSettings);
   leadToGamePage();
 }
+
+function getSelectedValue(radioName: string): string | null {
+  const el = document.querySelector(
+    `input[name="${radioName}"]:checked`
+  ) as HTMLInputElement | null;
+  return el ? el.value : null;
+}
+
+function activateStartBtn() {
+  const selectedTheme = getSelectedValue('game-theme');
+  const selectedPlayer = getSelectedValue('player');
+  const selectedBoard = getSelectedValue('board-size');
+  const btn = document.querySelector('#start_btn') as HTMLButtonElement | null;
+  if (!btn) return;
+  btn.disabled = !(selectedTheme && selectedPlayer && selectedBoard);
+}
+
 
 function saveCurrentSettings(currentSettings: Settings) {
   console.log(currentSettings);

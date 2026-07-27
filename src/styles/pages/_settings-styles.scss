@@ -178,7 +178,13 @@ h2 {
     @include flex-all.flex-all-center;
     gap: 0.5em;
     grid-area: button;
+    font-family: "Red Rose", sans-serif;
   }
+}
+
+.disabled-btn img {
+filter: brightness(0) invert(18%) sepia(75%) saturate(3000%) hue-rotate(330deg) brightness(63%) contrast(91%);
+  transition: filter .2s;
 }
 
 .preview-wrapper {
@@ -233,9 +239,11 @@ h2 {
     display: flex;
     align-items: center;
   }
+
   .list-text {
     font-weight: 700;
   }
+
   input {
     border: solid 2px #303131;
     background: radial-gradient(#303131 0 25%, transparent 30% 100%);
@@ -252,9 +260,11 @@ h2 {
     display: flex;
     align-items: center;
   }
+
   .list-text {
     font-weight: 700;
   }
+
   input {
     border: solid 2px #303131;
     background: radial-gradient(#303131 0 25%, transparent 30% 100%);
@@ -283,15 +293,20 @@ label {
 .line-small {
   width: 41px;
   height: 3px;
-  background-color: #F0EA6E;
+  background-color: var(--yellow-300);
 }
 
 .diamond-small {
   width: 12px;
   height: 12px;
-  background-color: #F0EA6E;
+  background-color: var(--yellow-300);
   transform: rotate(45deg);
 }
+
+// .start-btn {
+//   background-color: var(--yellow-300);
+//   color: var(--neutral-900);
+// }
 
 .d-none {
   display: none;
