@@ -4,6 +4,7 @@ import "../styles/entries/game.scss";
 import { themes } from "./data.js";
 import { createElementWithoutText, createElementWithText } from "./helpers.js";
 import { createImageElement } from "./helpers.js";
+import { createSvgElement } from "./helpers.js";
 import { createPlayerScoreWrapper } from "./helpers.js";
 import { CardData } from "../interfaces/card.interface";
 
@@ -175,10 +176,11 @@ function renderExitBtn() {
   if (!themeData) return;
   const exitWrapper = createElementWithoutText("section", ["exit-wrapper"], null);
   const iconPath = "exit.svg";
-  const exitImg = createImageElement("/assets/img/ui/", iconPath, null);
-  const exitText = createElementWithText("p", ["exitText"], null, "Exit game");
+  // const exitImg = createImageElement("/assets/img/ui/", iconPath, null);
+  const exitSvg = createSvgElement("exit.svg", ["exit-btn"]);
+  const exitText = createElementWithText("p", ["exit-text"], null, "Exit game");
   header.append(exitWrapper);
-  exitWrapper.append(exitImg, exitText);
+  exitWrapper.append(exitSvg, exitText);
   exitWrapper.classList.add(themeData.exitBtnClass);
 }
 

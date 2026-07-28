@@ -1,4 +1,5 @@
 import { themes } from "./data.js";
+import { SVG_ICONS } from "./svgIcons.js";
 
 import {
   BoardSize,
@@ -113,18 +114,21 @@ export function createImageElement(
   return img;
 }
 
-// export function createSvgElement(iconPath: string, svgClasses: string[] | null): HTMLElement {
-//   const markup = SVG_ICONS[iconPath];
-//   if (!markup) throw new Error(`SVG nicht gefunden: ${iconPath}`);
-//   const temp = document.createElement("div");
-//   temp.innerHTML = markup;
-//   const svg = temp.querySelector("svg") as HTMLElement;
-//   if (!svg) throw new Error(`Kein <svg> in ${iconPath}`);
-//   if (svgClasses && svgClasses.length > 0) {
-//     svg.classList.add(...svgClasses);
-//   }
-//   return svg;
-// }
+export function createSvgElement(
+  iconPath: string,
+  svgClasses: string[] | null,
+): HTMLElement {
+  const markup = SVG_ICONS[iconPath];
+  if (!markup) throw new Error (`SVG nicht gefunden: ${iconPath}`);
+  const temp = document.createElement("div");
+  temp.innerHTML = markup;
+  const svg = temp.querySelector("svg") as HTMLElement | null;
+  if (!svg) throw new Error (`Kein <svg> in ${iconPath}`);
+  if (svgClasses && svgClasses.length >  0) {
+    svg.classList.add(...svgClasses);
+  }
+  return svg;
+}
 
 export function createPlayerScoreWrapper(
   color: string,

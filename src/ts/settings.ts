@@ -64,6 +64,7 @@ function updateSettingsSelection(
     currentSizeBox.textContent = getBoardSizeSelection(selectedItem as BoardSize);
   }
   activateStartBtn();
+  updateSeparatorState();
 }
 
 function renderSettings() {
@@ -164,8 +165,31 @@ function activateStartBtn() {
   const btn = document.querySelector('#start_btn') as HTMLButtonElement | null;
   if (!btn) return;
   btn.disabled = !(selectedTheme && selectedPlayer && selectedBoard);
+  if (selectedTheme && selectedPlayer && selectedBoard) {
+    btn.classList.remove("disabled-btn");
+  }
 }
 
+function updateSeparatorState(): void {
+  const selectedPlayer = getSelectedValue("player");
+  const selectedBoard = getSelectedValue("board-size");
+  const sep1 = document.querySelector(".sep1");
+  const sep2 = document.querySelector(".sep2");
+  const diamondPlayer = document.querySelector("#diamond-player");
+  const diamondBoard = document.querySelector("#diamond-board");
+  if (sep1 && selectedPlayer) {
+    sep1.classList.add("separator-small");
+  }
+  if (sep2 && selectedBoard) {
+    sep2.classList.add("separator-small");
+  }
+  if (diamondPlayer && selectedPlayer) {
+    diamondPlayer.classList.remove("d-none");
+  }
+  if (diamondBoard && selectedBoard) {
+    diamondBoard.classList.remove("d-none");
+  }
+}
 
 function saveCurrentSettings(currentSettings: Settings) {
   console.log(currentSettings);
