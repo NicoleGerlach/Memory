@@ -132,17 +132,16 @@ export function createSvgElement(
 
 export function createPlayerScoreWrapper(
   color: string,
-  imgPath: string,
+  iconName: string,
   score: number,
 ): HTMLElement {
-  const wrapper = createElementWithoutText("div", [color, "player-score"], null,);
-  const playerIcon = createImageElement("/assets/img/ui/", imgPath, null);
-  const playerDescription = createElementWithText("span", [color], null, color);
-  const playerScore = createElementWithText("span", [color], null, String(score));
-  wrapper.append(playerIcon, playerDescription, playerScore);
+  const wrapper = createElementWithoutText("div", [color, "player-score"], null);
+  const playerIcon = createSvgElement(iconName, ["score-player-icon", color]);
+  const pointsSpan = createElementWithText("span", ["score-value", "score-points"], null, String(score));
+  const playerSpan = createElementWithText("span", ["score-value", "score-player"], null, color);
+  wrapper.append(playerIcon, pointsSpan, playerSpan);
   return wrapper;
 }
-
 
 export function getThemeSelection(item: ThemeId) {
   switch (item) {

@@ -20,7 +20,7 @@ type SelectedCard = {
 type Winner = "blue" | "orange" | "draw";
 
 let currentSettings = {} as Settings;
-let currentPlayer: Player = "blue";
+let activePlayer: Player = "blue";
 let currentTheme: ThemeId = "codeVibes";
 let firstCard: SelectedCard | null;
 let secondCard: SelectedCard | null;
@@ -30,6 +30,8 @@ let cards: CardData[] = [];
 function init() {
   loadData();
   initializeGameData();
+  createAndAppendExitOverlay();
+  bindExitButton();
   flipCard();
   generateIds(+currentSettings.size);
   resetPoints();
@@ -48,7 +50,7 @@ function loadData() {
 }
 
 function initializeGameData() {
-  currentPlayer = currentSettings.player ?? "blue";
+  activePlayer = currentSettings.player ?? "blue";
   currentTheme = currentSettings.theme ?? "codeVibes";
   if (!currentSettings.selectedPlayer) {
     currentSettings.selectedPlayer = currentSettings.player;
@@ -149,8 +151,8 @@ function renderScores() {
   const oldScoreWrapper = header.querySelector(".score-wrapper");
   if (oldScoreWrapper) oldScoreWrapper.remove();
   const scoreWrapper = createElementWithoutText("section", ["score-wrapper", themeData.scoreWrapperClass], null);
-  const bluePlayerScoreWrapper = createPlayerScoreWrapper("blue", themeData.playerIcons.blue, currentSettings.points.pointsBlue);
-  const orangePlayerScoreWrapper = createPlayerScoreWrapper("orange", themeData.playerIcons.orange, currentSettings.points.pointsOrange);
+  const bluePlayerScoreWrapper = createPlayerScoreWrapper("blue", themeData.playerIcon, currentSettings.points.pointsBlue);
+  const orangePlayerScoreWrapper = createPlayerScoreWrapper("orange", themeData.playerIcon, currentSettings.points.pointsOrange);
   scoreWrapper.append(bluePlayerScoreWrapper, orangePlayerScoreWrapper);
   header.prepend(scoreWrapper);
 }
@@ -158,15 +160,13 @@ function renderScores() {
 function renderCurrentPlayer() {
   const currentPlayerElement = document.querySelector("#current_player");
   if (!currentPlayerElement) return;
-  const themeData = getThemeData();
-  if (!themeData) return;
-  const currentPlayer = currentSettings.player;
-  const iconPath = themeData.playerIcons[currentPlayer];
+  const activePlayer = currentSettings.player;
   currentPlayerElement.textContent = "";
   const playerText = document.createElement("span");
   playerText.textContent = "Current player: ";
-  const playerIcon = createImageElement("/assets/img/ui/", iconPath, null);
-  currentPlayerElement.append(playerText, playerIcon);
+  const iconName = currentTheme === "codeVibes" ? "player-code.svg" : "player.svg";
+  const playerSvg = createSvgElement(iconName, ["player-svg", activePlayer]);
+  currentPlayerElement.append(playerText, playerSvg);
 }
 
 function renderExitBtn() {
@@ -174,15 +174,26 @@ function renderExitBtn() {
   if (!header) return;
   const themeData = getThemeData();
   if (!themeData) return;
-  const exitWrapper = createElementWithoutText("section", ["exit-wrapper"], null);
-  const iconPath = "exit.svg";
-  // const exitImg = createImageElement("/assets/img/ui/", iconPath, null);
-  const exitSvg = createSvgElement("exit.svg", ["exit-btn"]);
+  const exitWrapper = createElementWithoutText("section", ["exit-wrapper", "exit-btn"], null);
+  const exitSvg = createSvgElement("exit.svg", ["exit-icon"]);
   const exitText = createElementWithText("p", ["exit-text"], null, "Exit game");
   header.append(exitWrapper);
   exitWrapper.append(exitSvg, exitText);
   exitWrapper.classList.add(themeData.exitBtnClass);
 }
+
+// function renderExitBtn() {
+//   const header = document.querySelector("#game_header");
+//   if (!header) return;
+//   const themeData = getThemeData();
+//   if (!themeData) return;
+//   const exitWrapper = createElementWithoutText("section", ["exit-wrapper"], null);
+//   const exitSvg = createSvgElement("exit.svg", ["exit-btn"]);
+//   const exitText = createElementWithText("p", ["exit-text"], null, "Exit game");
+//   header.append(exitWrapper);
+//   exitWrapper.append(exitSvg, exitText);
+//   exitWrapper.classList.add(themeData.exitBtnClass);
+// }
 
 function shuffleCards(array: CardData[]): CardData[] {
   const shuffled = [...array];
@@ -392,8 +403,8 @@ function renderLoseView(
   const gameOver = createElementWithText("span", ["game-over-text"], null, "Game Over");
   const finalScore = createElementWithText("span", ["game-over-score"], null, "Final score");
   const scoreWrapper = createElementWithoutText("section", ["score-wrapper"], null);
-  const blueScore = createPlayerScoreWrapper("blue", themeData.playerIcons.blue, currentSettings.points.pointsBlue);
-  const orangeScore = createPlayerScoreWrapper("orange", themeData.playerIcons.orange, currentSettings.points.pointsOrange);
+  const blueScore = createPlayerScoreWrapper("blue", themeData.playerIcon, currentSettings.points.pointsBlue);
+  const orangeScore = createPlayerScoreWrapper("orange", themeData.playerIcon, currentSettings.points.pointsOrange);
   gameField.append(wrapper, scoreWrapper);
   wrapper.append(gameOver, finalScore, scoreWrapper);
   scoreWrapper.append(blueScore, orangeScore);
@@ -414,5 +425,40 @@ function renderDrawView(
   safeAddClasses(header, themeData.gameBackground);
 }
 
+function createExitOverlay(): HTMLElement {
+  const overlay = createElementWithoutText("div", ["exit-overlay", "d-none"], "exit_overlay");
+  const modal = createElementWithoutText("section", ["exit-modal"], null);
+  const text = createElementWithText("p", ["exit-text"], null, "Are you sure you want to quit the game?");
+  const buttonWrapper = createElementWithoutText("div", ["exit-buttons"], null);
+  const cancelBtn = createElementWithText("button", ["exit-cancel"], null, "Back to game");
+  const confirmBtn = createElementWithText("button", ["exit-confirm"], null, "Exit game");
+  overlay.append(modal);
+  modal.append(text, buttonWrapper);
+  buttonWrapper.append(cancelBtn, confirmBtn);
+  confirmBtn.addEventListener("click", () => {
+    window.location.href = "/index.html";
+  });
+  cancelBtn.addEventListener("click", () => {
+    overlay.classList.add("d-none");
+  });
+  return overlay;
+}
+
+function createAndAppendExitOverlay() {
+  const existingOverlay = document.querySelector("#exit_overlay");
+  if (existingOverlay) return;
+  const overlay = createExitOverlay();
+  document.body.append(overlay);
+}
+
+function bindExitButton() {
+  const exitBtn = document.querySelector(".exit-btn");
+  if (!exitBtn) return;
+  exitBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    const overlay = document.querySelector("#exit_overlay");
+    overlay?.classList.remove("d-none");
+  });
+}
 
 init();

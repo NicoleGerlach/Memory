@@ -67,6 +67,10 @@ header.header-gaming {
 .score-wrapper-gaming {
   background-color: var(--white);
   border-radius: 10px;
+
+  .score-player {
+    display: none;
+  }
 }
 
 .exit-btn-gaming {

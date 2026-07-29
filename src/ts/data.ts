@@ -1,3 +1,5 @@
+import { SVG_ICONS } from "./svgIcons";
+
 export const preSelectedTheme = "codeVibes";
 export const settingsData = [
   {
@@ -83,10 +85,11 @@ export const themes = {
     cardMatchBorder: "card-match-border-code",
     cardMatchBackground: "card-match-bg-code",
     cardMatchShadow: "card-match-shadow-code",
-    playerIcons: {
-      blue: "code_blue.svg",
-      orange: "code_orange.svg",
-    },
+    // playerIcons: {
+    //   blue: "code_blue.svg",
+    //   orange: "code_orange.svg",
+    // },
+    playerIcon: "player-code.svg",
     previewPath: "preview-code.svg",
 
     motifs: [
@@ -134,10 +137,11 @@ export const themes = {
     cardMatchBorder: "card-match-border-gaming",
     cardMatchBackground: "card-match-bg-gaming",
     cardMatchShadow: "card-match-shadow-gaming",
-    playerIcons: {
-      blue: "player_blue.svg",
-      orange: "player_orange.svg",
-    },
+    // playerIcons: {
+    //   blue: "player_blue.svg",
+    //   orange: "player_orange.svg",
+    // },
+    playerIcon: "player.svg",
     previewPath: "preview-gaming.svg",
     motifs: [
       "banana.svg",
@@ -183,10 +187,11 @@ export const themes = {
     cardMatchBackground: "card-match-bg-projects",
     cardMatchShadow: "",
 
-    playerIcons: {
-      blue: "player_blue.svg",
-      orange: "player_orange.svg",
-    },
+    // playerIcons: {
+    //   blue: "player_blue.svg",
+    //   orange: "player_orange.svg",
+    // },
+    playerIcon: "player.svg",
     previewPath: "preview-projects.svg",
 
     motifs: [
@@ -234,10 +239,11 @@ export const themes = {
     cardMatchBackground: "card-match-bg-food",
     cardMatchShadow: "",
 
-    playerIcons: {
-      blue: "player_blue.svg",
-      orange: "player_orange.svg",
-    },
+    // playerIcons: {
+    //   blue: "player_blue.svg",
+    //   orange: "player_orange.svg",
+    // },
+    playerIcon: "player.svg",
     previewPath: "preview-food.svg",
 
     motifs: [

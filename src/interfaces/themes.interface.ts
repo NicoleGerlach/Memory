@@ -18,18 +18,11 @@ export interface ThemeData {
   gameOverBackground: string;
   winnerBackground: string;
   cardBackground: string;
-  playerIcons: PlayerIcons;
+  playerIcon: string;
   previewPath: string;
   motifs: string[];
   winnerIcons: WinnerIcons;
 }
-
-
-export interface PlayerIcons {
-  blue: string;
-  orange: string;
-}
-
 
 export interface WinnerIcons {
   winBlue: string;
