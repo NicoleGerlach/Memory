@@ -8,7 +8,7 @@ body {
   font-family: "Almarai", sans-serif;
   height: 100vh;
   width: 100vw;
-  margin: 0 auto;
+  margin: 70px;
   overflow: hidden;
   max-width: 1440px;
   flex-direction: column;
@@ -103,24 +103,10 @@ h2 {
 }
 
 .settings-selection {
-  // grid-area: selection;
-  // max-width: 600px;
-  // padding: 1em;
-  // display: flex;
-  // justify-content: space-around;
-  // // display: grid;
-  // // grid-template-columns: repeat(2, 1fr 8px) 1fr;
-  // // grid-template-areas:
-  // //   "theme sep1 player sep2 size"
-  // //   "button button button button button";
-  // gap: 0.5em;
-  // font-size: 0.9rem;
-  // place-items: center;
   @include flex-align.flex-align-center;
 
   background-color: var(--panel-bg);
-  gap: 1rem; // Abstand zu den Dividers
-  // Falls der Container zu lang wird, kein Umbruch der P-Elemente
+  gap: 1rem;
   flex-wrap: nowrap;
   padding: 18px;
 
@@ -138,7 +124,6 @@ h2 {
     border: solid 6px var(--panel-separator);
     transform: rotate(45deg);
     margin-left: -4px;
-
   }
 
   .sep1 {
@@ -197,101 +182,14 @@ h2 {
   justify-content: flex-end;
 }
 
-
 .preview {
   grid-area: preview;
   justify-self: end;
 }
 
-.list-element {
-  input {
-    border: solid 3px #303131;
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
-    appearance: none;
-    cursor: pointer;
-
-    display: inline-block;
-    box-sizing: border-box;
-    background: #fff;
-  }
-
-  // input:checked {
-  //   border: solid 2px #303131;
-  //   background: radial-gradient(#303131 0 25%, transparent 35% 100%);
-  // }
-
-  &:hover {
-    // font-weight: 700;
-    cursor: pointer;
-
-    // input {
-    //   border: solid 2px #303131;
-    //   background: radial-gradient(#303131 0 25%, transparent 30% 100%);
-    // }
-  }
-}
-
-// Gecheckt → anzeigen, ABER nur wenn nirgends gehovert wird
-.theme-list:not(:has(:hover)) .list-element:has(input:checked),
-.player-list:not(:has(:hover)) .list-element:has(input:checked),
-.size-list:not(:has(:hover)) .list-element:has(input:checked) {
-
-  .line-wrap-small,
-  .diamond {
-    display: flex;
-    align-items: center;
-  }
-
-  .list-text {
-    font-weight: 700;
-  }
-
-  input {
-    border: solid 2px #303131;
-    background: radial-gradient(#303131 0 25%, transparent 30% 100%);
-  }
-}
-
-// Gehovertes Element (das nicht gecheckt ist) → anzeigen
-.theme-list:has(:hover) .list-element:hover:not(:has(input:checked)),
-.player-list:has(:hover) .list-element:hover:not(:has(input:checked)),
-.size-list:has(:hover) .list-element:hover:not(:has(input:checked)) {
-
-  .line-wrap-small,
-  .diamond {
-    display: flex;
-    align-items: center;
-  }
-
-  .list-text {
-    font-weight: 700;
-  }
-
-  input {
-    border: solid 2px #303131;
-    background: radial-gradient(#303131 0 25%, transparent 30% 100%);
-  }
-}
-
-label {
-  @include flex-align.flex-align-center;
-  gap: 10px;
-  cursor: pointer;
-
-  &:hover {
-
-    .line-wrap-small,
-    .diamond-small {
-      display: flex;
-      align-items: center;
-    }
-  }
-}
-
 .line-wrap-small {
   display: none;
+  align-items: center;
 }
 
 .line-small {
@@ -307,10 +205,71 @@ label {
   transform: rotate(45deg);
 }
 
-// .start-btn {
-//   background-color: var(--yellow-300);
-//   color: var(--neutral-900);
-// }
+.list-element {
+  input {
+    border: solid 3px #303131;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    appearance: none;
+    cursor: pointer;
+    display: inline-block;
+    box-sizing: border-box;
+    background: #fff;
+  }
+}
+
+label {
+  @include flex-align.flex-align-center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+/* Standard: ausgewaehltes Element sichtbar */
+.list-element:has(input:checked) {
+  .line-wrap-small {
+    display: flex;
+  }
+  .list-text {
+    font-weight: 700;
+  }
+  input {
+    border: solid 2px #303131;
+    background: radial-gradient(#303131 0 25%, transparent 30% 100%);
+  }
+}
+
+/* Nur gecheckte Elemente ausblenden, die NICHT gerade gehovert sind */
+.theme-list.has-hover .list-element:has(input:checked):not(.is-hovered),
+.player-list.has-hover .list-element:has(input:checked):not(.is-hovered),
+.size-list.has-hover .list-element:has(input:checked):not(.is-hovered) {
+  .line-wrap-small {
+    display: none;
+  }
+  .list-text {
+    font-weight: 400;
+  }
+  input {
+    border: solid 3px #303131;
+    background: #fff;
+  }
+}
+
+/* Das aktuell gehoverte Element aktiv anzeigen */
+.theme-list.has-hover .list-element.is-hovered,
+.player-list.has-hover .list-element.is-hovered,
+.size-list.has-hover .list-element.is-hovered {
+  .line-wrap-small {
+    display: flex;
+  }
+  .list-text {
+    font-weight: 700;
+  }
+  input {
+    border: solid 2px #303131;
+    background: radial-gradient(#303131 0 25%, transparent 30% 100%);
+  }
+}
 
 .d-none {
   display: none;

@@ -182,19 +182,6 @@ function renderExitBtn() {
   exitWrapper.classList.add(themeData.exitBtnClass);
 }
 
-// function renderExitBtn() {
-//   const header = document.querySelector("#game_header");
-//   if (!header) return;
-//   const themeData = getThemeData();
-//   if (!themeData) return;
-//   const exitWrapper = createElementWithoutText("section", ["exit-wrapper"], null);
-//   const exitSvg = createSvgElement("exit.svg", ["exit-btn"]);
-//   const exitText = createElementWithText("p", ["exit-text"], null, "Exit game");
-//   header.append(exitWrapper);
-//   exitWrapper.append(exitSvg, exitText);
-//   exitWrapper.classList.add(themeData.exitBtnClass);
-// }
-
 function shuffleCards(array: CardData[]): CardData[] {
   const shuffled = [...array];
   for (let i = shuffled.length - 1; i > 0; i--) {

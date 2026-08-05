@@ -22,6 +22,7 @@ import {
 function init() {
   renderSettings();
   setEventListeners();
+  toggleListHover();
 }
 
 function setEventListeners() {
@@ -200,5 +201,24 @@ function leadToGamePage() {
   location.href = "/game.html";
 }
 
-
+function toggleListHover() {
+  const lists = document.querySelectorAll<HTMLElement>(".theme-list, .player-list, .size-list");
+  lists.forEach((list) => {
+    const items = list.querySelectorAll<HTMLElement>(".list-element");
+    items.forEach((item) => {
+      item.addEventListener("mouseenter", () => {
+        items.forEach((el) => el.classList.remove("is-hovered"));
+        list.classList.add("has-hover");
+        item.classList.add("is-hovered");
+      });
+      item.addEventListener("mouseleave", (e) => {
+        const relatedTarget = e.relatedTarget as Node | null;
+        if (!relatedTarget || !list.contains(relatedTarget)) {
+          items.forEach((el) => el.classList.remove("is-hovered"));
+          list.classList.remove("has-hover");
+        }
+      });
+    });
+  });
+}
 init();

@@ -6,7 +6,9 @@ body {
   background-image: url("/assets/img/ui/controller-big.svg");
   background-repeat: no-repeat;
   background-position: bottom left;
+  background-size: clamp(9.375rem, 5.571rem + 19.018vw, 22.688rem);
   font-family: "Red Rose", sans-serif;
+  overflow-x: hidden;
 }
 
 .home {
