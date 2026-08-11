@@ -20,6 +20,12 @@ export interface ThemeData {
   cardBackground: string;
   playerIcon: string;
   previewPath: string;
+  exitModalClass: string;
+  exitTextClass: string;
+  exitCancelBtn: string;
+  exitConfirmBtn: string;
+  exitCancelBtnClass: string;
+  exitConfirmBtnClass: string;
   motifs: string[];
   winnerIcons: WinnerIcons;
 }

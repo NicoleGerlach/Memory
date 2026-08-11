@@ -34,18 +34,23 @@
   --green-500: #4dd5bc;
   --green-500-transparent-20: #4dd5bc33;
   --green-400-transparent-20: rgba(134, 233, 214, 0.2);
+  --green-300-transparent-14: rgba(134, 233, 214, 0.14);
+  --green-200: #66CFBC;
   --green-100: #e8f3f0;
 
   --red-50: #f6f1f3;
   --red-500-transparent-35: rgba(237, 27, 118, 0.35);
-  --red_600-transparent-20: rgba(253, 150, 201, 0.2);
   --red_700-transparent-30: rgba(237, 27, 118, 0.3);
+  --red_600-transparent-20: rgba(253, 150, 201, 0.2);
+  --red-400-transparent-08: rgba(237, 27, 118, 0.08);
+  --red-300: #FD8A81;
   --red-500: #ed1b76;
   --red-700: #c41463;
   --red-600: #E71C4F;
 
   --orange-700: #fff9f2;
   --orange-600: #a45212;
+  --orange-550: #FFAB3E;
   --orange-500: #f3832d;
   --orange-500-transparent-25: rgba(243, 131, 45, 0.25);
   --orange-400: #f4ece4;
@@ -96,17 +101,13 @@
 
   /* ---------- cards ---------- */
 
-  --theme-red-bg-gradient: linear-gradient(
-    180deg,
-    var(--blue-800),
-    var(--blue-500)
-  );
+  --theme-red-bg-gradient: linear-gradient(180deg,
+      var(--blue-800),
+      var(--blue-500));
 
-  --theme-red-card-gradient: linear-gradient(
-    180deg,
-    var(--red-500),
-    var(--blue-900)
-  );
+  --theme-red-card-gradient: linear-gradient(180deg,
+      var(--red-500),
+      var(--blue-900));
 
   --theme-red-card-front: var(--red-50);
 
@@ -144,17 +145,13 @@
 
   /* ----------------- cards -------------------------- */
 
-  --theme-green-bg-gradient: linear-gradient(
-    180deg,
-    var(--neutral-900),
-    var(--neutral-700)
-  );
+  --theme-green-bg-gradient: linear-gradient(180deg,
+      var(--neutral-900),
+      var(--neutral-700));
 
-  --theme-green-card-gradient: linear-gradient(
-    180deg,
-    var(--green-500),
-    var(--green-700)
-  );
+  --theme-green-card-gradient: linear-gradient(180deg,
+      var(--green-500),
+      var(--green-700));
 
   --theme-green-card-front: var(--green-100);
 
@@ -238,8 +235,8 @@
 
   --match-status-bg: var(--orange-100);
 
-//   --match-status-border-food: solid 2px var(--orange-500);
-  
+  //   --match-status-border-food: solid 2px var(--orange-500);
+
   --match-status-icon: var(--orange-500);
   --match-status-shadow: 0 0 12px var(--orange-500-transparent-25);
 

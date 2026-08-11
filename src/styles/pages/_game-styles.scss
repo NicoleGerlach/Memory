@@ -177,7 +177,7 @@ body {
 .exit-overlay {
     position: fixed;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.3);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -188,12 +188,27 @@ body {
     }
 }
 
-.exit.modal {
-    background-color: beige;
-    border-radius: 12px;
+.exit-modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 54px;
+    padding: 40px;
     text-align: center;
-    max-width: 400px;
-    width: 90%;
+    width: 480px;
+    height: 250px;
+}
+
+.exit-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+
+    >button {
+        cursor: pointer;
+        font-size: 16px;
+    }
 }
 
 .exit-text {

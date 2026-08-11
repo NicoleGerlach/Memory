@@ -3,24 +3,24 @@
 @use "../abstracts/mixins" as flex-justify;
 
 body {
-  @include flex-justify.flex-justify-center;
   background-color: var(--white);
   font-family: "Almarai", sans-serif;
   min-height: 100vh;
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
-  padding: 24px 32px;
+  padding: 24px 32px 32px;
   box-sizing: border-box;
-  flex-direction: column;
   overflow: hidden;
 }
 
 main {
-  @include flex-justify.flex-justify-center;
-  width: 100%;
-  padding: 0;
+  display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  padding: 0;
   gap: clamp(1rem, 2vw, 2rem);
   box-sizing: border-box;
 }
@@ -76,49 +76,18 @@ h2 {
   }
 }
 
-// .settings-content-wrapper {
-//   display: grid;
-//   grid-template-columns: 260px minmax(0, 1fr);
-//   grid-template-areas:
-//     "settings preview"
-//     "settings selection";
-//   gap: clamp(1rem, 2.5vw, 2.5rem);
-//   align-items: start;
-//   width: 100%;
-// }
-
 .settings-content-wrapper {
   display: grid;
   grid-template-columns: 260px 1fr;
   grid-template-areas:
     "settings preview"
     "settings selection";
-  gap: 24px 32px;
+  gap: 45px clamp(0.375rem, -0.698rem + 1.887vw, 1rem);
   align-items: start;
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
-
-// .settings-box {
-//   grid-area: settings;
-//   margin: 0;
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: flex-start;
-//   width: 260px;
-
-
-//   .theme-box,
-//   .player-box,
-//   .size-box {
-//     margin: 0 0 clamp(1rem, 2vw, 2rem);
-
-//     .theme-list li,
-//     .player-list li,
-//     .size-list li {
-//       margin: 0.5em 0;
-//     }
-//   }
-// }
 
 .settings-box {
   grid-area: settings;
@@ -148,31 +117,30 @@ h2 {
   justify-content: flex-end;
   align-items: flex-start;
   margin: 0;
-  // min-width: 0;
-}
 
-.preview {
-  // justify-self: end;
-  max-width: 100%;
+  >img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
 }
 
 .settings-form {
   grid-area: selection;
   justify-self: end;
-  // width: fit-content;
-  // max-width: 100%;
   width: auto;
 }
 
 .settings-selection {
   background-color: var(--panel-bg);
   display: grid;
-  grid-template-columns: 200px 8px 150px 8px 140px max-content;
+  grid-template-columns: clamp(9.375rem, 3.957rem + 8.936vw, 12rem) 0 120px 0 clamp(5.625rem, 1.755rem + 6.383vw, 7.5rem) max-content;
   grid-template-areas: "theme sep1 player sep2 size button";
   align-items: center;
-  gap: 16px;
-  padding: 18px 24px;
+  gap: clamp(0.75rem, -0.798rem + 2.553vw, 1.5rem);
+  padding: 12px 20px;
   box-sizing: border-box;
+  justify-items: center;
 
   .separator {
     display: flex;
@@ -205,25 +173,24 @@ h2 {
 
   .current-theme {
     grid-area: theme;
-    width: 200px;
+    width: clamp(9.375rem, 3.957rem + 8.936vw, 12rem);
   }
 
   .current-player {
     grid-area: player;
-    width: 150px;
+    width: 120px;
   }
 
   .current-size {
     grid-area: size;
-    width: 140px;
+    width: clamp(5.625rem, 1.755rem + 6.383vw, 7.5rem);
   }
 
   .current-player,
   .current-size,
   .current-theme {
-    font-size: clamp(1rem, 1vw + 0.75rem, 1.25rem);
+    font-size: clamp(1.125rem, 0.867rem + 0.426vw, 1.25rem);
     text-align: center;
-    padding: 0.5em;
     white-space: nowrap;
     overflow: visible;
     box-sizing: border-box
@@ -234,84 +201,11 @@ h2 {
     grid-area: button;
     gap: 0.5em;
     font-family: "Red Rose", sans-serif;
+    font-size: clamp(1.125rem, 0.867rem + 0.426vw, 1.25rem);
     justify-self: start;
     padding: 14px 24px;
   }
 }
-
-// .settings-selection {
-//   display: grid;
-//   grid-template-columns: 260px 1fr;
-//   grid-template-areas:
-//     "settings preview"
-//     "settings selection";
-//   gap: 24px 32px;
-//   align-items: start;
-//   width: 100%;
-
-//   .separator {
-//     display: flex;
-//     flex-direction: column;
-//     justify-content: flex-end;
-//     height: 56px;
-//     width: 8px;
-//     background-color: var(--panel-separator);
-//     transform: rotate(16deg);
-//     flex-shrink: 0;
-//   }
-
-//   .diamond {
-//     border: solid 6px var(--panel-separator);
-//     transform: rotate(45deg);
-//     margin-left: -4px;
-//   }
-
-//   .sep1 {
-//     grid-area: sep1;
-//   }
-
-//   .sep2 {
-//     grid-area: sep2;
-//   }
-
-//   .separator-small {
-//     width: 4px;
-//   }
-
-//   .current-theme {
-//     grid-area: theme;
-//     width: 200px;
-//   }
-
-//   .current-player {
-//     grid-area: player;
-//     width: 150px;
-//   }
-
-//   .current-size {
-//     grid-area: size;
-//     width: 140px;
-//   }
-
-//   .current-player,
-//   .current-size,
-//   .current-theme {
-//     font-size: clamp(1rem, 1vw + 0.75rem, 1.25rem);
-//     text-align: center;
-//     padding: 0.5em;
-//     white-space: nowrap;
-//     box-sizing: border-box;
-//   }
-
-//   .start-btn {
-//     @include flex-all.flex-all-center;
-//     grid-area: button;
-//     gap: 0.5em;
-//     font-family: "Red Rose", sans-serif;
-//     padding: 12px 18px;
-//     justify-self: start;
-//   }
-// }
 
 .start-btn-activate {
   color: #303131;
@@ -408,4 +302,109 @@ label {
 
 .d-none {
   display: none;
+}
+
+main::-webkit-scrollbar {
+  display: none;
+}
+
+main {
+  scrollbar-width: none;
+}
+
+main {
+  -ms-overflow-style: none;
+}
+
+@media (max-width: 900px) {
+  body {
+    height: 100vh;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 16px 16px 24px;
+  }
+
+  main {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-sizing: border-box;
+    padding-right: 4px;
+  }
+
+  .settings-content-wrapper {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "settings"
+      "preview"
+      "selection";
+    gap: 12px;
+  }
+
+  .settings-box {
+    width: 100%;
+    flex: 1 1 auto;
+  }
+
+  .preview-wrapper {
+    justify-content: center;
+
+    >img {
+      width: 80%;
+      height: auto;
+    }
+  }
+
+  .settings-form {
+    width: 100%;
+    justify-self: stretch;
+  }
+
+  .current-player,
+  .current-size,
+  .current-theme {
+    font-size: 14px;
+  }
+
+  .theme-list li,
+  .player-list li,
+  .size-list li {
+    margin: 0.2em 0;
+  }
+
+  .settings-selection {
+    grid-template-columns: 1fr 8px 1fr 8px 1fr;
+    align-items: center;
+    gap: 12px;
+    justify-items: center;
+  }
+
+  .settings-selection .current-theme,
+  .settings-selection .current-player,
+  .settings-selection .current-size {
+    width: 100%;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  .settings-selection .start-btn {
+    justify-self: center;
+    width: fit-content;
+  }
+
+  @media (max-width: 550px) {
+    .settings-selection {
+      grid-template-areas:
+        "theme sep1 player sep2 size"
+        "button button button button button";
+    }
+  }
 }

@@ -85,12 +85,14 @@ export const themes = {
     cardMatchBorder: "card-match-border-code",
     cardMatchBackground: "card-match-bg-code",
     cardMatchShadow: "card-match-shadow-code",
-    // playerIcons: {
-    //   blue: "code_blue.svg",
-    //   orange: "code_orange.svg",
-    // },
     playerIcon: "player-code.svg",
     previewPath: "preview-code.svg",
+    exitModalClass: "exit-modal-code",
+    exitTextClass: "exit-text-code",
+    exitCancelBtn: "Back to game",
+    exitConfirmBtn: "Exit game",
+    exitCancelBtnClass: "exit-cancel-btn-code",
+    exitConfirmBtnClass: "exit-confirm-btn-code",
 
     motifs: [
       "angular.svg",
@@ -137,12 +139,15 @@ export const themes = {
     cardMatchBorder: "card-match-border-gaming",
     cardMatchBackground: "card-match-bg-gaming",
     cardMatchShadow: "card-match-shadow-gaming",
-    // playerIcons: {
-    //   blue: "player_blue.svg",
-    //   orange: "player_orange.svg",
-    // },
     playerIcon: "player.svg",
     previewPath: "preview-gaming.svg",
+    exitModalClass: "exit-modal-gaming",
+    exitTextClass: "exit-text-gaming",
+    exitCancelBtn: "No, back to game",
+    exitConfirmBtn: "Yes, quit game",
+    exitCancelBtnClass: "exit-cancel-btn-gaming",
+    exitConfirmBtnClass: "exit-confirm-btn-gaming",
+
     motifs: [
       "banana.svg",
       "card.svg",
@@ -186,13 +191,14 @@ export const themes = {
     cardMatchBorder: "card-match-border-projects",
     cardMatchBackground: "card-match-bg-projects",
     cardMatchShadow: "",
-
-    // playerIcons: {
-    //   blue: "player_blue.svg",
-    //   orange: "player_orange.svg",
-    // },
     playerIcon: "player.svg",
     previewPath: "preview-projects.svg",
+    exitModalClass: "exit-modal-projects",
+    exitTextClass: "exit-text-projects",
+    exitCancelBtn: "Back to game",
+    exitConfirmBtn: "Exit game",
+    exitCancelBtnClass: "exit-cancel-btn-projects",
+    exitConfirmBtnClass: "exit-confirm-btn-projects",
 
     motifs: [
       "noodles.svg",
@@ -238,13 +244,14 @@ export const themes = {
     cardMatchBorder: "card-match-border-food",
     cardMatchBackground: "card-match-bg-food",
     cardMatchShadow: "",
-
-    // playerIcons: {
-    //   blue: "player_blue.svg",
-    //   orange: "player_orange.svg",
-    // },
     playerIcon: "player.svg",
     previewPath: "preview-food.svg",
+    exitModalClass: "exit-modal-food",
+    exitTextClass: "exit-text-food",
+    exitCancelBtn: "No, back to game",
+    exitConfirmBtn: "Yes, quit game",
+    exitCancelBtnClass: "exit-cancel-btn-food",
+    exitConfirmBtnClass: "exit-confirm-btn-food",
 
     motifs: [
       "pommes.svg",

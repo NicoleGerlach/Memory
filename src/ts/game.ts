@@ -413,15 +413,20 @@ function renderDrawView(
 }
 
 function createExitOverlay(): HTMLElement {
+  const themeData = getThemeData();
   const overlay = createElementWithoutText("div", ["exit-overlay", "d-none"], "exit_overlay");
   const modal = createElementWithoutText("section", ["exit-modal"], null);
-  const text = createElementWithText("p", ["exit-text"], null, "Are you sure you want to quit the game?");
+  const text = createElementWithText("p", null, null, "Are you sure you want to quit the game?");
   const buttonWrapper = createElementWithoutText("div", ["exit-buttons"], null);
-  const cancelBtn = createElementWithText("button", ["exit-cancel"], null, "Back to game");
-  const confirmBtn = createElementWithText("button", ["exit-confirm"], null, "Exit game");
+  const cancelBtn = createElementWithText("button", null, null, `${themeData.exitCancelBtn}`);
+  const confirmBtn = createElementWithText("button", null, null, `${themeData.exitConfirmBtn}`);
   overlay.append(modal);
   modal.append(text, buttonWrapper);
   buttonWrapper.append(cancelBtn, confirmBtn);
+  safeAddClasses(modal, themeData.exitModalClass);
+  safeAddClasses(text, themeData.exitTextClass);
+  safeAddClasses(cancelBtn, themeData.exitCancelBtnClass);
+  safeAddClasses(confirmBtn, themeData.exitConfirmBtnClass);
   confirmBtn.addEventListener("click", () => {
     window.location.href = "/index.html";
   });
