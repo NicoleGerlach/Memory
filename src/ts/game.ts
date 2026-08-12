@@ -360,6 +360,7 @@ function renderEndScreen() {
   } else {
     renderLoseView(gameField, header, themeData);
   }
+  backToStart();
 }
 
 function renderWinView(
@@ -404,12 +405,16 @@ function renderDrawView(
   themeData: ThemeData,
 ) {
   const wrapper = createElementWithoutText("section", ["game-over-wrapper"], null);
-  const text = createElementWithText("span", ["game-over-text"], null, "It's a");
-  const draw = createElementWithText("span", ["game-over-text"], null, "Draw");
+  const text = createElementWithText("span", null, null, "It's a");
+  const draw = createElementWithText("span", null, null, "Draw");
   const scales = createImageElement(`/assets/img/${themeData.id}/`, themeData.winnerIcons.draw, ["winner-icon"]);
+  const backBtn = createElementWithText("button", null, null, `${themeData.backBtnText}`);
   gameField.append(wrapper);
-  wrapper.append(text, draw, scales);
+  wrapper.append(text, draw, scales, backBtn);
   safeAddClasses(header, themeData.gameBackground);
+  safeAddClasses(text, themeData.drawTextClass);
+  safeAddClasses(draw, themeData.drawClass);
+  safeAddClasses(backBtn, themeData.backBtnClass);
 }
 
 function createExitOverlay(): HTMLElement {
@@ -427,12 +432,6 @@ function createExitOverlay(): HTMLElement {
   safeAddClasses(text, themeData.exitTextClass);
   safeAddClasses(cancelBtn, themeData.exitCancelBtnClass);
   safeAddClasses(confirmBtn, themeData.exitConfirmBtnClass);
-  confirmBtn.addEventListener("click", () => {
-    window.location.href = "/index.html";
-  });
-  cancelBtn.addEventListener("click", () => {
-    overlay.classList.add("d-none");
-  });
   return overlay;
 }
 
@@ -451,6 +450,41 @@ function bindExitButton() {
     const overlay = document.querySelector("#exit_overlay");
     overlay?.classList.remove("d-none");
   });
+  closeExitOverlay();
+  backToSettings();
+
+}
+
+function closeExitOverlay() {
+  const themeData = getThemeData();
+  const backToGame = document.querySelector(`.${themeData.exitCancelBtnClass}`);
+  if (backToGame) {
+    backToGame.addEventListener("click", () => {
+      const overlay = document.querySelector("#exit_overlay");
+      overlay?.classList.add("d-none");
+    }
+    )
+  };
+}
+
+function backToSettings() {
+  const themeData = getThemeData();
+  const confirmBtn = document.querySelector(`.${themeData.exitConfirmBtnClass}`);
+  if (confirmBtn) {
+    confirmBtn.addEventListener("click", () => {
+      window.location.href = "/settings.html";
+    });
+  }
+}
+
+function backToStart() {
+  const themeData = getThemeData();
+  const backBtn = document.querySelector(`.${themeData.backBtnClass}`);
+  if (backBtn) {
+    backBtn.addEventListener("click", () => {
+      window.location.href = "/index.html";
+    });
+  }
 }
 
 init();

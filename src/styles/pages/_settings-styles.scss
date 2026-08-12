@@ -2,6 +2,7 @@
 @use "../abstracts/mixins" as flex-align;
 @use "../abstracts/mixins" as flex-justify;
 
+
 body {
   background-color: var(--white);
   font-family: "Almarai", sans-serif;
@@ -27,7 +28,7 @@ main {
 
 h1 {
   font-family: "Red Rose", sans-serif;
-  font-size: clamp(3rem, -0.25rem + 10vw, 8.75rem);
+  font-size: clamp(3rem, 2.893rem + 0.536vw, 3.375rem);
   font-weight: 700;
   line-height: 1;
   margin: 0;
@@ -82,11 +83,12 @@ h2 {
   grid-template-areas:
     "settings preview"
     "settings selection";
-  gap: 45px clamp(0.375rem, -0.698rem + 1.887vw, 1rem);
+  gap: clamp(1rem, 0.482rem + 2.589vw, 2.813rem) clamp(0.375rem, -0.698rem + 1.887vw, 1rem);
   align-items: start;
   width: 100%;
   max-width: 100%;
   min-width: 0;
+  padding-top: clamp(1.25rem, -2.917rem + 7.407vw, 3.75rem);
 }
 
 .settings-box {
@@ -101,13 +103,15 @@ h2 {
   .theme-box,
   .player-box,
   .size-box {
-    margin: 0 0 clamp(1rem, 2vw, 2rem);
+    padding: 0 0 clamp(1rem, 2vw, 2rem);
+  }
 
-    .theme-list li,
-    .player-list li,
-    .size-list li {
-      margin: 0.5em 0;
-    }
+  .theme-list,
+  .size-list,
+  .player-list {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.25rem, -0.167rem + 0.741vw, 0.5rem);
   }
 }
 
@@ -122,6 +126,9 @@ h2 {
     display: block;
     max-width: 100%;
     height: auto;
+    max-height: 60vh;
+    width: auto;
+    object-fit: contain;
   }
 }
 
@@ -371,12 +378,6 @@ main {
   .current-size,
   .current-theme {
     font-size: 14px;
-  }
-
-  .theme-list li,
-  .player-list li,
-  .size-list li {
-    margin: 0.2em 0;
   }
 
   .settings-selection {

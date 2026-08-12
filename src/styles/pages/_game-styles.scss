@@ -1,4 +1,5 @@
 @use "../abstracts/mixins" as flex-align;
+@use "../abstracts/mixins" as flex-all;
 
 body {
     @include flex-align.flex-align-center;
@@ -11,29 +12,79 @@ body {
     font-family: "Red Rose", sans-serif;
 }
 
+// Neu eingefügt
+header {
+  @include flex-align.flex-align-center;
+  padding: 1em;
+  justify-content: space-between;
+  color: white;
+//   margin: 10px 0 20px;
+  width: 90%;
+
+  .score-wrapper {
+    @include flex-all.flex-all-center;
+    gap: 20px;
+    padding: 0.75em 1em;
+    text-transform: capitalize;
+    font-size: clamp(1rem, 0.857rem + 0.714vw, 1.5rem);
+
+    .player-score {
+      display: flex;
+      gap: 5px;
+      text-transform: capitalize;
+    }
+    .player-svg {
+      height: 40px;
+    }
+  }
+
+  .player-score {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    >img {
+      height: clamp(0.875rem, 0.699rem + 0.882vw, 1.25rem);
+    }
+  }
+
+  .current-player-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.2em;
+    font-size: clamp(1.125rem, 0.982rem + 0.714vw, 1.625rem);
+    gap: 8px;
+
+    >img {
+      height: clamp(1.125rem, 0.949rem + 0.882vw, 1.5rem);
+    }
+  }
+
+  .exit-wrapper {
+    @include flex-all.flex-all-center;
+    gap: 10px;
+    padding: 0.75em 1em;
+    font-size: clamp(1rem, 0.857rem + 0.714vw, 1.5rem);
+  }
+}
+//
+
 .game-field {
     display: grid;
     grid-template-columns: repeat(4, auto);
     place-content: center;
     align-content: flex-start;
-    gap: 10px;
+    // gap: 10px;
+    gap: clamp(0.625rem, 0.518rem + 0.536vw, 1rem);
     min-height: 100%;
 }
 
-// .game-field[data-cards="16"] {
-//     grid-template-columns: repeat(4, auto);
-// }
-
-// .game-field[data-cards="24"] {
-//     grid-template-columns: repeat(6, auto);
-// }
-
-// .game-field[data-cards="36"] {
-//     grid-template-columns: repeat(6, auto);
-// }
-
 .field {
     height: clamp(4rem, 2.353rem + 8.235vw, 7.5rem);
+    // height: clamp(3rem, 2.353rem + 6vw, 7.5rem);
+    // display: flex;
+    // align-items: center;
+    // justify-content: center;
     // height: 120px;
     // width: 120px;
     // border-style: solid;
@@ -49,7 +100,7 @@ body {
     padding: unset;
 
     border-style: solid;
-    border-color: transparent; // Standard: unsichtbar
+    border-color: transparent;
     box-sizing: border-box;
 
 
@@ -121,12 +172,14 @@ body {
 .game-over-wrapper {
     @include flex-align.flex-align-center;
     flex-direction: column;
+    font-size: clamp(1rem, 0.857rem + 0.714vw, 1.5rem);
+
 
     .game-over-text {
         color: var(--green-500);
-        font-size: 124px;
+        font-size: clamp(3rem, 1.643rem + 6.786vw, 7.75rem);
         font-weight: 700;
-        margin-bottom: 100px;
+        margin-bottom: clamp(3.5rem, 2.714rem + 3.929vw, 6.25rem);
         text-shadow: -2px -2px 1px var(--green-100);
     }
 
@@ -144,7 +197,8 @@ body {
         margin-top: 24px;
 
         .player-score {
-            display: flex;
+            @include flex-align.flex-align-center;
+            // display: flex;
             gap: 5px;
             text-transform: capitalize;
         }
@@ -170,7 +224,8 @@ body {
     }
 
     .winner-icon {
-        margin: 64px 0;
+        // margin: 64px 0;
+        margin-top: clamp(1.75rem, 1.107rem + 3.214vw, 4rem)
     }
 }
 
@@ -211,18 +266,25 @@ body {
     }
 }
 
-.exit-text {
-    font-size: 32px;
-}
-
 @media (max-width: 900px) {
-    .game-field {
-        display: flex;
-        align-items: center;
-    }
+    // .game-field {
+    //     display: flex;
+    //     align-items: center;
+    // }
 
     .game-over-text {
         font-size: 52px;
         margin-bottom: 52px;
     }
+}
+
+@media (max-width: 850px) {
+  header {
+    flex-direction: column-reverse;
+    gap: 8px;
+  }
+
+  .exit-wrapper {
+    margin-bottom: 32px;
+  }
 }

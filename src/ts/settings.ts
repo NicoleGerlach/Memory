@@ -53,7 +53,7 @@ function updateSettingsSelection(
   const currentThemeBox = document.querySelector("#current_theme");
   const currentPlayerBox = document.querySelector("#current_player");
   const currentSizeBox = document.querySelector("#current_board_size");
-  console.log("Themenbox: ", currentThemeBox);
+  // console.log("Themenbox: ", currentThemeBox);
   if (!currentThemeBox || !currentPlayerBox || !currentSizeBox) return;
   if (target.name === "game-theme") {
     currentThemeBox.textContent = getThemeSelection(selectedItem as ThemeId);
@@ -64,6 +64,7 @@ function updateSettingsSelection(
   if (target.name === "board-size") {
     currentSizeBox.textContent = getBoardSizeSelection(selectedItem as BoardSize);
   }
+  // console.log("Board Größe: ", currentSizeBox);
   activateStartBtn();
   updateSeparatorState();
 }
@@ -72,7 +73,7 @@ function renderSettings() {
   const settingsBox = document.querySelector("#settings_box");
   if (!settingsBox) return;
   for (const sectionData of settingsData) {
-    console.log("SectionData: ", sectionData);
+    // console.log("SectionData: ", sectionData);
     const section = renderSettingsBox(sectionData as SettingsData);
     settingsBox.append(section);
   }
@@ -108,7 +109,6 @@ function renderSettingsBox(data: SettingsData): HTMLElement {
 }
 
 function renderPreviewImage(selectedTheme: string) {
-  // const target = event.target as HTMLInputElement;
   const previewImage = document.querySelector(
     "#preview_img",
   ) as HTMLImageElement;
@@ -117,7 +117,7 @@ function renderPreviewImage(selectedTheme: string) {
       "src",
       `/assets/img/ui/previews/${selectedTheme}.svg`,
     );
-    console.log("Preview-Img: ", previewImage);
+    // console.log("Preview-Img: ", previewImage);
   }
 }
 
@@ -133,7 +133,6 @@ function handleSubmitEvent(event: any) {
     'input[name="board-size"]:checked',
   ) as HTMLInputElement | null;
   if (!themeInput || !playerInput || !sizeInput) {
-    console.error("Nicht alle Einstellungen gewählt");
     return;
   }
 
@@ -147,7 +146,6 @@ function handleSubmitEvent(event: any) {
       pointsOrange: 0,
     }
   };
-  console.log("Spiel gestartet", currentSettings);
   saveCurrentSettings(currentSettings);
   leadToGamePage();
 }
@@ -193,7 +191,6 @@ function updateSeparatorState(): void {
 }
 
 function saveCurrentSettings(currentSettings: Settings) {
-  console.log(currentSettings);
   localStorage.setItem("settings", JSON.stringify(currentSettings));
 }
 
@@ -221,4 +218,5 @@ function toggleListHover() {
     });
   });
 }
+
 init();

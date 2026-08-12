@@ -17,6 +17,10 @@ export interface ThemeData {
   cardStyle: string;
   gameOverBackground: string;
   winnerBackground: string;
+  drawTextClass: string;
+  drawClass: string;
+  backBtnText: string;
+  backBtnClass: string;
   cardBackground: string;
   playerIcon: string;
   previewPath: string;
