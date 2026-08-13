@@ -62,6 +62,19 @@ function initializeGameData() {
   renderCurrentTheme(numberOfPairs);
 }
 
+// function applyThemeStyles() {
+//   const themeData = getThemeData();
+//   if (!themeData) return;
+//   const gameSection = document.querySelector("#game_field");
+//   if (!gameSection) return;
+//   const allGameBackgrounds = Object.values(themes).map((theme) => theme.gameBackground);
+//   gameSection.classList.remove(...allGameBackgrounds);
+//   safeAddClasses(gameSection, themeData.gameBackground);
+//   const allBodyClasses = Object.values(themes).map((theme) => theme.bodyClass);
+//   document.body.classList.remove(...allBodyClasses);
+//   document.body.classList.add(themeData.bodyClass);
+// }
+
 function applyThemeStyles() {
   const themeData = getThemeData();
   if (!themeData) return;
@@ -73,6 +86,13 @@ function applyThemeStyles() {
   const allBodyClasses = Object.values(themes).map((theme) => theme.bodyClass);
   document.body.classList.remove(...allBodyClasses);
   document.body.classList.add(themeData.bodyClass);
+  const allStateBackgrounds = Object.values(themes).flatMap((theme) => [
+    theme.gameBackground,
+    theme.gameOverBackground,
+    theme.winnerBackground,
+  ]);
+  document.body.classList.remove(...allStateBackgrounds);
+  safeAddClasses(document.body, themeData.gameBackground);
 }
 
 function applyHeaderStyles() {
@@ -354,10 +374,13 @@ function renderEndScreen() {
   const isDraw = winner === "draw";
   const hasWon = winner === userPlayer;
   if (isDraw) {
+    safeAddClasses(document.body, themeData.winnerBackground);
     renderDrawView(gameField, header, themeData);
   } else if (hasWon) {
+    safeAddClasses(document.body, themeData.winnerBackground);
     renderWinView(gameField, header, themeData, winner);
   } else {
+    safeAddClasses(document.body, themeData.gameOverBackground);
     renderLoseView(gameField, header, themeData);
   }
   backToStart();
@@ -376,9 +399,11 @@ function renderWinView(
   const winnerIcon = winner === "blue" ? themeData.winnerIcons.winBlue : themeData.winnerIcons.winOrange
   const img = createImageElement(`/assets/img/${themeData.id}/`, winnerIcon, ["winner-icon"]);
   const confetti = createImageElement("/assets/img/ui/", themeData.winnerIcons.decoration, ["confetti"]);
+  const backBtn = createElementWithText("button", null, null, `${themeData.backBtnText}`);
   gameField.append(wrapper);
   wrapper.append(label, player, img);
   safeAddClasses(header, themeData.gameBackground);
+  safeAddClasses(backBtn, themeData.backBtnClass);
   header.append(confetti);
 }
 
@@ -393,10 +418,14 @@ function renderLoseView(
   const scoreWrapper = createElementWithoutText("section", ["score-wrapper"], null);
   const blueScore = createPlayerScoreWrapper("blue", themeData.playerIcon, currentSettings.points.pointsBlue);
   const orangeScore = createPlayerScoreWrapper("orange", themeData.playerIcon, currentSettings.points.pointsOrange);
+  const backBtn = createElementWithText("button", null, null, `${themeData.backBtnText}`);
   gameField.append(wrapper, scoreWrapper);
-  wrapper.append(gameOver, finalScore, scoreWrapper);
+  wrapper.append(gameOver, finalScore, scoreWrapper, backBtn);
   scoreWrapper.append(blueScore, orangeScore);
   safeAddClasses(header, themeData.gameBackground);
+  safeAddClasses(gameOver, themeData.gameOverTextClass);
+  safeAddClasses(scoreWrapper, themeData.scoreWrapperClass);
+  safeAddClasses(backBtn, themeData.backBtnClass);
 }
 
 function renderDrawView(

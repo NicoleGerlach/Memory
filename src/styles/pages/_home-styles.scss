@@ -17,6 +17,7 @@ body {
   @include flex-all.flex-all-center;
   flex-direction: column;
   gap: 3em;
+  overflow: hidden;
 }
 
 .title-wrapper {
