@@ -133,6 +133,7 @@ function createCards(numberOfPairs: number, motifs: string[]): CardData[] {
 function renderCurrentTheme(numberOfPairs: number) {
   const gameField = document.querySelector("#game_field");
   if (!gameField) return;
+  gameField.classList.remove("game-field-endscreen");
   const themeData = themes[currentTheme];
   if (!themeData) return;
   gameField.innerHTML = "";
@@ -153,7 +154,9 @@ function renderCurrentTheme(numberOfPairs: number) {
     field.append(button);
     button.append(box);
     box.append(imgBack, imgObj)
+    gameField.classList.add(`size-${numberOfPairs * 2}`);
   }
+  console.log(numberOfPairs * 2);
 }
 
 function renderHeader() {
@@ -392,7 +395,8 @@ function renderWinView(
   themeData: ThemeData,
   winner: "blue" | "orange",
 ) {
-  gameField.classList.add(themeData.winnerBackground);
+  gameField.classList.add(themeData.winnerBackground, "game-field-endscreen", "game-field-win");
+  header.classList.add("header-endscreen");
   const wrapper = createElementWithoutText("section", ["winner-wrapper"], null);
   const label = createElementWithText("span", ["winner-text"], null, "The winner is");
   const player = createElementWithText("span", ["winner-player"], null, `${winner} Player`);
@@ -401,7 +405,7 @@ function renderWinView(
   const confetti = createImageElement("/assets/img/ui/", themeData.winnerIcons.decoration, ["confetti"]);
   const backBtn = createElementWithText("button", null, null, `${themeData.backBtnText}`);
   gameField.append(wrapper);
-  wrapper.append(label, player, img);
+  wrapper.append(label, player, img, backBtn);
   safeAddClasses(header, themeData.gameBackground);
   safeAddClasses(backBtn, themeData.backBtnClass);
   header.append(confetti);
@@ -412,6 +416,8 @@ function renderLoseView(
   header: HTMLElement,
   themeData: ThemeData,
 ) {
+  gameField.classList.add(themeData.gameOverBackground, "game-field-endscreen");
+  header.classList.add("header-endscreen");
   const wrapper = createElementWithoutText("section", ["game-over-wrapper"], null);
   const gameOver = createElementWithText("span", ["game-over-text"], null, "Game Over");
   const finalScore = createElementWithText("span", ["game-over-score"], null, "Final score");
@@ -425,7 +431,7 @@ function renderLoseView(
   safeAddClasses(header, themeData.gameBackground);
   safeAddClasses(gameOver, themeData.gameOverTextClass);
   safeAddClasses(scoreWrapper, themeData.scoreWrapperClass);
-  safeAddClasses(backBtn, themeData.backBtnClass);
+  safeAddClasses(backBtn, themeData.backBtnClass, themeData.backBtnGameOverClass);
 }
 
 function renderDrawView(
@@ -433,10 +439,12 @@ function renderDrawView(
   header: HTMLElement,
   themeData: ThemeData,
 ) {
+  gameField.classList.add(themeData.winnerBackground, "game-field-endscreen");
+  header.classList.add("header-endscreen");
   const wrapper = createElementWithoutText("section", ["game-over-wrapper"], null);
   const text = createElementWithText("span", null, null, "It's a");
   const draw = createElementWithText("span", null, null, "Draw");
-  const scales = createImageElement(`/assets/img/${themeData.id}/`, themeData.winnerIcons.draw, ["winner-icon"]);
+  const scales = createSvgElement("scales.svg", ["scales-svg"]);
   const backBtn = createElementWithText("button", null, null, `${themeData.backBtnText}`);
   gameField.append(wrapper);
   wrapper.append(text, draw, scales, backBtn);

@@ -14,98 +14,103 @@ body {
 
 // Neu eingefügt
 header {
-  @include flex-align.flex-align-center;
-  padding: 1em;
-  justify-content: space-between;
-  color: white;
-  width: 90%;
-  margin-top: 10px;
+    @include flex-align.flex-align-center;
+    padding: 1em;
+    justify-content: space-between;
+    color: white;
+    width: 90%;
+    margin-top: 10px;
 
-  .score-wrapper {
-    @include flex-all.flex-all-center;
-    gap: 20px;
-    padding: 0.75em 1em;
-    text-transform: capitalize;
-    font-size: clamp(1rem, 0.857rem + 0.714vw, 1.5rem);
+    .score-wrapper {
+        @include flex-all.flex-all-center;
+        gap: 20px;
+        padding: 0.75em 1em;
+        text-transform: capitalize;
+        font-size: clamp(1rem, 0.857rem + 0.714vw, 1.5rem);
+        min-width: 115px;
+
+        .player-score {
+            display: flex;
+            gap: 5px;
+            text-transform: capitalize;
+        }
+
+        .player-svg {
+            height: 40px;
+        }
+    }
 
     .player-score {
-      display: flex;
-      gap: 5px;
-      text-transform: capitalize;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+
+        >img {
+            height: clamp(0.875rem, 0.699rem + 0.882vw, 1.25rem);
+        }
+
+        .score-points {
+            min-width: 2ch;
+        }
     }
-    .player-svg {
-      height: 40px;
+
+    .current-player-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 0.2em;
+        font-size: clamp(1.125rem, 0.982rem + 0.714vw, 1.625rem);
+        gap: 8px;
+
+        >img {
+            height: clamp(1.125rem, 0.949rem + 0.882vw, 1.5rem);
+        }
     }
-  }
 
-  .player-score {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-
-    >img {
-      height: clamp(0.875rem, 0.699rem + 0.882vw, 1.25rem);
+    .exit-wrapper {
+        @include flex-all.flex-all-center;
+        gap: 10px;
+        padding: 0.75em 1em;
+        font-size: clamp(1rem, 0.857rem + 0.714vw, 1.5rem);
     }
-  }
-
-  .current-player-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 0.2em;
-    font-size: clamp(1.125rem, 0.982rem + 0.714vw, 1.625rem);
-    gap: 8px;
-
-    >img {
-      height: clamp(1.125rem, 0.949rem + 0.882vw, 1.5rem);
-    }
-  }
-
-  .exit-wrapper {
-    @include flex-all.flex-all-center;
-    gap: 10px;
-    padding: 0.75em 1em;
-    font-size: clamp(1rem, 0.857rem + 0.714vw, 1.5rem);
-  }
 }
-//
 
 .game-field {
     display: grid;
     grid-template-columns: repeat(4, auto);
     place-content: center;
     align-content: flex-start;
-    // gap: 10px;
     gap: clamp(0.625rem, 0.518rem + 0.536vw, 1rem);
     min-height: 100%;
     padding-top: clamp(1.125rem, 0.482rem + 3.214vw, 3.375rem);
 }
 
-.field {
-    height: clamp(4rem, 2.353rem + 8.235vw, 7.5rem);
-    // height: clamp(3rem, 2.353rem + 6vw, 7.5rem);
-    // display: flex;
-    // align-items: center;
-    // justify-content: center;
-    // height: 120px;
-    // width: 120px;
-    // border-style: solid;
-    // border-color: transparent; // Standard: unsichtbar
-    // box-sizing: border-box;
+.game-field.game-field-endscreen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: unset;
 }
 
-.card-button {
-    // width: 120px;
-    // height: 120px;
-    height: clamp(4.5rem, 3.643rem + 4.286vw, 7.5rem);
+/* Wrapper pro Karte */
+.field {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: clamp(4.5rem, 3.643rem + 4.286vw, 7.5rem);
+    height: clamp(4.5rem, 3.643rem + 4.286vw, 7.5rem);
+    box-sizing: border-box;
+}
+
+/* Standardkarte */
+.card-button {
+    width: 100%;
+    height: 100%;
     background-color: transparent;
     border: none;
-    padding: unset;
-
+    padding: 0;
     border-style: solid;
     border-color: transparent;
     box-sizing: border-box;
-
 
     &__inner {
         position: relative;
@@ -116,10 +121,10 @@ header {
     }
 
     &__face {
-        height: 100%;
-        width: 100%;
         position: absolute;
         inset: 0;
+        width: 100%;
+        height: 100%;
         backface-visibility: hidden;
         box-sizing: border-box;
         border-radius: inherit;
@@ -141,18 +146,46 @@ header {
     object-fit: contain;
 }
 
-.theme-gaming .card-button {
+// .theme-code.game-field.game-field-endscreen.game-field-win {
+//     justify-content: flex-start !important;
+// }
+
+/* ---------- Gaming ---------- */
+// .theme-gaming .game-field {
+//   gap: 16px;
+// }
+
+.theme-gaming .field {
     width: clamp(4.313rem, 3.67rem + 3.214vw, 6.563rem);
     height: clamp(4.75rem, 3.964rem + 3.929vw, 7.5rem);
 }
 
-.theme-projects .card-button {
+.theme-gaming.game-field.game-field-endscreen {
+    justify-content: center;
+}
+
+.theme-gaming .card-button {
+    width: 100%;
+    height: 100%;
+}
+
+/* ---------- DA Projects ---------- */
+// .theme-projects .game-field {
+//   gap: 16px;
+// }
+
+.theme-projects .field {
     width: clamp(4.75rem, 3.964rem + 3.929vw, 7.5rem);
     height: clamp(4.25rem, 3.679rem + 2.857vw, 6.25rem);
+}
 
-    &__inner {
-        border-radius: 13px;
-    }
+.theme-projects .card-button {
+    width: 100%;
+    height: 100%;
+}
+
+.theme-projects .card-button__inner {
+    border-radius: 13px;
 }
 
 .theme-gaming .card-button {
@@ -165,6 +198,12 @@ header {
 
 .theme-food .card-button {
     border-width: 4px;
+}
+
+.game-field.size-24,
+.game-field.size-36 {
+    gap: 6px;
+    grid-template-columns: repeat(6, auto);
 }
 
 .winner-icon {
@@ -258,6 +297,12 @@ header {
     height: clamp(9.75rem, 7.714rem + 10.179vw, 16.875rem);
 }
 
+.exit-text {
+    font-size: clamp(1.25rem, 1.036rem + 1.071vw, 2rem);
+    font-weight: 700;
+}
+
+
 .exit-buttons {
     width: 100%;
     display: flex;
@@ -271,11 +316,6 @@ header {
 }
 
 @media (max-width: 900px) {
-    // .game-field {
-    //     display: flex;
-    //     align-items: center;
-    // }
-
     .game-over-text {
         font-size: 52px;
         margin-bottom: 52px;
@@ -283,8 +323,16 @@ header {
 }
 
 @media (max-width: 850px) {
-  header {
-    flex-direction: column-reverse;
-    gap: 16px;
-  }
+    header {
+        flex-direction: column-reverse;
+        gap: 16px;
+    }
+}
+
+@media (max-width: 550px) {
+
+    .game-field.size-24,
+    .game-field.size-36 {
+        grid-template-columns: repeat(4, auto);
+    }
 }

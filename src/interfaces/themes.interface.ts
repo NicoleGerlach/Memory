@@ -22,6 +22,7 @@ export interface ThemeData {
   drawClass: string;
   backBtnText: string;
   backBtnClass: string;
+  backBtnGameOverClass: string;
   cardBackground: string;
   playerIcon: string;
   previewPath: string;
