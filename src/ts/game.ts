@@ -458,7 +458,7 @@ function createExitOverlay(): HTMLElement {
   const themeData = getThemeData();
   const overlay = createElementWithoutText("div", ["exit-overlay", "d-none"], "exit_overlay");
   const modal = createElementWithoutText("section", ["exit-modal"], null);
-  const text = createElementWithText("p", null, null, "Are you sure you want to quit the game?");
+  const text = createElementWithText("p", ["exit-text-overlay"], null, "Are you sure you want to quit the game?");
   const buttonWrapper = createElementWithoutText("div", ["exit-buttons"], null);
   const cancelBtn = createElementWithText("button", null, null, `${themeData.exitCancelBtn}`);
   const confirmBtn = createElementWithText("button", null, null, `${themeData.exitConfirmBtn}`);

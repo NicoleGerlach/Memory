@@ -26,7 +26,8 @@ header {
         gap: 20px;
         padding: 0.75em 1em;
         text-transform: capitalize;
-        font-size: clamp(1rem, 0.857rem + 0.714vw, 1.5rem);
+        // font-size: clamp(1rem, 0.857rem + 0.714vw, 1.5rem);
+        font-size: clamp(0.875rem, 0.696rem + 0.893vw, 1.5rem);
         min-width: 115px;
 
         .player-score {
@@ -37,6 +38,11 @@ header {
 
         .player-svg {
             height: 40px;
+        }
+
+        .score-player-icon {
+            width: clamp(1.25rem, 1.179rem + 0.357vw, 1.5rem);
+            height: clamp(1rem, 0.929rem + 0.357vw, 1.25rem);
         }
     }
 
@@ -58,8 +64,7 @@ header {
         display: flex;
         align-items: center;
         gap: 0.2em;
-        font-size: clamp(1.125rem, 0.982rem + 0.714vw, 1.625rem);
-        gap: 8px;
+        font-size: clamp(0.875rem, 0.661rem + 1.071vw, 1.625rem);
 
         >img {
             height: clamp(1.125rem, 0.949rem + 0.882vw, 1.5rem);
@@ -79,7 +84,7 @@ header {
     grid-template-columns: repeat(4, auto);
     place-content: center;
     align-content: flex-start;
-    gap: clamp(0.625rem, 0.518rem + 0.536vw, 1rem);
+    gap: clamp(0.125rem, -0.125rem + 1.25vw, 1rem);
     min-height: 100%;
     padding-top: clamp(1.125rem, 0.482rem + 3.214vw, 3.375rem);
 }
@@ -151,9 +156,6 @@ header {
 // }
 
 /* ---------- Gaming ---------- */
-// .theme-gaming .game-field {
-//   gap: 16px;
-// }
 
 .theme-gaming .field {
     width: clamp(4.313rem, 3.67rem + 3.214vw, 6.563rem);
@@ -170,9 +172,6 @@ header {
 }
 
 /* ---------- DA Projects ---------- */
-// .theme-projects .game-field {
-//   gap: 16px;
-// }
 
 .theme-projects .field {
     width: clamp(4.75rem, 3.964rem + 3.929vw, 7.5rem);
@@ -202,7 +201,7 @@ header {
 
 .game-field.size-24,
 .game-field.size-36 {
-    gap: 6px;
+    gap: clamp(0.063rem, -0.027rem + 0.446vw, 0.375rem);
     grid-template-columns: repeat(6, auto);
 }
 
@@ -218,11 +217,9 @@ header {
     font-weight: 700;
 
     .game-over-text {
-        // color: var(--green-500);
         font-size: clamp(3rem, 1.643rem + 6.786vw, 7.75rem);
         font-weight: 700;
         margin-bottom: clamp(3.5rem, 2.714rem + 3.929vw, 6.25rem);
-        // text-shadow: -2px -2px 1px var(--green-100);
     }
 
     .game-over-score {
@@ -236,14 +233,11 @@ header {
         gap: 32px;
         padding: 20px;
         margin-top: 24px;
-        // font-weight: 700;
 
         .player-score {
             @include flex-align.flex-align-center;
-            // display: flex;
             gap: 5px;
             text-transform: capitalize;
-            // font-weight: 700
         }
     }
 }
@@ -267,7 +261,6 @@ header {
     }
 
     .winner-icon {
-        // margin: 64px 0;
         margin-top: clamp(1.75rem, 1.107rem + 3.214vw, 4rem)
     }
 }
@@ -290,7 +283,7 @@ header {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: clamp(1.5rem, 0.964rem + 2.679vw, 3.375rem);
+    gap: clamp(1.25rem, 0.643rem + 3.036vw, 3.375rem);
     padding: clamp(1.5rem, 1.214rem + 1.429vw, 2.5rem);
     text-align: center;
     width: clamp(19.5rem, 15.446rem + 20.268vw, 33.688rem);
@@ -301,7 +294,6 @@ header {
     font-size: clamp(1.25rem, 1.036rem + 1.071vw, 2rem);
     font-weight: 700;
 }
-
 
 .exit-buttons {
     width: 100%;
@@ -329,10 +321,81 @@ header {
     }
 }
 
-@media (max-width: 550px) {
+// @media (max-width: 550px) {
 
-    .game-field.size-24,
-    .game-field.size-36 {
-        grid-template-columns: repeat(4, auto);
+//     .game-field.size-24,
+//     .game-field.size-36 {
+//         grid-template-columns: repeat(4, auto);
+//     }
+// }
+
+@media (max-width: 450px) {
+    // #game_header {
+    //     padding: 7px;
+    //     flex-direction: row;
+    // }
+
+    // header .current-player-wrapper {
+    //     gap: 12px;
+    //     flex: 0 0;
+    //     >span {
+    //         flex: 0 0;
+    //     }
+    // }
+
+    // header .score-wrapper {
+    //     padding: 8px;
+    //     text-align: center;
+    //     gap: 12px;
+    // }
+
+    // header .player-score .score-points {
+    //     min-width: 1.8ch;
+    // }
+
+    // .theme-code .score-player {
+    //     display: none;
+    // }
+
+    // header .exit-wrapper {
+    //     padding: 8px;
+    // }
+
+    // .exit-text {
+    //     display: none;
+    // }
+
+    .theme-code .game-field.size-24 .field,
+    .theme-code .game-field.size-24 .card-button,
+    .theme-code .game-field.size-36 .field,
+    .theme-code .game-field.size-36 .card-button .theme-food .game-field.size-24 .field,
+    .theme-food .game-field.size-24 .card-button,
+    .theme-food .game-field.size-36 .field,
+    .theme-food .game-field.size-36 .card-button {
+        width: 64px;
+        height: 64px;
+    }
+
+    .theme-gaming .game-field.size-24 .field,
+    .theme-gaming .game-field.size-24 .card-button,
+    .theme-gaming .game-field.size-36 .field,
+    .theme-gaming .game-field.size-36 .card-button {
+        width: 56px;
+        height: 64px;
+    }
+
+    .theme-projects .game-field.size-24 .field,
+    .theme-projects .game-field.size-24 .card-button,
+    .theme-projects .game-field.size-36 .field,
+    .theme-projects .game-field.size-36 .card-button {
+        width: 60px;
+        height: 52px;
+    }
+
+    .theme-gaming header .current-player-wrapper .player-svg,
+    .theme-projects header .current-player-wrapper .player-svg,
+    .theme-food header .current-player-wrapper .player-svg {
+        width: 34px;
+        height: 35px;
     }
 }

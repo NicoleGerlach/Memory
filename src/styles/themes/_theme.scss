@@ -3,6 +3,8 @@
 body:not(.theme-code) .player-svg {
   width: 40px;
   height: 41px;
+  // width: clamp(1.25rem, 0.893rem + 1.786vw, 2.5rem);
+  // height: clamp(1rem, 0.929rem + 0.357vw, 1.25rem);
   border-radius: 8px;
   padding: 4px 8px;
   color: var(--white);
@@ -104,6 +106,14 @@ body.theme-code .game-field {
   font-weight: 700;
 }
 
+body.theme-code .game-field.game-field-endscreen {
+  justify-content: flex-start;
+}
+
+body.theme-code .scales-svg {
+  color: var(--green-500);
+}
+
 .draw-text-code {
   color: var(--white);
   font-size: 40px;
@@ -128,13 +138,6 @@ body.theme-code .game-field {
   margin-top: clamp(1.5rem, 0.786rem + 3.571vw, 4rem);
 }
 
-// @media (max-width: 900px) {
-//   .game-field {
-//     display: flex;
-//     align-items: center;
-//   }
-// }
-
 /* ---------- Gaming ---------- */
 
 body.theme-gaming {
@@ -152,10 +155,6 @@ header.header-gaming {
   border-radius: 10px;
   letter-spacing: 4%;
 }
-
-// .body.theme-gaming .player-svg {
-//   border-radius: 3px !important;
-// }
 
 .score-wrapper-gaming {
   background-color: var(--white);
@@ -202,7 +201,7 @@ header.header-gaming {
 
 .game-over-text-gaming {
   color: var(--red-500);
-  font-size: clamp(3rem, 1.643rem + 6.786vw, 7.75rem);
+  font-size: clamp(2.25rem, 0.679rem + 7.857vw, 7.75rem);
   font-weight: 900;
   letter-spacing: 7%;
   text-transform: uppercase;
@@ -227,6 +226,7 @@ header.header-gaming {
   border-radius: 10px;
   padding: 12px 20px;
   border: unset;
+  font-family: 'Orbitron';
 }
 
 .exit-confirm-btn-gaming {
@@ -236,6 +236,7 @@ header.header-gaming {
   border-radius: 10px;
   padding: 12px 20px;
   border: 2px solid var(--red-600);
+  font-family: 'Orbitron'
 }
 
 .draw-text-gaming {
@@ -419,7 +420,6 @@ header.header-food {
   .score-player {
     display: none;
   }
-
 }
 
 .exit-btn-food {
@@ -486,7 +486,7 @@ body.theme-food .winner-player {
   color: var(--white);
   // box-shadow: 3px 3px 5px 0px rgba(47, 46, 46, 0.2);
   border-radius: 10px;
-  padding: 12px 20px;
+  padding: 12px clamp(0.75rem, 0.607rem + 0.714vw, 1.25rem);
   border: 3px solid var(--orange-500);
   text-transform: uppercase;
 }
@@ -494,9 +494,8 @@ body.theme-food .winner-player {
 .exit-confirm-btn-food {
   background-color: var(--orange-700);
   color: var(--orange-500);
-  // box-shadow: 3px 3px 5px 0px rgba(47, 46, 46, 0.2);
   border-radius: 10px;
-  padding: 12px 20px;
+  padding: 12px clamp(0.75rem, 0.607rem + 0.714vw, 1.25rem);
   border: 3px solid var(--orange-500);
   text-transform: uppercase;
 }
@@ -516,6 +515,16 @@ body.theme-food .winner-player {
   text-transform: uppercase;
 }
 
+body.theme-food .scales-svg {
+  background-color: var(--orange-100);
+  color: var(--orange-500);
+  width: 311px;
+  height: 285px;
+  padding: 30px;
+  margin-top: 40px;
+  box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
+}
+
 .back-btn-food {
   background-color: var(--orange-500);
   color: var(--white);
@@ -532,9 +541,5 @@ body.theme-food .winner-player {
 .back-btn-game-over-food {
   background-color: var(--white);
   color: var(--orange-500);
-  width: 311px;
-  height: 285px;
-  padding: 30px;
-  margin-top: 40px;
   box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
 }

@@ -273,7 +273,7 @@ export const themes = {
     exitModalClass: "exit-modal-food",
     exitTextClass: "exit-text-food",
     exitCancelBtn: "No, back to game",
-    exitConfirmBtn: "Yes, quit game",
+    exitConfirmBtn: "Exit game",
     exitCancelBtnClass: "exit-cancel-btn-food",
     exitConfirmBtnClass: "exit-confirm-btn-food",
 
