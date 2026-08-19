@@ -1,6 +1,5 @@
 import "../styles/entries/global.scss";
 import "../styles/entries/settings.scss";
-
 import { settingsData } from "./data.js";
 import {
   ThemeId,
@@ -28,7 +27,6 @@ function init() {
 function setEventListeners() {
   const settingsBox = document.querySelector("#settings_box");
   const settingsForm = document.querySelector("#settings_form");
-
   settingsBox?.addEventListener("change", handleSelectionChanges);
   settingsForm?.addEventListener("submit", handleSubmitEvent);
 }
@@ -38,33 +36,20 @@ function handleSelectionChanges(event: Event) {
   const selectedItem = target.value as ThemeId | Player | BoardSize;
   console.log("Target: ", target);
   console.log("Target-Value: ", selectedItem);
-
   if (target.name === "game-theme") {
     renderPreviewImage(selectedItem as ThemeId);
   }
-
-  updateSettingsSelection(target, selectedItem);
+  updateSettingsSelection(target, selectedItem as ThemeId | Player);
 }
 
-function updateSettingsSelection(
-  target: HTMLInputElement,
-  selectedItem: ThemeId | Player | BoardSize,
-) {
-  const currentThemeBox = document.querySelector("#current_theme");
-  const currentPlayerBox = document.querySelector("#current_player");
-  const currentSizeBox = document.querySelector("#current_board_size");
-  // console.log("Themenbox: ", currentThemeBox);
-  if (!currentThemeBox || !currentPlayerBox || !currentSizeBox) return;
+function updateSettingsSelection(target: HTMLInputElement, selectedItem: ThemeId | Player) {
+  const el = document.querySelector(`#current_${target.name}`);
   if (target.name === "game-theme") {
-    currentThemeBox.textContent = getThemeSelection(selectedItem as ThemeId);
+    if (el) el.textContent = getThemeSelection(selectedItem as ThemeId);
+  } else if (target.name === "player") {
+    if (el) el.textContent = getPlayerSelection(selectedItem as Player);
+  } else if (target.name === "board-size") {
   }
-  if (target.name === "player") {
-    currentPlayerBox.textContent = getPlayerSelection(selectedItem as Player);
-  }
-  if (target.name === "board-size") {
-    currentSizeBox.textContent = getBoardSizeSelection(selectedItem as BoardSize);
-  }
-  // console.log("Board Größe: ", currentSizeBox);
   activateStartBtn();
   updateSeparatorState();
 }
@@ -73,7 +58,6 @@ function renderSettings() {
   const settingsBox = document.querySelector("#settings_box");
   if (!settingsBox) return;
   for (const sectionData of settingsData) {
-    // console.log("SectionData: ", sectionData);
     const section = renderSettingsBox(sectionData as SettingsData);
     settingsBox.append(section);
   }
@@ -81,30 +65,12 @@ function renderSettings() {
 
 function renderSettingsBox(data: SettingsData): HTMLElement {
   const box = createElementWithoutText("section", [`${data.type}-box`], null);
-  const titleWrapper = createElementWithoutText(
-    "span",
-    ["title-wrapper"],
-    null,
-  );
+  const titleWrapper = createElementWithoutText("span", ["title-wrapper"], null);
   const img = createImageElement("/assets/img/ui/", data.iconPath, null);
-  const title = createElementWithText(
-    "h2",
-    [`${data.type}-title`],
-    null,
-    data.title,
-  );
-
+  const title = createElementWithText("h2", [`${data.type}-title`], null, data.title);
   titleWrapper.append(img, title);
-
-  const list = createList(
-    `${data.type}-list`,
-    "list-element",
-    data.items,
-    data.radioName,
-  );
-
+  const list = createList(`${data.type}-list`, "list-element", data.items, data.radioName);
   box.append(titleWrapper, list);
-
   return box;
 }
 
@@ -117,35 +83,33 @@ function renderPreviewImage(selectedTheme: string) {
       "src",
       `/assets/img/ui/previews/${selectedTheme}.svg`,
     );
-    // console.log("Preview-Img: ", previewImage);
   }
 }
 
-function handleSubmitEvent(event: any) {
+function readSettingsFromInputs(
+  themeInput: HTMLInputElement | null,
+  playerInput: HTMLInputElement | null,
+  sizeInput: HTMLInputElement | null
+): Settings | null {
+  if (!themeInput || !playerInput || !sizeInput) return null;
+  return {
+    theme: themeInput.value as ThemeId,
+    player: playerInput.value as Player,
+    selectedPlayer: playerInput.value as Player,
+    size: sizeInput.value as BoardSize,
+    points: { pointsBlue: 0, pointsOrange: 0 },
+  };
+}
+
+function handleSubmitEvent(event: Event) {
   event.preventDefault();
-  const themeInput = document.querySelector(
-    'input[name="game-theme"]:checked',
-  ) as HTMLInputElement | null;
-  const playerInput = document.querySelector(
-    'input[name="player"]:checked',
-  ) as HTMLInputElement | null;
-  const sizeInput = document.querySelector(
-    'input[name="board-size"]:checked',
-  ) as HTMLInputElement | null;
-  if (!themeInput || !playerInput || !sizeInput) {
+  const themeInput = document.querySelector<HTMLInputElement>('input[name="game-theme"]:checked');
+  const playerInput = document.querySelector<HTMLInputElement>('input[name="player"]:checked');
+  const sizeInput = document.querySelector<HTMLInputElement>('input[name="board-size"]:checked');
+  const currentSettings = readSettingsFromInputs(themeInput, playerInput, sizeInput);
+  if (!currentSettings) {
     return;
   }
-
-  const currentSettings: Settings = {
-    theme: themeInput?.value as ThemeId,
-    player: playerInput?.value as Player,
-    selectedPlayer: playerInput?.value as Player,
-    size: sizeInput?.value as BoardSize,
-    points: {
-      pointsBlue: 0,
-      pointsOrange: 0,
-    }
-  };
   saveCurrentSettings(currentSettings);
   leadToGamePage();
 }
@@ -176,18 +140,10 @@ function updateSeparatorState(): void {
   const sep2 = document.querySelector(".sep2");
   const diamondPlayer = document.querySelector("#diamond-player");
   const diamondBoard = document.querySelector("#diamond-board");
-  if (sep1 && selectedPlayer) {
-    sep1.classList.add("separator-small");
-  }
-  if (sep2 && selectedBoard) {
-    sep2.classList.add("separator-small");
-  }
-  if (diamondPlayer && selectedPlayer) {
-    diamondPlayer.classList.remove("d-none");
-  }
-  if (diamondBoard && selectedBoard) {
-    diamondBoard.classList.remove("d-none");
-  }
+  if (sep1 && selectedPlayer) {sep1.classList.add("separator-small");}
+  if (sep2 && selectedBoard) {sep2.classList.add("separator-small");}
+  if (diamondPlayer && selectedPlayer) {diamondPlayer.classList.remove("d-none");}
+  if (diamondBoard && selectedBoard) {diamondBoard.classList.remove("d-none");}
 }
 
 function saveCurrentSettings(currentSettings: Settings) {

@@ -7,8 +7,7 @@ import { createImageElement } from "./helpers.js";
 import { createSvgElement } from "./helpers.js";
 import { createPlayerScoreWrapper } from "./helpers.js";
 import { CardData } from "../interfaces/card.interface";
-
-import { ThemeId, Player, Settings, PlayerPoints, BoardSize } from "../interfaces/settings-data.interface.js";
+import { ThemeId, Player, Settings } from "../interfaces/settings-data.interface.js";
 import { ThemeData } from "../interfaces/themes.interface";
 
 type SelectedCard = {
@@ -55,43 +54,35 @@ function initializeGameData() {
   if (!currentSettings.selectedPlayer) {
     currentSettings.selectedPlayer = currentSettings.player;
   }
-
   const numberOfPairs = +currentSettings.size / 2;
   applyThemeStyles();
   renderHeader();
   renderCurrentTheme(numberOfPairs);
 }
 
-// function applyThemeStyles() {
-//   const themeData = getThemeData();
-//   if (!themeData) return;
-//   const gameSection = document.querySelector("#game_field");
-//   if (!gameSection) return;
-//   const allGameBackgrounds = Object.values(themes).map((theme) => theme.gameBackground);
-//   gameSection.classList.remove(...allGameBackgrounds);
-//   safeAddClasses(gameSection, themeData.gameBackground);
-//   const allBodyClasses = Object.values(themes).map((theme) => theme.bodyClass);
-//   document.body.classList.remove(...allBodyClasses);
-//   document.body.classList.add(themeData.bodyClass);
-// }
+function getAllGameBackgrounds() {
+  return Object.values(themes).map((theme) => theme.gameBackground);
+}
+
+function getAllBodyClasses() {
+  return Object.values(themes).map((theme) => theme.bodyClass);
+}
+
+function getAllStateBackgrounds() {
+  return Object.values(themes).flatMap((theme) => [
+    theme.gameBackground,
+    theme.winnerBackground,
+  ]);
+}
 
 function applyThemeStyles() {
   const themeData = getThemeData();
-  if (!themeData) return;
   const gameSection = document.querySelector("#game_field");
-  if (!gameSection) return;
-  const allGameBackgrounds = Object.values(themes).map((theme) => theme.gameBackground);
-  gameSection.classList.remove(...allGameBackgrounds);
+  if (!themeData || !gameSection) return;
+  gameSection.classList.remove(...getAllGameBackgrounds());
   safeAddClasses(gameSection, themeData.gameBackground);
-  const allBodyClasses = Object.values(themes).map((theme) => theme.bodyClass);
-  document.body.classList.remove(...allBodyClasses);
+  document.body.classList.remove(...getAllBodyClasses(), ...getAllStateBackgrounds());
   document.body.classList.add(themeData.bodyClass);
-  const allStateBackgrounds = Object.values(themes).flatMap((theme) => [
-    theme.gameBackground,
-    theme.gameOverBackground,
-    theme.winnerBackground,
-  ]);
-  document.body.classList.remove(...allStateBackgrounds);
   safeAddClasses(document.body, themeData.gameBackground);
 }
 
@@ -100,63 +91,48 @@ function applyHeaderStyles() {
   if (!header) return;
   const themeData = getThemeData();
   if (!themeData) return;
-  // const allHeaderClasses = Object.values(themes).map((theme) => theme.headerClass);
-  // header.classList.remove(...allHeaderClasses);
   safeRemoveClasses(header, themeData.headerClass);
   safeAddClasses(header, themeData.headerClass);
 }
 
+function createCardOptions(id: number, pairId: number, motif: string): CardData {
+  return { id, pairId, motif, isFlipped: false, isMatched: false };
+}
+
 function createCards(numberOfPairs: number, motifs: string[]): CardData[] {
-  const selectedMotifs = motifs.slice(0, numberOfPairs);
-  const cardData: CardData[] = [];
   let idCounter = 1;
-  selectedMotifs.forEach((motif, index) => {
+  const cardData = motifs.slice(0, numberOfPairs).flatMap((motif, index) => {
     const pairId = index + 1;
-    cardData.push({
-      id: idCounter++,
-      pairId,
-      motif,
-      isFlipped: false,
-      isMatched: false,
-    });
-    cardData.push({
-      id: idCounter++,
-      pairId,
-      motif,
-      isFlipped: false,
-      isMatched: false,
-    });
+    return [createCardOptions(idCounter++, pairId, motif), createCardOptions(idCounter++, pairId, motif)];
   });
   return shuffleCards(cardData);
 }
 
+function buildCardElement(card: CardData, themeData: ThemeData): HTMLElement {
+  const field = createElementWithoutText("section", ["field"], null);
+  field.id = String(card.id);
+  field.dataset.cardId = String(card.id);
+  field.dataset.pairId = String(card.pairId);
+  const button = createElementWithoutText("button", ["card-button"], null);
+  if (card.isFlipped) button.classList.add("is-flipped");
+  const box = createElementWithoutText("div", ["card-button__inner"], null);
+  const front = createImageElement(`/assets/img/${themeData.id}/`, card.motif, ["card-button__face", "card-button__face--back", themeData.cardBackground,]);
+  const back = createImageElement(`/assets/img/${themeData.id}/`, "back.svg", ["card-button__face", themeData.cardStyle,]);
+  box.append(back, front);
+  button.append(box);
+  field.append(button);
+  return field;
+}
+
 function renderCurrentTheme(numberOfPairs: number) {
   const gameField = document.querySelector("#game_field");
-  if (!gameField) return;
-  gameField.classList.remove("game-field-endscreen");
   const themeData = themes[currentTheme];
-  if (!themeData) return;
+  if (!gameField || !themeData) return;
+  gameField.classList.remove("game-field-endscreen");
   gameField.innerHTML = "";
   cards = createCards(numberOfPairs, themeData.motifs);
-  for (const card of cards) {
-    const field = createElementWithoutText("section", ["field"], null);
-    field.id = String(card.id);
-    field.dataset.cardId = String(card.id);
-    field.dataset.pairId = String(card.pairId);
-    const button = createElementWithoutText("button", ["card-button"], null);
-    if (card.isFlipped) {
-      button.classList.add("is-flipped");
-    }
-    const box = createElementWithoutText("div", ["card-button__inner"], null);
-    const imgObj = createImageElement(`/assets/img/${themeData.id}/`, card.motif, ["card-button__face", "card-button__face--back", themeData.cardBackground]);
-    const imgBack = createImageElement(`/assets/img/${themeData.id}/`, "back.svg", ["card-button__face", themeData.cardStyle]);
-    gameField.append(field);
-    field.append(button);
-    button.append(box);
-    box.append(imgBack, imgObj)
-    gameField.classList.add(`size-${numberOfPairs * 2}`);
-  }
-  console.log(numberOfPairs * 2);
+  cards.forEach((card) => gameField.append(buildCardElement(card, themeData)));
+  gameField.classList.add(`size-${numberOfPairs * 2}`);
 }
 
 function renderHeader() {
@@ -166,19 +142,22 @@ function renderHeader() {
   renderExitBtn();
 }
 
+function createScoreWrapper(themeData: ThemeData) {
+  const wrapper = createElementWithoutText("section", ["score-wrapper", themeData.scoreWrapperClass], null);
+  const blue = createPlayerScoreWrapper("blue", themeData.playerIcon, currentSettings.points.pointsBlue);
+  const orange = createPlayerScoreWrapper("orange", themeData.playerIcon, currentSettings.points.pointsOrange);
+  wrapper.append(blue, orange);
+  return wrapper;
+}
+
 function renderScores() {
   const header = document.querySelector("#game_header");
-  if (!header) return;
   const themeData = getThemeData();
-  if (!themeData) return;
-  const oldScoreWrapper = header.querySelector(".score-wrapper");
-  if (oldScoreWrapper) oldScoreWrapper.remove();
-  const scoreWrapper = createElementWithoutText("section", ["score-wrapper", themeData.scoreWrapperClass], null);
-  const bluePlayerScoreWrapper = createPlayerScoreWrapper("blue", themeData.playerIcon, currentSettings.points.pointsBlue);
-  const orangePlayerScoreWrapper = createPlayerScoreWrapper("orange", themeData.playerIcon, currentSettings.points.pointsOrange);
-  scoreWrapper.append(bluePlayerScoreWrapper, orangePlayerScoreWrapper);
-  header.prepend(scoreWrapper);
+  if (!header || !themeData) return;
+  header.querySelector(".score-wrapper")?.remove();
+  header.prepend(createScoreWrapper(themeData));
 }
+
 
 function renderCurrentPlayer() {
   const currentPlayerElement = document.querySelector("#current_player");
@@ -216,27 +195,33 @@ function shuffleCards(array: CardData[]): CardData[] {
   return shuffled;
 }
 
+function getClickedCard(target: HTMLElement): SelectedCard | null {
+  const button = target.closest(".card-button") as HTMLElement | null;
+  const field = target.closest(".field") as HTMLElement | null;
+  if (!button || !field || button.classList.contains("is-flipped")) return null;
+  const selectedCard = createSelectedCard(field, button);
+  if (selectedCard.cardData.isMatched || selectedCard.cardData.isFlipped) return null;
+  return selectedCard;
+}
+
+function handleCardSelection(selectedCard: SelectedCard) {
+  selectedCard.button.classList.add("is-flipped");
+  selectedCard.cardData.isFlipped = true;
+  if (!firstCard) return void (firstCard = selectedCard);
+  if (!secondCard && selectedCard.field !== firstCard.field) {
+    secondCard = selectedCard;
+    isChecking = true;
+    compareCards();
+  }
+}
+
 function flipCard() {
   document.addEventListener("click", (e) => {
     if (isChecking) return;
     const target = e.target as HTMLElement;
-    const button = target.closest(".card-button") as HTMLElement | null;
-    const field = target.closest(".field") as HTMLElement | null;
-    if (!button || !field) return;
-    if (button.classList.contains("is-flipped")) return;
-    const selectedCard = createSelectedCard(field, button);
-    if (selectedCard.cardData.isMatched || selectedCard.cardData.isFlipped) return;
-    button.classList.add("is-flipped");
-    selectedCard.cardData.isFlipped = true;
-    if (!firstCard) {
-      firstCard = selectedCard;
-      return;
-    }
-    if (!secondCard && field !== firstCard.field) {
-      secondCard = selectedCard;
-      isChecking = true;
-      compareCards();
-    }
+    const selectedCard = getClickedCard(target);
+    if (!selectedCard) return;
+    handleCardSelection(selectedCard);
   });
 }
 
@@ -262,7 +247,6 @@ function isMatch(cardOne: SelectedCard, cardTwo: SelectedCard): boolean {
 }
 
 function applyMatchStyles(card: SelectedCard, themeData: any) {
-  // BG auf das img (dort liegt auch card-bg-*)
   const img = card.button.querySelector(".card-button__face--back");
   if (img) {
     safeAddClasses(img, themeData.cardMatchBackground);
@@ -270,14 +254,12 @@ function applyMatchStyles(card: SelectedCard, themeData: any) {
       img.classList.remove(themeData.cardBackground);
     }
   }
-  // Border und Shadow auf den Button
   safeAddClasses(card.button, themeData.cardMatchBorder, themeData.cardMatchShadow);
 }
 
 function safeAddClasses(element: Element, ...classes: (string | undefined | null)[]): void {
   const valid = classes
     .filter((c): c is string => Boolean(c) && typeof c === "string" && c.trim() !== "");
-
   if (valid.length) {
     element.classList.add(...valid);
   }
@@ -286,7 +268,6 @@ function safeAddClasses(element: Element, ...classes: (string | undefined | null
 function safeRemoveClasses(element: Element, ...classes: (string | undefined | null)[]): void {
   const valid = classes
     .filter((c): c is string => Boolean(c) && typeof c === "string" && c.trim() !== "");
-
   if (valid.length) {
     element.classList.remove(...valid);
   }
@@ -310,30 +291,31 @@ function resetPoints() {
   renderScores();
 }
 
+function handleMatch(themeData: ThemeData) {
+  if (!firstCard || !secondCard) return;
+  firstCard.cardData.isMatched = true;
+  secondCard.cardData.isMatched = true;
+  applyMatchStyles(firstCard, themeData);
+  applyMatchStyles(secondCard, themeData);
+  countPoints();
+  if (isGameOver(cards)) renderEndScreen();
+  resetSelectedCards();
+  isChecking = false;
+}
+
+function handleMismatch() {
+  setTimeout(() => {
+    if (firstCard && secondCard) unflipCards(firstCard, secondCard);
+    resetSelectedCards();
+    changeCurrentPlayer();
+    isChecking = false;
+  }, 1000);
+}
+
 function compareCards() {
   const themeData = getThemeData();
   if (!themeData || !firstCard || !secondCard) return;
-  if (isMatch(firstCard, secondCard)) {
-    firstCard.cardData.isMatched = true;
-    secondCard.cardData.isMatched = true;
-    applyMatchStyles(firstCard, themeData);
-    applyMatchStyles(secondCard, themeData);
-    countPoints();
-    if (isGameOver(cards)) {
-      renderEndScreen();
-    }
-    resetSelectedCards();
-    isChecking = false;
-  } else {
-    setTimeout(() => {
-      if (firstCard && secondCard) {
-        unflipCards(firstCard, secondCard);
-      }
-      resetSelectedCards();
-      changeCurrentPlayer();
-      isChecking = false;
-    }, 1000);
-  }
+  isMatch(firstCard, secondCard) ? handleMatch(themeData) : handleMismatch();
 }
 
 function changeCurrentPlayer() {
@@ -362,96 +344,84 @@ function getWinner(): Winner {
   return "draw";
 }
 
+function clearEndScreen(field: HTMLElement, header: HTMLElement, themeData: ThemeData) {
+  field.innerHTML = "";
+  header.innerHTML = "";
+  safeRemoveClasses(field, themeData.gameBackground, themeData.winnerBackground);
+  safeRemoveClasses(header, themeData.headerClass);
+}
+
 function renderEndScreen() {
   const winner = getWinner();
   const themeData = getThemeData();
-  if (!themeData) return;
   const gameField = document.querySelector("#game_field");
   const header = document.querySelector("#game_header") as HTMLElement | null;
-  if (!(gameField instanceof HTMLElement) || !(header instanceof HTMLElement)) return;
-  gameField.innerHTML = "";
-  header.innerHTML = "";
-  safeRemoveClasses(gameField, themeData.gameBackground, themeData.gameOverBackground, themeData.winnerBackground);
-  safeRemoveClasses(header, themeData.headerClass);
-  const userPlayer = currentSettings.selectedPlayer;  // ← statt .player
-  const isDraw = winner === "draw";
-  const hasWon = winner === userPlayer;
-  if (isDraw) {
-    safeAddClasses(document.body, themeData.winnerBackground);
-    renderDrawView(gameField, header, themeData);
-  } else if (hasWon) {
-    safeAddClasses(document.body, themeData.winnerBackground);
-    renderWinView(gameField, header, themeData, winner);
-  } else {
-    safeAddClasses(document.body, themeData.gameOverBackground);
-    renderLoseView(gameField, header, themeData);
-  }
+  if (!themeData || !(gameField instanceof HTMLElement) || !(header instanceof HTMLElement)) return;
+  clearEndScreen(gameField, header, themeData);
+  safeAddClasses(document.body, themeData.winnerBackground);
+  winner === "draw"
+    ? renderDrawView({gameField, header, themeData})
+    : winner === currentSettings.selectedPlayer
+      ? renderWinView({ gameField, header, themeData, winner })
+      : renderWinView({ gameField, header, themeData, winner });
   backToStart();
 }
 
-function renderWinView(
+function createBackButton(themeData: ThemeData) {
+  const backBtn = createElementWithText("button", null, null, themeData.backBtnText);
+  safeAddClasses(backBtn, themeData.backBtnClass);
+  return backBtn;
+}
+
+type CreateViewBaseOptions = {
   gameField: HTMLElement,
   header: HTMLElement,
   themeData: ThemeData,
+};
+
+type CreateWinViewOptions = CreateViewBaseOptions & {
   winner: "blue" | "orange",
-) {
+};
+
+function renderWinView(options: CreateWinViewOptions) {
+  const { gameField, header, themeData, winner } = options;
   gameField.classList.add(themeData.winnerBackground, "game-field-endscreen", "game-field-win");
   header.classList.add("header-endscreen");
   const wrapper = createElementWithoutText("section", ["winner-wrapper"], null);
   const label = createElementWithText("span", ["winner-text"], null, "The winner is");
-  const player = createElementWithText("span", ["winner-player"], null, `${winner} Player`);
-  const winnerIcon = winner === "blue" ? themeData.winnerIcons.winBlue : themeData.winnerIcons.winOrange
+  const player = createElementWithText("span", ["winner-player", winner], null, `${winner} Player`);
+  const winnerIcon = winner === "blue" ? themeData.winnerIcons.winBlue : themeData.winnerIcons.winOrange;
   const img = createImageElement(`/assets/img/${themeData.id}/`, winnerIcon, ["winner-icon"]);
   const confetti = createImageElement("/assets/img/ui/", themeData.winnerIcons.decoration, ["confetti"]);
-  const backBtn = createElementWithText("button", null, null, `${themeData.backBtnText}`);
   gameField.append(wrapper);
-  wrapper.append(label, player, img, backBtn);
+  wrapper.append(label, player, img, createScoreWrapper(themeData), createBackButton(themeData));
   safeAddClasses(header, themeData.gameBackground);
-  safeAddClasses(backBtn, themeData.backBtnClass);
   header.append(confetti);
 }
 
-function renderLoseView(
-  gameField: HTMLElement,
-  header: HTMLElement,
-  themeData: ThemeData,
-) {
-  gameField.classList.add(themeData.gameOverBackground, "game-field-endscreen");
-  header.classList.add("header-endscreen");
-  const wrapper = createElementWithoutText("section", ["game-over-wrapper"], null);
-  const gameOver = createElementWithText("span", ["game-over-text"], null, "Game Over");
-  const finalScore = createElementWithText("span", ["game-over-score"], null, "Final score");
-  const scoreWrapper = createElementWithoutText("section", ["score-wrapper"], null);
-  const blueScore = createPlayerScoreWrapper("blue", themeData.playerIcon, currentSettings.points.pointsBlue);
-  const orangeScore = createPlayerScoreWrapper("orange", themeData.playerIcon, currentSettings.points.pointsOrange);
-  const backBtn = createElementWithText("button", null, null, `${themeData.backBtnText}`);
-  gameField.append(wrapper, scoreWrapper);
-  wrapper.append(gameOver, finalScore, scoreWrapper, backBtn);
-  scoreWrapper.append(blueScore, orangeScore);
-  safeAddClasses(header, themeData.gameBackground);
-  safeAddClasses(gameOver, themeData.gameOverTextClass);
-  safeAddClasses(scoreWrapper, themeData.scoreWrapperClass);
-  safeAddClasses(backBtn, themeData.backBtnClass, themeData.backBtnGameOverClass);
-}
-
-function renderDrawView(
-  gameField: HTMLElement,
-  header: HTMLElement,
-  themeData: ThemeData,
-) {
+function renderDrawView(options: CreateViewBaseOptions) {
+  const { gameField, header, themeData } = options;
   gameField.classList.add(themeData.winnerBackground, "game-field-endscreen");
   header.classList.add("header-endscreen");
   const wrapper = createElementWithoutText("section", ["game-over-wrapper"], null);
   const text = createElementWithText("span", null, null, "It's a");
   const draw = createElementWithText("span", null, null, "Draw");
   const scales = createSvgElement("scales.svg", ["scales-svg"]);
-  const backBtn = createElementWithText("button", null, null, `${themeData.backBtnText}`);
   gameField.append(wrapper);
-  wrapper.append(text, draw, scales, backBtn);
+  wrapper.append(text, draw, scales, createScoreWrapper(themeData), createBackButton(themeData));
   safeAddClasses(header, themeData.gameBackground);
   safeAddClasses(text, themeData.drawTextClass);
   safeAddClasses(draw, themeData.drawClass);
-  safeAddClasses(backBtn, themeData.backBtnClass);
+}
+
+function createExitOverlayBlock(themeData: ThemeData) {
+  const buttonWrapper = createElementWithoutText("div", ["exit-buttons"], null);
+  const cancelBtn = createElementWithText("button", null, null, `${themeData.exitCancelBtn}`);
+  const confirmBtn = createElementWithText("button", null, null, `${themeData.exitConfirmBtn}`);
+  buttonWrapper.append(cancelBtn, confirmBtn);
+  safeAddClasses(cancelBtn, themeData.exitCancelBtnClass);
+  safeAddClasses(confirmBtn, themeData.exitConfirmBtnClass);
+  return { buttonWrapper };
 }
 
 function createExitOverlay(): HTMLElement {
@@ -459,18 +429,13 @@ function createExitOverlay(): HTMLElement {
   const overlay = createElementWithoutText("div", ["exit-overlay", "d-none"], "exit_overlay");
   const modal = createElementWithoutText("section", ["exit-modal"], null);
   const text = createElementWithText("p", ["exit-text-overlay"], null, "Are you sure you want to quit the game?");
-  const buttonWrapper = createElementWithoutText("div", ["exit-buttons"], null);
-  const cancelBtn = createElementWithText("button", null, null, `${themeData.exitCancelBtn}`);
-  const confirmBtn = createElementWithText("button", null, null, `${themeData.exitConfirmBtn}`);
   overlay.append(modal);
-  modal.append(text, buttonWrapper);
-  buttonWrapper.append(cancelBtn, confirmBtn);
+  modal.append(text, createExitOverlayBlock(themeData).buttonWrapper);
   safeAddClasses(modal, themeData.exitModalClass);
   safeAddClasses(text, themeData.exitTextClass);
-  safeAddClasses(cancelBtn, themeData.exitCancelBtnClass);
-  safeAddClasses(confirmBtn, themeData.exitConfirmBtnClass);
   return overlay;
 }
+
 
 function createAndAppendExitOverlay() {
   const existingOverlay = document.querySelector("#exit_overlay");
@@ -489,7 +454,6 @@ function bindExitButton() {
   });
   closeExitOverlay();
   backToSettings();
-
 }
 
 function closeExitOverlay() {

@@ -9,11 +9,7 @@ export interface SettingsData {
 export interface SettingsItem {
   id: string;
   label: string;
-
-  // id: ThemeId;
-  // label: ThemeName;
 }
-
 
 export type ThemeId = "codeVibes" | "gaming" | "daProjects" | "food";
 export type ThemeName = "Code vibes theme" | "Gaming theme" | "DA Projects theme" | "Food theme";

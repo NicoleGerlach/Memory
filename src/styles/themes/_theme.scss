@@ -3,8 +3,6 @@
 body:not(.theme-code) .player-svg {
   width: 40px;
   height: 41px;
-  // width: clamp(1.25rem, 0.893rem + 1.786vw, 2.5rem);
-  // height: clamp(1rem, 0.929rem + 0.357vw, 1.25rem);
   border-radius: 8px;
   padding: 4px 8px;
   color: var(--white);
@@ -21,7 +19,6 @@ body:not(.theme-code) .player-svg {
 header.header-endscreen {
   display: none;
 }
-
 
 /* ---------- Code vibes ---------- */
 
@@ -63,7 +60,6 @@ body.theme-code .game-field {
 }
 
 .card-match-border-code {
-  // border: solid 5px var(--green-500);
   border-color: var(--green-500);
 }
 
@@ -75,18 +71,12 @@ body.theme-code .game-field {
   box-shadow: 6px 6px 8px 0px rgba(77, 213, 188, 0.3);
 }
 
-.game-over-text-code {
-  color: var(--green-500);
-  text-shadow: -2px -2px 1px var(--green-100);
-}
-
 .exit-modal-code {
   background-color: var(--white);
 }
 
 .exit-text-code {
   color: var(--neutral-900);
-  // font-size: clamp(1.25rem, 1.036rem + 1.071vw, 2rem);
   font-weight: 700;
 }
 
@@ -106,7 +96,16 @@ body.theme-code .game-field {
   font-weight: 700;
 }
 
-body.theme-code .game-field.game-field-endscreen {
+body.theme-code .winner-player.blue {
+  color: var(--blue);
+}
+
+body.theme-code .winner-player.orange {
+  color: var(--orange);
+}
+
+
+body.theme-code .game-field.game-field-endscreen.game-field-win {
   justify-content: flex-start;
 }
 
@@ -135,7 +134,6 @@ body.theme-code .scales-svg {
   padding: 16px 24px;
   font-size: 24px;
   font-weight: 700;
-  margin-top: clamp(1.5rem, 0.786rem + 3.571vw, 4rem);
 }
 
 /* ---------- Gaming ---------- */
@@ -150,7 +148,6 @@ body.theme-gaming {
 header.header-gaming {
   width: 90vw;
   background-color: var(--red_600-transparent-20);
-  // font-family: 'Orbitron';
   font-weight: 700;
   border-radius: 10px;
   letter-spacing: 4%;
@@ -172,20 +169,16 @@ header.header-gaming {
 
 .card-style-gaming {
   box-shadow: 6px 6px 12px 0px rgba(0, 0, 0, 0.25);
-  // width: 105px;
   border-radius: 12px;
 }
 
 .card-bg-gaming {
   background-color: var(--red-50);
-  // width: 105px;
-  // height: 120px;
   border-radius: 12px;
   box-shadow: 6px 6px 12px 0px rgba(0, 0, 0, 0.25);
 }
 
 .card-match-border-gaming {
-  // border: solid 3px var(--red-500);
   border-color: var(--red-500);
   border-radius: 12px;
 }
@@ -199,15 +192,6 @@ header.header-gaming {
   box-shadow: 5px 5px 8px 0px var(--red_700-transparent-30);
 }
 
-.game-over-text-gaming {
-  color: var(--red-500);
-  font-size: clamp(2.25rem, 0.679rem + 7.857vw, 7.75rem);
-  font-weight: 900;
-  letter-spacing: 7%;
-  text-transform: uppercase;
-  margin-bottom: clamp(3.5rem, 2.714rem + 3.929vw, 6.25rem);
-}
-
 .exit-modal-gaming {
   background-color: #f0f6f9;
   border-radius: 20px;
@@ -215,7 +199,6 @@ header.header-gaming {
 
 .exit-text-gaming {
   color: var(--blue-800);
-  // font-size: 24px;
   font-weight: 400;
 }
 
@@ -237,6 +220,14 @@ header.header-gaming {
   padding: 12px 20px;
   border: 2px solid var(--red-600);
   font-family: 'Orbitron'
+}
+
+body.theme-gaming .winner-player.blue {
+  color: var(--blue);
+}
+
+body.theme-gaming .winner-player.orange {
+  color: var(--orange);
 }
 
 .draw-text-gaming {
@@ -269,7 +260,6 @@ body.theme-gaming .scales-svg {
   font-family: 'Orbitron';
   font-size: 24px;
   font-weight: 700;
-  margin-top: clamp(1.5rem, 0.786rem + 3.571vw, 4rem);
   border-radius: 10px;
   box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
@@ -277,7 +267,6 @@ body.theme-gaming .scales-svg {
 /* ---------- DA Projects ---------- */
 
 body.theme-projects {
-  // background-color: var(--blue-700);
   font-family: 'Figtree';
 }
 
@@ -304,8 +293,7 @@ header.header-projects {
   border-radius: 10px;
 }
 
-.winner-bg-projects,
-.game-over-bg-projects {
+.winner-bg-projects {
   background-color: var(--blue-700);
 }
 
@@ -313,21 +301,12 @@ body.theme-projects .winner-player {
   color: var(--white);
 }
 
-.game-over-text-projects {
-  color: var(--orange-650);
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  text-transform: uppercase;
-}
-
 .card-bg-projects {
   background-color: var(--blue-400);
-  // height: 100px;
   border-radius: 13px;
 }
 
 .card-match-border-projects {
-  // border: solid 2px var(--blue-700);
-  // height: 100px;
   border-color: var(--blue-700);
   border-radius: 13px;
 }
@@ -343,7 +322,6 @@ body.theme-projects .winner-player {
 
 .exit-text-projects {
   color: var(--blue-800);
-  // font-size: 24px;
   font-weight: 400;
 }
 
@@ -394,7 +372,6 @@ body.theme-projects .scales-svg {
   font-family: 'Orbitron';
   font-size: 24px;
   font-weight: 700;
-  margin-top: clamp(1.5rem, 0.786rem + 3.571vw, 4rem);
   border-radius: 10px;
   border: unset;
 }
@@ -435,7 +412,6 @@ header.header-food {
 }
 
 .card-match-border-food {
-  // border: var(--match-status-border-food);
   border-color: var(--orange-500);
 }
 
@@ -447,13 +423,7 @@ body.theme-food.winner-bg-food {
   background-color: var(--neutral-100);
 }
 
-body.theme-food.game-over-bg-food {
-  background-color: var(--orange-500);
-  color: var(--white);
-}
-
-.winner-bg-food,
-.game-over-bg-food {
+.winner-bg-food {
   img {
     box-shadow: 3px 3px 6px 0px rgba(0, 0, 0, 0.25);
     background-color: var(--orange-100-transparent-10);
@@ -461,13 +431,9 @@ body.theme-food.game-over-bg-food {
 }
 
 body.theme-food .winner-text,
-body.theme-food .winner-player {
+body.theme-food .winner-player,
+body.theme-food .game-over-score {
   color: var(--orange-600);
-}
-
-.game-over-text-food {
-  text-transform: uppercase;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .exit-modal-food {
@@ -477,14 +443,12 @@ body.theme-food .winner-player {
 
 .exit-text-food {
   color: var(--blue-800);
-  // font-size: 24px;
   font-weight: 400;
 }
 
 .exit-cancel-btn-food {
   background-color: var(--orange-550);
   color: var(--white);
-  // box-shadow: 3px 3px 5px 0px rgba(47, 46, 46, 0.2);
   border-radius: 10px;
   padding: 12px clamp(0.75rem, 0.607rem + 0.714vw, 1.25rem);
   border: 3px solid var(--orange-500);
@@ -518,8 +482,8 @@ body.theme-food .winner-player {
 body.theme-food .scales-svg {
   background-color: var(--orange-100);
   color: var(--orange-500);
-  width: 311px;
-  height: 285px;
+  width: clamp(12.5rem, 10.518rem + 9.911vw, 19.438rem);
+  height: clamp(11.125rem, 9.214rem + 9.554vw, 17.813rem);
   padding: 30px;
   margin-top: 40px;
   box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
@@ -532,7 +496,6 @@ body.theme-food .scales-svg {
   font-family: 'Klee One';
   font-size: 24px;
   font-weight: 700;
-  margin-top: clamp(1.5rem, 0.786rem + 3.571vw, 4rem);
   border-radius: 10px;
   border: unset;
   box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);

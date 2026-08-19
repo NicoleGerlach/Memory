@@ -1,6 +1,5 @@
 import { themes } from "./data.js";
 import { SVG_ICONS } from "./svgIcons.js";
-
 import {
   BoardSize,
   SettingsItem,
@@ -34,17 +33,14 @@ export function createElementWithoutText(
   elId: string | null,
 ): HTMLElement {
   const element = document.createElement(el);
-
   if (elClasses && elClasses?.length > 0) {
     for (const elClass of elClasses) {
       element.classList.add(elClass);
     }
   }
-
   if (elId) {
     element.id = elId;
   }
-
   return element;
 }
 
@@ -56,25 +52,20 @@ export function createList(
 ): HTMLUListElement {
   const list = document.createElement("ul");
   list.classList.add(listClass);
-
   for (const item of array) {
     const li = document.createElement("li");
     const label = document.createElement("label");
     const radioBtn = createInputField("radio", radioName, item.id);
     const text = document.createElement("span");
-
     const element = document.createElement('div');
     const lineSmall = document.createElement('div');
     const diamondSmall = document.createElement('div');
-
     text.textContent = item.label;
-
     text.classList.add('list-text');
     element.append(lineSmall, diamondSmall);
     element.classList.add('line-wrap-small');
     lineSmall.classList.add('line-small');
     diamondSmall.classList.add('diamond-small');
-
     li.classList.add(itemClass);
     label.append(radioBtn, text, element);
     li.append(label);

@@ -7,7 +7,6 @@ function init() {
 
 function setupEventListeners() {
   const playLink = document.querySelector("#play_link");
-
   playLink?.addEventListener("mouseenter", function () {
     exchangeArrow(true);
   });
@@ -18,9 +17,7 @@ function setupEventListeners() {
 
 function exchangeArrow(shouldExchangeArrow: boolean) {
   const arrowIcon = document.querySelector<HTMLImageElement>("#link_arrow");
-
   if (!arrowIcon) return;
-
   arrowIcon.src = shouldExchangeArrow
     ? "/assets/img/ui/arrow_thick.svg"
     : "/assets/img/ui/arrow.svg";

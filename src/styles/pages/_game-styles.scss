@@ -4,6 +4,7 @@
 body {
     @include flex-align.flex-align-center;
     height: 100vh;
+    height: 100dvh;
     width: 100vw;
     margin: 0 auto;
     overflow: hidden;
@@ -12,23 +13,21 @@ body {
     font-family: "Red Rose", sans-serif;
 }
 
-// Neu eingefügt
 header {
     @include flex-align.flex-align-center;
     padding: 1em;
     justify-content: space-between;
     color: white;
     width: 90%;
-    margin-top: 10px;
+    margin-top: clamp(0.25rem, 0.143rem + 0.536vw, 0.625rem);
 
     .score-wrapper {
         @include flex-all.flex-all-center;
         gap: 20px;
         padding: 0.75em 1em;
         text-transform: capitalize;
-        // font-size: clamp(1rem, 0.857rem + 0.714vw, 1.5rem);
         font-size: clamp(0.875rem, 0.696rem + 0.893vw, 1.5rem);
-        min-width: 115px;
+        min-width: 100px;
 
         .player-score {
             display: flex;
@@ -96,7 +95,6 @@ header {
     padding: unset;
 }
 
-/* Wrapper pro Karte */
 .field {
     display: flex;
     align-items: center;
@@ -106,7 +104,6 @@ header {
     box-sizing: border-box;
 }
 
-/* Standardkarte */
 .card-button {
     width: 100%;
     height: 100%;
@@ -151,9 +148,6 @@ header {
     object-fit: contain;
 }
 
-// .theme-code.game-field.game-field-endscreen.game-field-win {
-//     justify-content: flex-start !important;
-// }
 
 /* ---------- Gaming ---------- */
 
@@ -206,62 +200,45 @@ header {
 }
 
 .winner-icon {
-    height: clamp(9.375rem, 8.482rem + 4.464vw, 12.5rem);
-    width: clamp(9.375rem, 8.482rem + 4.464vw, 12.5rem);
+    height: clamp(3.75rem, 3.036rem + 3.571vw, 6.25rem);
+    width: clamp(3.75rem, 3.036rem + 3.571vw, 6.25rem);
 }
 
-.game-over-wrapper {
-    @include flex-align.flex-align-center;
-    flex-direction: column;
-    font-size: clamp(1rem, 0.857rem + 0.714vw, 1.5rem);
-    font-weight: 700;
-
-    .game-over-text {
-        font-size: clamp(3rem, 1.643rem + 6.786vw, 7.75rem);
-        font-weight: 700;
-        margin-bottom: clamp(3.5rem, 2.714rem + 3.929vw, 6.25rem);
-    }
-
-    .game-over-score {
-        color: var(--white);
-        font-size: 26px;
-        font-weight: 400;
-    }
-
-    .score-wrapper {
-        display: flex;
-        gap: 32px;
-        padding: 20px;
-        margin-top: 24px;
-
-        .player-score {
-            @include flex-align.flex-align-center;
-            gap: 5px;
-            text-transform: capitalize;
-        }
-    }
-}
-
+.game-over-wrapper,
 .winner-wrapper {
     @include flex-align.flex-align-center;
     flex-direction: column;
+    gap: 18px;
+}
 
-    .winner-text {
-        color: var(--white);
-        font-size: 40px;
-        font-weight: 400;
-        margin-bottom: 24px;
-    }
+.winner-text {
+    color: var(--white);
+    font-size: 40px;
+    font-weight: 400;
+}
 
-    .winner-player {
-        color: var(--blue);
-        font-size: clamp(2.5rem, 2.143rem + 1.786vw, 3.75rem);
-        font-weight: 700;
-        text-transform: uppercase;
-    }
+.winner-player {
+    color: var(--blue);
+    font-size: clamp(2.25rem, 1.821rem + 2.143vw, 3.75rem);
+    font-weight: 700;
+    text-transform: uppercase;
+}
 
-    .winner-icon {
-        margin-top: clamp(1.75rem, 1.107rem + 3.214vw, 4rem)
+.game-over-score {
+    color: var(--white);
+    font-size: 26px;
+    font-weight: 400;
+}
+
+.score-wrapper {
+    display: flex;
+    gap: 32px;
+    padding: 20px;
+
+    .player-score {
+        @include flex-align.flex-align-center;
+        gap: 5px;
+        text-transform: capitalize;
     }
 }
 
@@ -302,16 +279,13 @@ header {
     gap: 24px;
 
     >button {
-        cursor: pointer;
         font-size: clamp(0.875rem, 0.839rem + 0.179vw, 1rem);
     }
 }
 
-@media (max-width: 900px) {
-    .game-over-text {
-        font-size: 52px;
-        margin-bottom: 52px;
-    }
+button,
+.exit-wrapper {
+    cursor: pointer;
 }
 
 @media (max-width: 850px) {
@@ -321,49 +295,49 @@ header {
     }
 }
 
-// @media (max-width: 550px) {
-
-//     .game-field.size-24,
-//     .game-field.size-36 {
-//         grid-template-columns: repeat(4, auto);
-//     }
-// }
+@media (max-width: 550px) {
+    .game-field.size-24,
+    .game-field.size-36 {
+        grid-template-columns: repeat(4, auto);
+        padding: unset;
+    }
+}
 
 @media (max-width: 450px) {
-    // #game_header {
-    //     padding: 7px;
-    //     flex-direction: row;
-    // }
+    #game_header {
+        padding: 7px;
+        flex-direction: row;
+    }
 
-    // header .current-player-wrapper {
-    //     gap: 12px;
-    //     flex: 0 0;
-    //     >span {
-    //         flex: 0 0;
-    //     }
-    // }
+    header .current-player-wrapper {
+        gap: 12px;
+        flex: 0 0;
+        >span {
+            flex: 0 0;
+        }
+    }
 
-    // header .score-wrapper {
-    //     padding: 8px;
-    //     text-align: center;
-    //     gap: 12px;
-    // }
+    header .score-wrapper {
+        padding: 8px;
+        text-align: center;
+        gap: 12px;
+    }
 
-    // header .player-score .score-points {
-    //     min-width: 1.8ch;
-    // }
+    header .player-score .score-points {
+        min-width: 1.8ch;
+    }
 
-    // .theme-code .score-player {
-    //     display: none;
-    // }
+    .theme-code .score-player {
+        display: none;
+    }
 
-    // header .exit-wrapper {
-    //     padding: 8px;
-    // }
+    header .exit-wrapper {
+        padding: 8px;
+    }
 
-    // .exit-text {
-    //     display: none;
-    // }
+    .exit-text {
+        display: none;
+    }
 
     .theme-code .game-field.size-24 .field,
     .theme-code .game-field.size-24 .card-button,
@@ -372,16 +346,16 @@ header {
     .theme-food .game-field.size-24 .card-button,
     .theme-food .game-field.size-36 .field,
     .theme-food .game-field.size-36 .card-button {
-        width: 64px;
-        height: 64px;
+        width: 60px;
+        height: 60px;
     }
 
     .theme-gaming .game-field.size-24 .field,
     .theme-gaming .game-field.size-24 .card-button,
     .theme-gaming .game-field.size-36 .field,
     .theme-gaming .game-field.size-36 .card-button {
-        width: 56px;
-        height: 64px;
+        width: 52px;
+        height: 60px;
     }
 
     .theme-projects .game-field.size-24 .field,

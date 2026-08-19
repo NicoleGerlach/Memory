@@ -1,5 +1,6 @@
 body {
-    height: 100vh;
+  height: 100vh;
+  height: 100dvh;
 }
 
 .visually-hidden {
@@ -12,9 +13,4 @@ body {
   clip-path: inset(50%);
   white-space: nowrap;
   border: 0;
-}
-
-
-.cursor-pointer {
-  cursor: pointer;
 }
