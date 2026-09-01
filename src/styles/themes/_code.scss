@@ -1,0 +1,121 @@
+body.theme-code {
+  background-color: var(--neutral-900);
+  font-family: "Red Rose", sans-serif;
+}
+
+body.theme-code .header-endscreen {
+  display: flex;
+  padding: unset;
+  margin: unset;
+}
+
+body.theme-code .game-field {
+  align-items: unset;
+}
+
+.score-wrapper-code {
+  background-color: var(--green-400-transparent-20);
+}
+
+.exit-btn-code {
+  border: solid 1px var(--green-500);
+  background-color: var(--green-400-transparent-20);
+
+  >svg {
+    color: var(--white);
+  }
+}
+
+.card-bg-code {
+  background-color: var(--green-100);
+  box-shadow: 6px 6px 12px 0px #00000040;
+}
+
+.card-match-border-code {
+  border-color: var(--green-500);
+}
+
+.card-match-bg-code {
+  background-color: var(--white);
+}
+
+.card-match-shadow-code {
+  box-shadow: 6px 6px 8px 0px rgba(77, 213, 188, 0.3);
+}
+
+.game-over-text-code {
+  color: var(--green-500);
+  font-size: clamp(2.25rem, 0.679rem + 7.857vw, 7.75rem);
+  text-shadow: -2px -2px 1px var(--green-100);
+  margin-bottom: clamp(3.5rem, 2.714rem + 3.929vw, 6.25rem);
+}
+
+.exit-modal-code {
+  background-color: var(--white);
+}
+
+.exit-text-code {
+  color: var(--neutral-900);
+  font-weight: 700;
+}
+
+.exit-cancel-btn-code {
+  background-color: #66cfbc;
+  color: var(--white);
+  border: solid 2px var(--green-500);
+  padding: clamp(0.5rem, 0.357rem + 0.714vw, 1rem) clamp(0.75rem, 0.536rem + 1.071vw, 1.5rem);
+  font-weight: 700;
+}
+
+.exit-confirm-btn-code {
+  background-color: var(--green-300-transparent-14);
+  color: var(--green-500);
+  border: solid 2px var(--green-500);
+  padding: clamp(0.5rem, 0.357rem + 0.714vw, 1rem) clamp(0.75rem, 0.536rem + 1.071vw, 1.5rem);
+  font-weight: 700;
+}
+
+body.theme-code .winner-player.blue {
+  color: var(--blue);
+}
+
+body.theme-code .winner-player.orange {
+  color: var(--orange);
+}
+
+body.theme-code,
+body.theme-gaming, 
+body.theme-projects .winner-text {
+  color: var(--white);
+}
+
+body.theme-code .game-field.game-field-endscreen.game-field-win {
+  justify-content: flex-start;
+}
+
+body.theme-code .scales-svg {
+  color: var(--green-500);
+}
+
+.draw-text-code {
+  color: var(--white);
+  font-size: 40px;
+  font-weight: 400;
+}
+
+.draw-code {
+  color: var(--green-500);
+  font-size: clamp(3rem, 1.643rem + 6.786vw, 7.75rem);
+  font-weight: 700;
+  text-shadow: -2px -2px 1px var(--green-100);
+  text-transform: uppercase;
+}
+
+.back-btn-code {
+  background-color: var(--green-400-transparent-20);
+  color: var(--white);
+  border: solid 1px var(--green-500);
+  padding: 16px 24px;
+  font-size: 24px;
+  font-weight: 700;
+}

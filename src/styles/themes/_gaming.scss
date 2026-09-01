@@ -1,0 +1,157 @@
+body.theme-gaming {
+  font-family: 'Orbitron';
+  background-color: var(--blue-800);
+  display: flex;
+  align-items: center;
+}
+
+header.header-gaming {
+  width: 90vw;
+  background-color: var(--red_600-transparent-20);
+  font-weight: 700;
+  border-radius: 10px;
+  letter-spacing: 4%;
+}
+
+.score-wrapper-gaming {
+  background-color: var(--white);
+  border-radius: 10px;
+
+  .score-player {
+    display: none;
+  }
+}
+
+.exit-btn-gaming {
+  border: solid 2px var(--red-600);
+  border-radius: 10px;
+}
+
+.card-style-gaming {
+  box-shadow: 6px 6px 12px 0px rgba(0, 0, 0, 0.25);
+  border-radius: 12px;
+}
+
+.card-bg-gaming {
+  background-color: var(--red-50);
+  border-radius: 12px;
+  box-shadow: 6px 6px 12px 0px rgba(0, 0, 0, 0.25);
+}
+
+.card-match-border-gaming {
+  border-color: var(--red-500);
+  border-radius: 12px;
+}
+
+.card-match-bg-gaming {
+  background-color: var(--red-50);
+  border-radius: 9px;
+}
+
+.card-match-shadow-gaming {
+  box-shadow: 5px 5px 8px 0px var(--red_700-transparent-30);
+}
+
+.game-over-text-gaming {
+  color: var(--red-500);
+  font-size: clamp(2.25rem, 0.679rem + 7.857vw, 7.75rem);
+  font-weight: 900;
+  letter-spacing: 7%;
+  text-transform: uppercase;
+  margin-bottom: clamp(3.5rem, 2.714rem + 3.929vw, 6.25rem);
+}
+
+.exit-modal-gaming {
+  background-color: #f0f6f9;
+  border-radius: 20px;
+}
+
+.exit-text-gaming {
+  color: var(--blue-800);
+  font-weight: 400;
+}
+
+.exit-cancel-btn-gaming {
+  background-color: var(--red-500);
+  color: var(--white);
+  box-shadow: 3px 3px 5px 0px rgba(47, 46, 46, 0.2);
+  border-radius: 10px;
+  padding: 12px 20px;
+  border: unset;
+  font-family: 'Orbitron';
+}
+
+.exit-confirm-btn-gaming {
+  background-color: var(--red-400-transparent-08);
+  color: var(--red-600);
+  box-shadow: 3px 3px 5px 0px rgba(47, 46, 46, 0.2);
+  border-radius: 10px;
+  padding: 12px 20px;
+  border: 2px solid var(--red-600);
+  font-family: 'Orbitron'
+}
+
+body.theme-gaming .winner-player.blue {
+  color: var(--blue);
+}
+
+body.theme-gaming .winner-player.orange {
+  color: var(--orange);
+}
+
+body.theme-gaming .winner-icon {
+  height: clamp(15.625rem, 13.946rem + 8.393vw, 21.5rem);
+}
+
+.draw-text-gaming {
+  color: var(--white);
+  font-family: 'Orbitron';
+  font-size: 40px;
+  font-weight: 400;
+}
+
+.draw-gaming {
+  color: var(--red-500);
+  font-family: 'Orbitron';
+  font-size: clamp(3rem, 1.643rem + 6.786vw, 7.75rem);
+  font-weight: 700;
+  letter-spacing: 7%;
+  text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  text-transform: uppercase;
+}
+
+body.theme-gaming .scales-svg {
+  color: var(--red-500);
+  filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.back-btn-gaming {
+  background-color: var(--red-400-transparent-08);
+  color: var(--white);
+  border: solid 2px var(--red-600);
+  padding: 12px 20px;
+  font-family: 'Orbitron';
+  font-size: 24px;
+  font-weight: 700;
+  border-radius: 10px;
+  box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.theme-gaming .field {
+  width: clamp(4.313rem, 3.67rem + 3.214vw, 6.563rem);
+  height: clamp(4.75rem, 3.964rem + 3.929vw, 7.5rem);
+}
+
+.theme-gaming.game-field.game-field-endscreen {
+  justify-content: center;
+}
+
+.theme-gaming .card-button {
+  width: 100%;
+  height: 100%;
+  border-width: 3px;
+}
+
+// .theme-gaming .card-button {
+//   border-width: 3px;
+// }

@@ -1,11 +1,11 @@
 import "../styles/entries/global.scss";
 import "../styles/entries/home.scss";
 
-function init() {
+function init(): void {
   setupEventListeners();
 }
 
-function setupEventListeners() {
+function setupEventListeners(): void {
   const playLink = document.querySelector("#play_link");
   playLink?.addEventListener("mouseenter", function () {
     exchangeArrow(true);
@@ -15,7 +15,7 @@ function setupEventListeners() {
   });
 }
 
-function exchangeArrow(shouldExchangeArrow: boolean) {
+function exchangeArrow(shouldExchangeArrow: boolean): void {
   const arrowIcon = document.querySelector<HTMLImageElement>("#link_arrow");
   if (!arrowIcon) return;
   arrowIcon.src = shouldExchangeArrow

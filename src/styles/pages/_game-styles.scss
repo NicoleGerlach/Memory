@@ -1,11 +1,12 @@
 @use "../abstracts/mixins" as flex-align;
 @use "../abstracts/mixins" as flex-all;
+@use "../pages/game-styles-responsive";
 
 body {
     @include flex-align.flex-align-center;
-    height: 100vh;
-    height: 100dvh;
-    width: 100vw;
+    min-height: 100vh;
+    min-height: 100dvh;
+    width: 100%;
     margin: 0 auto;
     overflow: hidden;
     max-width: 1440px;
@@ -17,52 +18,14 @@ header {
     @include flex-align.flex-align-center;
     padding: 1em;
     justify-content: space-between;
-    color: white;
     width: 90%;
+    max-width: 1440px;
     margin-top: clamp(0.25rem, 0.143rem + 0.536vw, 0.625rem);
-
-    .score-wrapper {
-        @include flex-all.flex-all-center;
-        gap: 20px;
-        padding: 0.75em 1em;
-        text-transform: capitalize;
-        font-size: clamp(0.875rem, 0.696rem + 0.893vw, 1.5rem);
-        min-width: 100px;
-
-        .player-score {
-            display: flex;
-            gap: 5px;
-            text-transform: capitalize;
-        }
-
-        .player-svg {
-            height: 40px;
-        }
-
-        .score-player-icon {
-            width: clamp(1.25rem, 1.179rem + 0.357vw, 1.5rem);
-            height: clamp(1rem, 0.929rem + 0.357vw, 1.25rem);
-        }
-    }
-
-    .player-score {
-        display: flex;
-        align-items: center;
-        gap: 4px;
-
-        >img {
-            height: clamp(0.875rem, 0.699rem + 0.882vw, 1.25rem);
-        }
-
-        .score-points {
-            min-width: 2ch;
-        }
-    }
 
     .current-player-wrapper {
         display: flex;
         align-items: center;
-        gap: 0.2em;
+        gap: 0.5em;
         font-size: clamp(0.875rem, 0.661rem + 1.071vw, 1.625rem);
 
         >img {
@@ -73,8 +36,46 @@ header {
     .exit-wrapper {
         @include flex-all.flex-all-center;
         gap: 10px;
-        padding: 0.75em 1em;
+        padding: clamp(0.5rem, 0.357rem + 0.714vw, 1rem);
         font-size: clamp(1rem, 0.857rem + 0.714vw, 1.5rem);
+    }
+}
+
+.score-wrapper {
+    @include flex-all.flex-all-center;
+    gap: 20px;
+    padding: 0.75em 1em;
+    text-transform: capitalize;
+    font-size: clamp(0.875rem, 0.696rem + 0.893vw, 1.5rem);
+    min-width: 100px;
+
+    .player-score {
+        @include flex-align.flex-align-center;
+        gap: 5px;
+        text-transform: capitalize;
+    }
+
+    .player-svg {
+        height: 40px;
+    }
+
+    .score-player-icon {
+        width: clamp(1.25rem, 1.179rem + 0.357vw, 1.5rem);
+        height: clamp(1rem, 0.929rem + 0.357vw, 1.25rem);
+    }
+}
+
+.player-score {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    >img {
+        height: clamp(0.875rem, 0.699rem + 0.882vw, 1.25rem);
+    }
+
+    .score-points {
+        min-width: 1.8ch;
     }
 }
 
@@ -85,7 +86,7 @@ header {
     align-content: flex-start;
     gap: clamp(0.125rem, -0.125rem + 1.25vw, 1rem);
     min-height: 100%;
-    padding-top: clamp(1.125rem, 0.482rem + 3.214vw, 3.375rem);
+    padding-top: clamp(0.125rem, -0.196rem + 1.607vw, 1.25rem);
 }
 
 .game-field.game-field-endscreen {
@@ -118,7 +119,7 @@ header {
         position: relative;
         width: 100%;
         height: 100%;
-        transition: all 300ms ease-in-out;
+        transition: transform 300ms ease-in-out;
         transform-style: preserve-3d;
     }
 
@@ -148,60 +149,10 @@ header {
     object-fit: contain;
 }
 
-
-/* ---------- Gaming ---------- */
-
-.theme-gaming .field {
-    width: clamp(4.313rem, 3.67rem + 3.214vw, 6.563rem);
-    height: clamp(4.75rem, 3.964rem + 3.929vw, 7.5rem);
-}
-
-.theme-gaming.game-field.game-field-endscreen {
-    justify-content: center;
-}
-
-.theme-gaming .card-button {
-    width: 100%;
-    height: 100%;
-}
-
-/* ---------- DA Projects ---------- */
-
-.theme-projects .field {
-    width: clamp(4.75rem, 3.964rem + 3.929vw, 7.5rem);
-    height: clamp(4.25rem, 3.679rem + 2.857vw, 6.25rem);
-}
-
-.theme-projects .card-button {
-    width: 100%;
-    height: 100%;
-}
-
-.theme-projects .card-button__inner {
-    border-radius: 13px;
-}
-
-.theme-gaming .card-button {
-    border-width: 3px;
-}
-
-.theme-projects .card-button {
-    border-width: 2px;
-}
-
-.theme-food .card-button {
-    border-width: 4px;
-}
-
 .game-field.size-24,
 .game-field.size-36 {
     gap: clamp(0.063rem, -0.027rem + 0.446vw, 0.375rem);
     grid-template-columns: repeat(6, auto);
-}
-
-.winner-icon {
-    height: clamp(3.75rem, 3.036rem + 3.571vw, 6.25rem);
-    width: clamp(3.75rem, 3.036rem + 3.571vw, 6.25rem);
 }
 
 .game-over-wrapper,
@@ -212,13 +163,11 @@ header {
 }
 
 .winner-text {
-    color: var(--white);
     font-size: 40px;
     font-weight: 400;
 }
 
 .winner-player {
-    color: var(--blue);
     font-size: clamp(2.25rem, 1.821rem + 2.143vw, 3.75rem);
     font-weight: 700;
     text-transform: uppercase;
@@ -228,18 +177,6 @@ header {
     color: var(--white);
     font-size: 26px;
     font-weight: 400;
-}
-
-.score-wrapper {
-    display: flex;
-    gap: 32px;
-    padding: 20px;
-
-    .player-score {
-        @include flex-align.flex-align-center;
-        gap: 5px;
-        text-transform: capitalize;
-    }
 }
 
 .exit-overlay {
@@ -288,88 +225,75 @@ button,
     cursor: pointer;
 }
 
-@media (max-width: 850px) {
-    header {
-        flex-direction: column-reverse;
-        gap: 16px;
-    }
+.endscreen-enter-in {
+  animation: slide-in 500ms ease-out;
 }
 
-@media (max-width: 550px) {
-    .game-field.size-24,
-    .game-field.size-36 {
-        grid-template-columns: repeat(4, auto);
-        padding: unset;
-    }
+.endscreen-enter-top {
+  animation: slide-in-down 500ms ease-out;
 }
 
-@media (max-width: 450px) {
-    #game_header {
-        padding: 7px;
-        flex-direction: row;
-    }
+.endscreen-enter-bottom {
+  animation: slide-in-up 500ms ease-out;
+}
 
-    header .current-player-wrapper {
-        gap: 12px;
-        flex: 0 0;
-        >span {
-            flex: 0 0;
-        }
-    }
+.endscreen-enter-left {
+  animation: slide-in-left 500ms ease-out;
+}
 
-    header .score-wrapper {
-        padding: 8px;
-        text-align: center;
-        gap: 12px;
-    }
+.endscreen-enter-right {
+  animation: slide-in-right 500ms ease-out;
+}
 
-    header .player-score .score-points {
-        min-width: 1.8ch;
-    }
+@keyframes slide-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 
-    .theme-code .score-player {
-        display: none;
-    }
+@keyframes slide-in-down {
+  from {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
-    header .exit-wrapper {
-        padding: 8px;
-    }
+@keyframes slide-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
-    .exit-text {
-        display: none;
-    }
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
 
-    .theme-code .game-field.size-24 .field,
-    .theme-code .game-field.size-24 .card-button,
-    .theme-code .game-field.size-36 .field,
-    .theme-code .game-field.size-36 .card-button .theme-food .game-field.size-24 .field,
-    .theme-food .game-field.size-24 .card-button,
-    .theme-food .game-field.size-36 .field,
-    .theme-food .game-field.size-36 .card-button {
-        width: 60px;
-        height: 60px;
-    }
-
-    .theme-gaming .game-field.size-24 .field,
-    .theme-gaming .game-field.size-24 .card-button,
-    .theme-gaming .game-field.size-36 .field,
-    .theme-gaming .game-field.size-36 .card-button {
-        width: 52px;
-        height: 60px;
-    }
-
-    .theme-projects .game-field.size-24 .field,
-    .theme-projects .game-field.size-24 .card-button,
-    .theme-projects .game-field.size-36 .field,
-    .theme-projects .game-field.size-36 .card-button {
-        width: 60px;
-        height: 52px;
-    }
-
-    .theme-gaming header .current-player-wrapper .player-svg,
-    .theme-projects header .current-player-wrapper .player-svg,
-    .theme-food header .current-player-wrapper .player-svg {
-        width: 34px;
-        height: 35px;
-    }
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }

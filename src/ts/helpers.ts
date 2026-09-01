@@ -8,6 +8,8 @@ import {
 } from "../interfaces/settings-data.interface.js";
 import { preSelectedTheme } from "./data.js";
 
+/** Creates a new element with the given tag name for functions with text, sets its text content, adds optional classes,
+ * and optionally assigns an ID. */
 export function createElementWithText(
   el: string,
   elClasses: string[] | null,
@@ -27,6 +29,8 @@ export function createElementWithText(
   return element;
 }
 
+/** Creates a new element with the given tag name, adds optional classes,
+ * and optionally assigns an ID. */
 export function createElementWithoutText(
   el: string,
   elClasses: string[] | null,
@@ -44,6 +48,33 @@ export function createElementWithoutText(
   return element;
 }
 
+/** Creates and returns a wrapper. */
+function createDecoratorWrapper() {
+  const wrapper = document.createElement("div");
+  const lineSmall = document.createElement("div");
+  const diamondSmall = document.createElement("div");
+  wrapper.classList.add("line-wrap-small");
+  lineSmall.classList.add("line-small");
+  diamondSmall.classList.add("diamond-small");
+  wrapper.append(lineSmall, diamondSmall);
+  return wrapper;
+}
+
+/** Creates and returns list elements. */
+function createListItem(item: SettingsItem, itemClass: string, radioName: string) {
+  const li = document.createElement("li");
+  const label = document.createElement("label");
+  const radioBtn = createInputField("radio", radioName, item.id);
+  const text = document.createElement("span");
+  text.textContent = item.label;
+  text.classList.add("list-text");
+  li.classList.add(itemClass);
+  label.append(radioBtn, text, createDecoratorWrapper());
+  li.append(label);
+  return li;
+}
+
+/** Creates and returns a complete list off all elements. */
 export function createList(
   listClass: string,
   itemClass: string,
@@ -52,28 +83,12 @@ export function createList(
 ): HTMLUListElement {
   const list = document.createElement("ul");
   list.classList.add(listClass);
-  for (const item of array) {
-    const li = document.createElement("li");
-    const label = document.createElement("label");
-    const radioBtn = createInputField("radio", radioName, item.id);
-    const text = document.createElement("span");
-    const element = document.createElement('div');
-    const lineSmall = document.createElement('div');
-    const diamondSmall = document.createElement('div');
-    text.textContent = item.label;
-    text.classList.add('list-text');
-    element.append(lineSmall, diamondSmall);
-    element.classList.add('line-wrap-small');
-    lineSmall.classList.add('line-small');
-    diamondSmall.classList.add('diamond-small');
-    li.classList.add(itemClass);
-    label.append(radioBtn, text, element);
-    li.append(label);
-    list.append(li);
-  }
+  array.forEach((item) => list.append(createListItem(item, itemClass, radioName)));
   return list;
 }
 
+/** Creates an input field of the given type, assigns name and value, and marks it as checked if it matches the
+ * predefined theme preSelectedTheme. If there is no match, it remains unchecked. */
 export function createInputField(
   type: string,
   btnName: string,
@@ -89,6 +104,7 @@ export function createInputField(
   return newInputElement;
 }
 
+/** The function creates a new image Element and adds optional CSS classes. */
 export function createImageElement(
   pathPrefix: string,
   iconPath: string,
@@ -105,6 +121,7 @@ export function createImageElement(
   return img;
 }
 
+/** Creates a new svg element and adds optional CSS classes. */
 export function createSvgElement(
   iconPath: string,
   svgClasses: string[] | null,
@@ -121,6 +138,10 @@ export function createSvgElement(
   return svg;
 }
 
+/** Creates a player score wrapper element:
+ * - builds a div wrapper with color and layout classes,
+ * - adds an SVG icon,
+ * - displays the score */
 export function createPlayerScoreWrapper(
   color: string,
   iconName: string,
@@ -134,6 +155,7 @@ export function createPlayerScoreWrapper(
   return wrapper;
 }
 
+/** The function returns the corresponding theme. */
 export function getThemeSelection(item: ThemeId) {
   switch (item) {
     case "codeVibes":
@@ -147,6 +169,7 @@ export function getThemeSelection(item: ThemeId) {
   }
 }
 
+/** The function returns the corresponding player. */
 export function getPlayerSelection(item: Player) {
   switch (item) {
     case "blue":
@@ -156,6 +179,7 @@ export function getPlayerSelection(item: Player) {
   }
 }
 
+/** The function returns the corresponding board size. */
 export function getBoardSizeSelection(item: BoardSize) {
   switch (item) {
     case "16":

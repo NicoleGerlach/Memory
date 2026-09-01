@@ -1,0 +1,95 @@
+@media (max-width: 850px) {
+    header {
+        flex-direction: column-reverse;
+        gap: clamp(0.125rem, -0.403rem + 2.642vw, 1rem);
+    }
+}
+
+@media (max-width: 550px) {
+
+    .game-field.size-24,
+    .game-field.size-36 {
+        grid-template-columns: repeat(4, auto);
+        padding: unset;
+    }
+
+    .score-points {
+        display: flex;
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 450px) {
+    #game_header {
+        padding: 7px;
+        flex-direction: row;
+    }
+
+    header .current-player-wrapper {
+        gap: 8px;
+        flex: 0 0;
+
+        >span {
+            flex: 0 0;
+            display: flex;
+            text-align: center;
+        }
+    }
+
+    header .score-wrapper {
+        padding: 8px;
+        text-align: center;
+        gap: clamp(0.125rem, -0.798rem + 4.615vw, 0.5rem);
+
+        .player-score {
+            gap: 2px;
+
+            .score-points {
+                min-width: 1.8ch;
+            }
+        }
+    }
+
+    .theme-code .score-player {
+        display: none;
+    }
+
+    .exit-text {
+        display: none;
+    }
+
+    .theme-code .game-field.size-24 .field,
+    .theme-code .game-field.size-24 .card-button,
+    .theme-code .game-field.size-36 .field,
+    .theme-code .game-field.size-36 .card-button,
+    .theme-food .game-field.size-24 .field,
+    .theme-food .game-field.size-24 .card-button,
+    .theme-food .game-field.size-36 .field,
+    .theme-food .game-field.size-36 .card-button {
+        width: 60px;
+        height: 60px;
+    }
+
+    .theme-gaming .game-field.size-24 .field,
+    .theme-gaming .game-field.size-24 .card-button,
+    .theme-gaming .game-field.size-36 .field,
+    .theme-gaming .game-field.size-36 .card-button {
+        width: 52px;
+        height: 60px;
+    }
+
+    .theme-projects .game-field.size-24 .field,
+    .theme-projects .game-field.size-24 .card-button,
+    .theme-projects .game-field.size-36 .field,
+    .theme-projects .game-field.size-36 .card-button {
+        width: 60px;
+        height: 52px;
+    }
+
+    .theme-gaming header .current-player-wrapper .player-svg,
+    .theme-projects header .current-player-wrapper .player-svg,
+    .theme-food header .current-player-wrapper .player-svg {
+        width: 34px;
+        height: 35px;
+    }
+}

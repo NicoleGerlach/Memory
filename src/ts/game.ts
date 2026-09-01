@@ -2,13 +2,12 @@ import "../styles/entries/global.scss";
 import "../styles/entries/game.scss";
 
 import { themes } from "./data.js";
-import { createElementWithoutText, createElementWithText } from "./helpers.js";
-import { createImageElement } from "./helpers.js";
-import { createSvgElement } from "./helpers.js";
-import { createPlayerScoreWrapper } from "./helpers.js";
+import { createElementWithoutText, createElementWithText, createImageElement,
+  createSvgElement, createPlayerScoreWrapper } from "./helpers.js";
 import { CardData } from "../interfaces/card.interface";
 import { ThemeId, Player, Settings } from "../interfaces/settings-data.interface.js";
 import { ThemeData } from "../interfaces/themes.interface";
+import { isGameOver, showEndScreen, createAndAppendExitOverlay, bindExitButton } from "./gameOver";
 
 type SelectedCard = {
   field: HTMLElement;
@@ -18,6 +17,16 @@ type SelectedCard = {
 
 type Winner = "blue" | "orange" | "draw";
 
+type CreateViewBaseOptions = {
+  gameField: HTMLElement,
+  header: HTMLElement,
+  themeData: ThemeData,
+};
+
+type CreateWinViewOptions = CreateViewBaseOptions & {
+  winner: "blue" | "orange",
+};
+
 let currentSettings = {} as Settings;
 let activePlayer: Player = "blue";
 let currentTheme: ThemeId = "codeVibes";
@@ -26,21 +35,21 @@ let secondCard: SelectedCard | null;
 let isChecking: boolean = false;
 let cards: CardData[] = [];
 
-function init() {
+function init(): void {
   loadData();
   initializeGameData();
-  createAndAppendExitOverlay();
-  bindExitButton();
   flipCard();
   generateIds(+currentSettings.size);
   resetPoints();
 }
 
-function getThemeData() {
+/** Returns the theme data for the currently selected theme. */
+export function getThemeData() {
   return themes[currentTheme];
 }
 
-function loadData() {
+/** Loads user settings from Local Storage and stores them in `currentSettings`. */
+function loadData(): void {
   const data = localStorage.getItem("settings");
   if (data) {
     const settings = JSON.parse(data) as Settings;
@@ -48,6 +57,13 @@ function loadData() {
   }
 }
 
+/** Initializes game data based on `currentSettings`
+ * Sets activePlayer to currentSettings.player or fallback to "blue".
+ * Sets currentTheme to currentSettings.theme or fallback to "codeVibes".
+ * If currentSettings.selectedPlayer is not set, it will be set to currentSettings.player.
+ * Calculates numberOfPairs as half of the size.
+ * Applies theme styles, renders the header, and renders the current theme based on the calculated pairs.
+ */
 function initializeGameData() {
   activePlayer = currentSettings.player ?? "blue";
   currentTheme = currentSettings.theme ?? "codeVibes";
@@ -60,14 +76,18 @@ function initializeGameData() {
   renderCurrentTheme(numberOfPairs);
 }
 
+/** Iterates over all values of themes and returns an array containing each theme's gameBackground property. */
 function getAllGameBackgrounds() {
   return Object.values(themes).map((theme) => theme.gameBackground);
 }
 
+/** Iterates over all theme values and returns an array of the bodyClass properties. */
 function getAllBodyClasses() {
   return Object.values(themes).map((theme) => theme.bodyClass);
 }
 
+/** Iterates over all theme values, builds an array with gameBackground and winnerBackground for each theme,
+ * and flattens it into a single array. */
 function getAllStateBackgrounds() {
   return Object.values(themes).flatMap((theme) => [
     theme.gameBackground,
@@ -75,7 +95,10 @@ function getAllStateBackgrounds() {
   ]);
 }
 
-function applyThemeStyles() {
+/** Loads the theme data, selects the game field element (#game_field),
+ * removes all existing background classes, applies the theme's background classes,
+ * and updates the document body with the corresponding theme classes. */
+function applyThemeStyles(): void {
   const themeData = getThemeData();
   const gameSection = document.querySelector("#game_field");
   if (!themeData || !gameSection) return;
@@ -86,7 +109,9 @@ function applyThemeStyles() {
   safeAddClasses(document.body, themeData.gameBackground);
 }
 
-function applyHeaderStyles() {
+/** Applies header styles based on the theme. It retrieves the theme data, selects the header,
+ * removes any existing header classes, and adds the new header classes from the theme.  */
+function applyHeaderStyles(): void {
   const header = document.querySelector("#game_header");
   if (!header) return;
   const themeData = getThemeData();
@@ -95,10 +120,15 @@ function applyHeaderStyles() {
   safeAddClasses(header, themeData.headerClass);
 }
 
+/** Creates a CardData object for a card with the given ids and motif. */
 function createCardOptions(id: number, pairId: number, motif: string): CardData {
   return { id, pairId, motif, isFlipped: false, isMatched: false };
 }
 
+/** Creates an array of CardData objects for a given number of pairs.
+ * Takes the first numberOfPairs motifs from motifs.
+ * For each motif, two cards are created with the same pairId.
+ * The resulting card data is then shuffled using shuffleCards. */
 function createCards(numberOfPairs: number, motifs: string[]): CardData[] {
   let idCounter = 1;
   const cardData = motifs.slice(0, numberOfPairs).flatMap((motif, index) => {
@@ -108,6 +138,9 @@ function createCards(numberOfPairs: number, motifs: string[]): CardData[] {
   return shuffleCards(cardData);
 }
 
+/** Builds an HTMLElement for a card based on CardData and ThemeData.
+ * Creates a field Section with the card ID as the DOM id and data attributes.
+ * Contains a button with the card content according to the theme. */
 function buildCardElement(card: CardData, themeData: ThemeData): HTMLElement {
   const field = createElementWithoutText("section", ["field"], null);
   field.id = String(card.id);
@@ -124,7 +157,9 @@ function buildCardElement(card: CardData, themeData: ThemeData): HTMLElement {
   return field;
 }
 
-function renderCurrentTheme(numberOfPairs: number) {
+/** Renders the current theme onto the game field by generating cards based on the selected theme's.
+ * Also applies a size class corresponding to the number of pairs. */
+function renderCurrentTheme(numberOfPairs: number): void {
   const gameField = document.querySelector("#game_field");
   const themeData = themes[currentTheme];
   if (!gameField || !themeData) return;
@@ -135,13 +170,17 @@ function renderCurrentTheme(numberOfPairs: number) {
   gameField.classList.add(`size-${numberOfPairs * 2}`);
 }
 
-function renderHeader() {
+function renderHeader(): void {
   applyHeaderStyles();
   renderScores();
   renderCurrentPlayer();
   renderExitBtn();
+  createAndAppendExitOverlay();
+  bindExitButton();
 }
 
+/** Builds a score wrapper section for the current theme, containing the
+ * blue and orange player score sub-wrappers with the configured icons and initial points. */
 function createScoreWrapper(themeData: ThemeData) {
   const wrapper = createElementWithoutText("section", ["score-wrapper", themeData.scoreWrapperClass], null);
   const blue = createPlayerScoreWrapper("blue", themeData.playerIcon, currentSettings.points.pointsBlue);
@@ -150,7 +189,8 @@ function createScoreWrapper(themeData: ThemeData) {
   return wrapper;
 }
 
-function renderScores() {
+/** Renders the current score UI by removing any existing score wrapper and inserting a fresh one for the current theme. */
+function renderScores(): void {
   const header = document.querySelector("#game_header");
   const themeData = getThemeData();
   if (!header || !themeData) return;
@@ -158,8 +198,8 @@ function renderScores() {
   header.prepend(createScoreWrapper(themeData));
 }
 
-
-function renderCurrentPlayer() {
+/** Renders the current player indicator on the UI. */
+function renderCurrentPlayer(): void {
   const currentPlayerElement = document.querySelector("#current_player");
   if (!currentPlayerElement) return;
   const activePlayer = currentSettings.player;
@@ -171,7 +211,8 @@ function renderCurrentPlayer() {
   currentPlayerElement.append(playerText, playerSvg);
 }
 
-function renderExitBtn() {
+/** Renders the exit button UI in the header. */
+function renderExitBtn(): void {
   const header = document.querySelector("#game_header");
   if (!header) return;
   const themeData = getThemeData();
@@ -184,6 +225,7 @@ function renderExitBtn() {
   exitWrapper.classList.add(themeData.exitBtnClass);
 }
 
+/** Returns a new array with the elements of the input array shuffled using a simple random sort-based approach. */
 function shuffleCards(array: CardData[]): CardData[] {
   const shuffled = [...array];
   for (let i = shuffled.length - 1; i > 0; i--) {
@@ -195,6 +237,7 @@ function shuffleCards(array: CardData[]): CardData[] {
   return shuffled;
 }
 
+/** Returns the clicked card as a selectedCard, or null if the click does not correspond to a valid, unflipped card. */
 function getClickedCard(target: HTMLElement): SelectedCard | null {
   const button = target.closest(".card-button") as HTMLElement | null;
   const field = target.closest(".field") as HTMLElement | null;
@@ -204,7 +247,8 @@ function getClickedCard(target: HTMLElement): SelectedCard | null {
   return selectedCard;
 }
 
-function handleCardSelection(selectedCard: SelectedCard) {
+/** Handles the selection of a card: flip it, track first/second card, and start comparison. */
+function handleCardSelection(selectedCard: SelectedCard): void {
   selectedCard.button.classList.add("is-flipped");
   selectedCard.cardData.isFlipped = true;
   if (!firstCard) return void (firstCard = selectedCard);
@@ -215,7 +259,8 @@ function handleCardSelection(selectedCard: SelectedCard) {
   }
 }
 
-function flipCard() {
+/** Attach a global click listener to flip cards when allowed. */
+function flipCard(): void {
   document.addEventListener("click", (e) => {
     if (isChecking) return;
     const target = e.target as HTMLElement;
@@ -225,6 +270,7 @@ function flipCard() {
   });
 }
 
+/** Generate a sequence of card IDs. */
 function generateIds(numberOfCards: number): string[] {
   const ids: string[] = [];
   for (let i = 0; i < numberOfCards; i++) {
@@ -233,20 +279,25 @@ function generateIds(numberOfCards: number): string[] {
   return ids;
 }
 
+/** Create and return a SelectedCard object by linking a field's data-id to a card from the global cards array,
+ * paired with a button element. */
 function createSelectedCard(field: HTMLElement, button: HTMLElement): SelectedCard {
   const cardId = Number(field.dataset.cardId);
   const cardData = cards.find(card => card.id === cardId);
   if (!cardData) {
-    throw new Error("Karte nicht gefunden");
+    throw new Error("Card not found");
   }
   return { field, button, cardData };
 }
 
+/** Check if two SelectedCard objects form a matching pair. */
 function isMatch(cardOne: SelectedCard, cardTwo: SelectedCard): boolean {
   return cardOne.cardData.pairId === cardTwo.cardData.pairId;
 }
 
-function applyMatchStyles(card: SelectedCard, themeData: any) {
+/** Apply the match styling to a card based on the provided theme data. The function adds match-specific 
+ * background/border/shadow classes and removes the previous card background class if present. */
+function applyMatchStyles(card: SelectedCard, themeData: any): void {
   const img = card.button.querySelector(".card-button__face--back");
   if (img) {
     safeAddClasses(img, themeData.cardMatchBackground);
@@ -257,7 +308,8 @@ function applyMatchStyles(card: SelectedCard, themeData: any) {
   safeAddClasses(card.button, themeData.cardMatchBorder, themeData.cardMatchShadow);
 }
 
-function safeAddClasses(element: Element, ...classes: (string | undefined | null)[]): void {
+/** Adds only valid string class names to the given element. */
+export function safeAddClasses(element: Element, ...classes: (string | undefined | null)[]): void {
   const valid = classes
     .filter((c): c is string => Boolean(c) && typeof c === "string" && c.trim() !== "");
   if (valid.length) {
@@ -265,7 +317,8 @@ function safeAddClasses(element: Element, ...classes: (string | undefined | null
   }
 }
 
-function safeRemoveClasses(element: Element, ...classes: (string | undefined | null)[]): void {
+/** Removes only valid string class names from the given element. */
+export function safeRemoveClasses(element: Element, ...classes: (string | undefined | null)[]): void {
   const valid = classes
     .filter((c): c is string => Boolean(c) && typeof c === "string" && c.trim() !== "");
   if (valid.length) {
@@ -273,37 +326,46 @@ function safeRemoveClasses(element: Element, ...classes: (string | undefined | n
   }
 }
 
-function unflipCards(cardOne: SelectedCard, cardTwo: SelectedCard) {
+/** Unflips two cards by removing the is-flipped class from both buttons and setting their flipped state to false. */
+function unflipCards(cardOne: SelectedCard, cardTwo: SelectedCard): void {
   cardOne.button.classList.remove("is-flipped");
   cardTwo.button.classList.remove("is-flipped");
   cardOne.cardData.isFlipped = false;
   cardTwo.cardData.isFlipped = false;
 }
 
-function resetSelectedCards() {
+/** Resets the currently selected cards by clearing the references to firstCard and secondCard. */
+function resetSelectedCards(): void {
   firstCard = null;
   secondCard = null;
 }
 
-function resetPoints() {
+/** Resets both blue and orange points to zero and re-renders the score display. */
+function resetPoints(): void {
   currentSettings.points.pointsBlue = 0;
   currentSettings.points.pointsOrange = 0;
   renderScores();
 }
 
-function handleMatch(themeData: ThemeData) {
+/** Marks two matched cards, applies match styles using the provided themeData, counts points,
+ * shows end screen if the game is over and resets the selected cards */
+function handleMatch(themeData: ThemeData): void {
   if (!firstCard || !secondCard) return;
   firstCard.cardData.isMatched = true;
   secondCard.cardData.isMatched = true;
   applyMatchStyles(firstCard, themeData);
   applyMatchStyles(secondCard, themeData);
   countPoints();
-  if (isGameOver(cards)) renderEndScreen();
+  if (isGameOver(cards))
+    setTimeout(() => {
+      showEndScreen(themeData, currentSettings.points.pointsBlue, currentSettings.points.pointsOrange);
+    }, 1000);
   resetSelectedCards();
   isChecking = false;
 }
 
-function handleMismatch() {
+/** Flipping the cards back after a delay, resets selections and advances to the next player. */
+function handleMismatch(): void {
   setTimeout(() => {
     if (firstCard && secondCard) unflipCards(firstCard, secondCard);
     resetSelectedCards();
@@ -312,180 +374,27 @@ function handleMismatch() {
   }, 1000);
 }
 
-function compareCards() {
+/** Compares the currently selected cards and then either handles a match or a mismatch. */
+function compareCards(): void {
   const themeData = getThemeData();
   if (!themeData || !firstCard || !secondCard) return;
   isMatch(firstCard, secondCard) ? handleMatch(themeData) : handleMismatch();
 }
 
-function changeCurrentPlayer() {
+/** This function toggles the current player between blue and orange and updates the UI. */
+function changeCurrentPlayer(): void {
   currentSettings.player = currentSettings.player === 'blue' ? 'orange' : 'blue';
   renderCurrentPlayer();
 }
 
-function countPoints() {
+/** This function increments the score for the current player and then updates the score display. */
+function countPoints(): void {
   if (currentSettings.player === 'blue') {
     currentSettings.points.pointsBlue++;
   } else if (currentSettings.player === 'orange') {
     currentSettings.points.pointsOrange++;
   }
   renderScores();
-}
-
-function isGameOver(cards: CardData[]): boolean {
-  return cards.every(card => card.isMatched);
-}
-
-function getWinner(): Winner {
-  const bluePoints = currentSettings.points.pointsBlue;
-  const orangePoints = currentSettings.points.pointsOrange;
-  if (bluePoints > orangePoints) return "blue";
-  if (orangePoints > bluePoints) return "orange";
-  return "draw";
-}
-
-function clearEndScreen(field: HTMLElement, header: HTMLElement, themeData: ThemeData) {
-  field.innerHTML = "";
-  header.innerHTML = "";
-  safeRemoveClasses(field, themeData.gameBackground, themeData.winnerBackground);
-  safeRemoveClasses(header, themeData.headerClass);
-}
-
-function renderEndScreen() {
-  const winner = getWinner();
-  const themeData = getThemeData();
-  const gameField = document.querySelector("#game_field");
-  const header = document.querySelector("#game_header") as HTMLElement | null;
-  if (!themeData || !(gameField instanceof HTMLElement) || !(header instanceof HTMLElement)) return;
-  clearEndScreen(gameField, header, themeData);
-  safeAddClasses(document.body, themeData.winnerBackground);
-  winner === "draw"
-    ? renderDrawView({gameField, header, themeData})
-    : winner === currentSettings.selectedPlayer
-      ? renderWinView({ gameField, header, themeData, winner })
-      : renderWinView({ gameField, header, themeData, winner });
-  backToStart();
-}
-
-function createBackButton(themeData: ThemeData) {
-  const backBtn = createElementWithText("button", null, null, themeData.backBtnText);
-  safeAddClasses(backBtn, themeData.backBtnClass);
-  return backBtn;
-}
-
-type CreateViewBaseOptions = {
-  gameField: HTMLElement,
-  header: HTMLElement,
-  themeData: ThemeData,
-};
-
-type CreateWinViewOptions = CreateViewBaseOptions & {
-  winner: "blue" | "orange",
-};
-
-function renderWinView(options: CreateWinViewOptions) {
-  const { gameField, header, themeData, winner } = options;
-  gameField.classList.add(themeData.winnerBackground, "game-field-endscreen", "game-field-win");
-  header.classList.add("header-endscreen");
-  const wrapper = createElementWithoutText("section", ["winner-wrapper"], null);
-  const label = createElementWithText("span", ["winner-text"], null, "The winner is");
-  const player = createElementWithText("span", ["winner-player", winner], null, `${winner} Player`);
-  const winnerIcon = winner === "blue" ? themeData.winnerIcons.winBlue : themeData.winnerIcons.winOrange;
-  const img = createImageElement(`/assets/img/${themeData.id}/`, winnerIcon, ["winner-icon"]);
-  const confetti = createImageElement("/assets/img/ui/", themeData.winnerIcons.decoration, ["confetti"]);
-  gameField.append(wrapper);
-  wrapper.append(label, player, img, createScoreWrapper(themeData), createBackButton(themeData));
-  safeAddClasses(header, themeData.gameBackground);
-  header.append(confetti);
-}
-
-function renderDrawView(options: CreateViewBaseOptions) {
-  const { gameField, header, themeData } = options;
-  gameField.classList.add(themeData.winnerBackground, "game-field-endscreen");
-  header.classList.add("header-endscreen");
-  const wrapper = createElementWithoutText("section", ["game-over-wrapper"], null);
-  const text = createElementWithText("span", null, null, "It's a");
-  const draw = createElementWithText("span", null, null, "Draw");
-  const scales = createSvgElement("scales.svg", ["scales-svg"]);
-  gameField.append(wrapper);
-  wrapper.append(text, draw, scales, createScoreWrapper(themeData), createBackButton(themeData));
-  safeAddClasses(header, themeData.gameBackground);
-  safeAddClasses(text, themeData.drawTextClass);
-  safeAddClasses(draw, themeData.drawClass);
-}
-
-function createExitOverlayBlock(themeData: ThemeData) {
-  const buttonWrapper = createElementWithoutText("div", ["exit-buttons"], null);
-  const cancelBtn = createElementWithText("button", null, null, `${themeData.exitCancelBtn}`);
-  const confirmBtn = createElementWithText("button", null, null, `${themeData.exitConfirmBtn}`);
-  buttonWrapper.append(cancelBtn, confirmBtn);
-  safeAddClasses(cancelBtn, themeData.exitCancelBtnClass);
-  safeAddClasses(confirmBtn, themeData.exitConfirmBtnClass);
-  return { buttonWrapper };
-}
-
-function createExitOverlay(): HTMLElement {
-  const themeData = getThemeData();
-  const overlay = createElementWithoutText("div", ["exit-overlay", "d-none"], "exit_overlay");
-  const modal = createElementWithoutText("section", ["exit-modal"], null);
-  const text = createElementWithText("p", ["exit-text-overlay"], null, "Are you sure you want to quit the game?");
-  overlay.append(modal);
-  modal.append(text, createExitOverlayBlock(themeData).buttonWrapper);
-  safeAddClasses(modal, themeData.exitModalClass);
-  safeAddClasses(text, themeData.exitTextClass);
-  return overlay;
-}
-
-
-function createAndAppendExitOverlay() {
-  const existingOverlay = document.querySelector("#exit_overlay");
-  if (existingOverlay) return;
-  const overlay = createExitOverlay();
-  document.body.append(overlay);
-}
-
-function bindExitButton() {
-  const exitBtn = document.querySelector(".exit-btn");
-  if (!exitBtn) return;
-  exitBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    const overlay = document.querySelector("#exit_overlay");
-    overlay?.classList.remove("d-none");
-  });
-  closeExitOverlay();
-  backToSettings();
-}
-
-function closeExitOverlay() {
-  const themeData = getThemeData();
-  const backToGame = document.querySelector(`.${themeData.exitCancelBtnClass}`);
-  if (backToGame) {
-    backToGame.addEventListener("click", () => {
-      const overlay = document.querySelector("#exit_overlay");
-      overlay?.classList.add("d-none");
-    }
-    )
-  };
-}
-
-function backToSettings() {
-  const themeData = getThemeData();
-  const confirmBtn = document.querySelector(`.${themeData.exitConfirmBtnClass}`);
-  if (confirmBtn) {
-    confirmBtn.addEventListener("click", () => {
-      window.location.href = "/settings.html";
-    });
-  }
-}
-
-function backToStart() {
-  const themeData = getThemeData();
-  const backBtn = document.querySelector(`.${themeData.backBtnClass}`);
-  if (backBtn) {
-    backBtn.addEventListener("click", () => {
-      window.location.href = "/index.html";
-    });
-  }
 }
 
 init();
