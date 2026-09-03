@@ -8,7 +8,6 @@ body {
     min-height: 100dvh;
     width: 100%;
     margin: 0 auto;
-    overflow: hidden;
     max-width: 1440px;
     flex-direction: column;
     font-family: "Red Rose", sans-serif;
@@ -85,7 +84,6 @@ header {
     place-content: center;
     align-content: flex-start;
     gap: clamp(0.125rem, -0.125rem + 1.25vw, 1rem);
-    min-height: 100%;
     padding-top: clamp(0.125rem, -0.196rem + 1.607vw, 1.25rem);
 }
 
@@ -94,6 +92,8 @@ header {
     flex-direction: column;
     align-items: center;
     padding: unset;
+    min-height: 100vh;
+    min-height: 100dvh;
 }
 
 .field {
@@ -202,6 +202,7 @@ header {
     text-align: center;
     width: clamp(19.5rem, 15.446rem + 20.268vw, 33.688rem);
     height: clamp(9.75rem, 7.714rem + 10.179vw, 16.875rem);
+    border: unset
 }
 
 .exit-text {

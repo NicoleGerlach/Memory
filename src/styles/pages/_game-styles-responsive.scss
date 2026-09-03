@@ -6,10 +6,9 @@
 }
 
 @media (max-width: 550px) {
-
     .game-field.size-24,
     .game-field.size-36 {
-        grid-template-columns: repeat(4, auto);
+        grid-template-columns: repeat(4, auto) !important;
         padding: unset;
     }
 

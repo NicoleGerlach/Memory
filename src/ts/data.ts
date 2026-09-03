@@ -184,7 +184,7 @@ export const themes = {
       winBlue: "goblet.svg",
       winOrange: "goblet.svg",
       draw: "scales.svg",
-      decoration: "",
+      decoration: "confetti.svg",
     },
   },
 
@@ -302,7 +302,7 @@ export const themes = {
       winBlue: "win_blue.svg",
       winOrange: "win_orange.svg",
       draw: "scales.svg",
-      decoration: "",
+      decoration: "confetti.svg",
     },
   },
 };

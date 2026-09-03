@@ -91,6 +91,7 @@ body.theme-projects .winner-text {
 
 body.theme-code .game-field.game-field-endscreen.game-field-win {
   justify-content: flex-start;
+  min-height: unset;
 }
 
 body.theme-code .scales-svg {

@@ -18,6 +18,10 @@ import {
   getThemeSelection,
 } from "./helpers.js";
 
+/**
+ * Initializes the settings page by rendering the settings, applying stored settings, setting event listeners,
+ * and enabling hover effects for the lists.
+ */
 function init(): void {
   renderSettings();
   applyStoredSettings();
@@ -25,9 +29,9 @@ function init(): void {
   toggleListHover();
 }
 
-/** Attaches two event listeners.
- * If #settings_box exists, changes trigger handleSelectionChanges.
- * If #settings_form exists, submitting triggers handleSubmitEvent. */
+/**
+ * Sets up event listeners for the settings box and form, handling changes and form submission.
+ */
 function setEventListeners(): void {
   const settingsBox = document.querySelector("#settings_box");
   const settingsForm = document.querySelector("#settings_form");
@@ -35,8 +39,10 @@ function setEventListeners(): void {
   settingsForm?.addEventListener("submit", handleSubmitEvent);
 }
 
-/** Renders the preview image according to the theme.
- * Finally updates the settings selection. */
+/**
+ * Handles changes in the selection of settings.
+ * @param {Event} event - The event object representing the change.
+ */
 function handleSelectionChanges(event: Event): void {
   const target = event.target as HTMLInputElement;
   const selectedItem = target.value as ThemeId | Player | BoardSize;
@@ -46,9 +52,11 @@ function handleSelectionChanges(event: Event): void {
   updateSettingsSelection(target, selectedItem);
 }
 
-/** Updates the displayed current selection based on the changed target.
- * Reads the current Theme, Player, or BoardSize selection and updates the corresponding them.
- * Enable the Start button if applicable and updates the separator state. */
+/**
+ * Updates the displayed current selection based on the changed target.
+ * @param {HTMLInputElement} target - The input element that triggered the change event.
+ * @param {ThemeId | Player | BoardSize} selectedItem - The selected item.
+ */
 function updateSettingsSelection(target: HTMLInputElement, selectedItem: ThemeId | Player | BoardSize): void {
   const currentThemeBox = document.querySelector("#current_theme");
   const currentPlayerBox = document.querySelector("#current_player");
@@ -67,7 +75,9 @@ function updateSettingsSelection(target: HTMLInputElement, selectedItem: ThemeId
   updateSeparatorState();
 }
 
-/** Iterates over settingsData, renders each entry into a section viarenderSettingsBox, and appends it to the container. */
+/**
+ * Renders the settings sections based on the settings data.
+ */
 function renderSettings(): void {
   const settingsBox = document.querySelector("#settings_box");
   if (!settingsBox) return;
@@ -77,38 +87,46 @@ function renderSettings(): void {
   }
 }
 
-/** Creates a section with class, a title-wrapper containing, a list and returns the full element. */
+/**
+ * Renders a settings section based on the provided data.
+ * @param {SettingsData} data - The data for the settings section to be rendered.
+ * @returns {HTMLElement} The newly created settings section element with the specified properties.
+ */
 function renderSettingsBox(data: SettingsData): HTMLElement {
-  const box = createElementWithoutText("section", [`${data.type}-box`], null);
-  const titleWrapper = createElementWithoutText("span", ["title-wrapper"], null);
+  const box = createElementWithoutText("fieldset", [`${data.type}-box`], null);
+  const titleWrapper = createElementWithoutText("legend", ["title-wrapper"], null);
   const img = createImageElement("/assets/img/ui/", data.iconPath, null);
-  const title = createElementWithText("h2", [`${data.type}-title`], null, data.title);
+  const title = createElementWithText("h3", [`${data.type}-title`], null, data.title);
   titleWrapper.append(img, title);
   const list = createList(`${data.type}-list`, "list-element", data.items, data.radioName);
   box.append(titleWrapper, list);
   return box;
 }
 
-/** Renders a preview image based on the selected theme. */
+/**
+ * Renders a preview image based on the selected theme.
+ * @param {string} selectedTheme - The currently selected theme for which to render the preview image.
+ */
 function renderPreviewImage(selectedTheme: string): void {
   const previewImage = document.querySelector(
     "#preview_img",
   ) as HTMLImageElement;
   if (previewImage) {
-    previewImage.setAttribute(
-      "src",
-      `/assets/img/ui/previews/${selectedTheme}.svg`,
-    );
+    previewImage.setAttribute("src", `/assets/img/ui/previews/${selectedTheme}.svg`,);
+    previewImage.setAttribute("alt", `Preview of ${selectedTheme} theme`);
   }
 }
 
-/** Reads values from three input elements and builds a Settings object.
- * The return includes theme, player, selectedPlayer, size and initialized points. */
-function readSettingsFromInputs(
-  themeInput: HTMLInputElement | null,
-  playerInput: HTMLInputElement | null,
-  sizeInput: HTMLInputElement | null
-): Settings | null {
+/**
+ * Reads values from three input elements and builds a Settings object.
+ * The return includes theme, player, selectedPlayer, size and initialized points.
+ * @param {HTMLInputElement | null} themeInput - The input element for selecting the game theme.
+ * @param {HTMLInputElement | null} playerInput - The input element for selecting the player.
+ * @param {HTMLInputElement | null} sizeInput - The input element for selecting the board size.
+ * @returns {Settings | null} The constructed settings object or null if any input is missing.
+ */
+function readSettingsFromInputs(themeInput: HTMLInputElement | null,
+ playerInput: HTMLInputElement | null, sizeInput: HTMLInputElement | null): Settings | null {
   if (!themeInput || !playerInput || !sizeInput) return null;
   return {
     theme: themeInput.value as ThemeId,
@@ -119,7 +137,10 @@ function readSettingsFromInputs(
   };
 }
 
-/** Handles form submit: gathers selections, validates, saves, and navigates to the game page. */
+/**
+ * Handles form submit: gathers selections, validates, saves, and navigates to the game page.
+ * @param event - The form submit event.
+ */
 function handleSubmitEvent(event: Event) {
   event.preventDefault();
   const themeInput = document.querySelector<HTMLInputElement>('input[name="game-theme"]:checked');
@@ -133,7 +154,11 @@ function handleSubmitEvent(event: Event) {
   leadToGamePage();
 }
 
-/** Returns the value of the currently selected radio button for the given name. */
+/**
+ * Returns the value of the currently selected radio button for the given name.
+ * @param {string} radioName - The name attribute of the radio input fields to check.
+ * @returns {string | null} The value of the selected radio button or null if none is selected.
+ */
 function getSelectedValue(radioName: string): string | null {
   const el = document.querySelector(
     `input[name="${radioName}"]:checked`
@@ -141,7 +166,9 @@ function getSelectedValue(radioName: string): string | null {
   return el ? el.value : null;
 }
 
-/** Enables the start button based on whether theme, player, and board size are selected. */
+/**
+ * Enables the start button based on whether theme, player, and board size are selected.
+ */
 function activateStartBtn(): void {
   const selectedTheme = getSelectedValue('game-theme');
   const selectedPlayer = getSelectedValue('player');
@@ -154,9 +181,11 @@ function activateStartBtn(): void {
   }
 }
 
-/** Updates separators and diamonds.
+/**
+ * Updates separators and diamonds.
  * If a player/board is selected, the corresponding separators are made smaller;
- * if a player/board is selected, the corresponding diamonds are shown. */
+ * if a player/board is selected, the corresponding diamonds are shown.
+ */
 function updateSeparatorState(): void {
   const selectedPlayer = getSelectedValue("player");
   const selectedBoard = getSelectedValue("board-size");
@@ -170,19 +199,35 @@ function updateSeparatorState(): void {
   if (diamondBoard && selectedBoard) { diamondBoard.classList.remove("d-none"); }
 }
 
+/**
+ * Saves the current settings to localStorage.
+ * @param currentSettings - The settings object to save.
+ */
 function saveCurrentSettings(currentSettings: Settings): void {
   localStorage.setItem("settings", JSON.stringify(currentSettings));
 }
 
+/**
+ * Navigates to the game page by changing the location.href to "/game.html".
+ */
 function leadToGamePage(): void {
   location.href = "/game.html";
 }
 
+/**
+ * Clears the hover state from all items.
+ * @param {NodeListOf<HTMLElement>} items - The list of items to clear the hover state from.
+ */
 function clearHoveredItems(items: NodeListOf<HTMLElement>): void {
   items.forEach((el) => el.classList.remove("is-hovered"));
 }
 
-/** Clears the hover state from all items, marks the list with has-hover, and highlights the current item with is-hovered. */
+/**
+ * Clears the hover state from all items, marks the list with has-hover, and highlights the current item with is-hovered.
+ * @param {HTMLElement} list - The list element.
+ * @param {HTMLElement} item - The item element.
+ * @param {NodeListOf<HTMLElement>} items - The list of items.
+ */
 function handleListEnter(list: HTMLElement, item: HTMLElement, items: NodeListOf<HTMLElement>): void {
   clearHoveredItems(items);
   list.classList.add("has-hover");
@@ -193,7 +238,12 @@ function handleListEnter(list: HTMLElement, item: HTMLElement, items: NodeListOf
   }
 }
 
-/** Clears the hover state when the mouse leaves the list and removes the has-hover class. */
+/**
+ * Handles the mouse leave event for a list item.
+ * @param {HTMLElement} list - The list element.
+ * @param {NodeListOf<HTMLElement>} items - The list of items.
+ * @param {MouseEvent} e - The mouse event object. 
+ */
 function handleListLeave(list: HTMLElement, items: NodeListOf<HTMLElement>, e: MouseEvent): void {
   const relatedTarget = e.relatedTarget as Node | null;
   if (relatedTarget && list.contains(relatedTarget)) return;
@@ -207,8 +257,9 @@ function handleListLeave(list: HTMLElement, items: NodeListOf<HTMLElement>, e: M
   }
 }
 
-/** Registers mouseenter/mouseleave handlers for all list elemnts
- * and calls handleListEnter / handleListLeave for each list item. */
+/**
+ * Enables hover effects for the theme list items by adding event listeners for mouseenter and mouseleave events.
+ */
 function toggleListHover(): void {
   const lists = document.querySelectorAll<HTMLElement>(".theme-list");
   lists.forEach((list) => {
@@ -221,7 +272,9 @@ function toggleListHover(): void {
 }
 
 
-/** Loads stored settings from localStorage, applies them, and renders a preview if a theme is set. */
+/**
+ * Applies stored settings from sessionStorage and localStorage.
+ */
 function applyStoredSettings(): void {
   const shouldRestore = sessionStorage.getItem("restoreSettings");
   if (shouldRestore !== "true") return;
@@ -235,7 +288,11 @@ function applyStoredSettings(): void {
   sessionStorage.removeItem("restoreSettings");
 }
 
-/** Retrieves the three input elements based on the settings values and returns them as an object. */
+/**
+ * Retrieves the three input elements based on the settings values and returns them as an object.
+ * @param {Settings} settings - The settings object.
+ * @returns {Object} An object containing the theme, player, and size input elements.
+ */
 function teestkürzung(settings: Settings) {
   const themeInput = document.querySelector(`input[name="game-theme"][value="${settings.theme}"]`) as HTMLInputElement | null;
   const playerInput = document.querySelector(`input[name="player"][value="${settings.player}"]`) as HTMLInputElement | null;
@@ -243,21 +300,21 @@ function teestkürzung(settings: Settings) {
   return { themeInput, playerInput, sizeInput };
 } 
 
-/** Applies the stored settings to the corresponding inputs, checks them, and updates the selection. */
+/**
+ * Applies the stored settings to the corresponding inputs, checks them, and updates the selection.
+ * @param {Settings} settings - The settings object.
+ */
 function applySavedSettings(settings: Settings): void {
   const { themeInput, playerInput, sizeInput } = teestkürzung(settings);
   if (themeInput) {
     themeInput.checked = true;
-    updateSettingsSelection(themeInput, settings.theme);
-  }
+    updateSettingsSelection(themeInput, settings.theme);}
   if (playerInput) {
     playerInput.checked = true;
-    updateSettingsSelection(playerInput, settings.player);
-  }
+    updateSettingsSelection(playerInput, settings.player);}
   if (sizeInput) {
     sizeInput.checked = true;
-    updateSettingsSelection(sizeInput, settings.size);
-  }
+    updateSettingsSelection(sizeInput, settings.size);}
 }
 
 init();
