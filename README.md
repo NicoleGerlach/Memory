@@ -26,7 +26,7 @@ The game includes score tracking, animated end screens, and persistent settings 
 
 ## Preview
 
-![Preview of the Memory Game](./assets/img/ui/previews/codeVibes.svg)
+![Preview of the Memory Game](public/assets/img/ui/previews/codeVibes.svg)
 
 ## Author
 
